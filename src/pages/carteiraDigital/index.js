@@ -1,64 +1,74 @@
 import React from 'react';
 
 import {StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform, View} from 'react-native';
-import { Block, Text, theme, Button as GaButton } from 'galio-framework';
+import {Block, Text, theme, Button as GaButton} from 'galio-framework';
+
+import {
+    Content,
+    ContantSaldo,
+    TextSaldo,
+    Link
+} from './styles';
+import {grey} from "color-name";
 
 
 export default class Perfil extends React.Component {
-
-
     render() {
         return (
-            <View>
-                <Text>Perfil</Text>
-            </View>
+            <Content>
+                <ContantSaldo style={styles.saldo}>
+                    <TextSaldo>R$ 150,00</TextSaldo>
+                    <Text>Saldo</Text>
+                    <View style={{flexDirection: 'row', marginTop: 20}}>
+                        <Link onPress={() => this.props.navigation.navigate('Saque')}>
+                            <Text style={styles.links}>Saque</Text>
+                        </Link>
+                        <Link onPress={() => this.props.navigation.navigate('Transferir')}>
+                            <Text style={styles.links}>Transferir</Text>
+                        </Link>
+                    </View>
+                    <View>
+                        <Link onPress={() => this.props.navigation.navigate('Saque')}>
+                            <Text style={styles.links2}>Adicionar Dinheiro</Text>
+                        </Link>
+                    </View>
+                </ContantSaldo>
+
+            </Content>
         );
     }
 }
 
 const styles = StyleSheet.create({
-
-    profileContainer: {
-
-        padding: 0,
-        zIndex: 1
-    },
-    profileBackground: {
-
-        height: 0.6
-    },
-
-    info: {
-        marginTop: 30,
-        paddingHorizontal: 10,
-        height: 0.8
-    },
-    avatarContainer: {
-        position: 'relative',
-        marginTop: -80
-    },
-    avatar: {
-
-
-        borderRadius: 50,
-        borderWidth: 0
-    },
-    nameInfo: {
-        marginTop: 35
-    },
-    thumb: {
-        borderRadius: 4,
-        marginVertical: 4,
-        alignSelf: 'center',
-
-
-    },
-    social: {
-
-
-
+    saldo: {
         justifyContent: 'center',
-        zIndex: 99,
-        marginHorizontal: 5
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 6,
+        },
+        shadowOpacity: 0.37,
+        shadowRadius: 7.49,
+        elevation: 12,
+        alignItems: 'center'
+
+    },
+    links: {
+        textAlign: 'center',
+        margin: 10,
+        width: 120,
+        padding: 5,
+        borderWidth: 0.3,
+        borderColor: 'grey',
+        borderRadius: 4,
+    },
+    links2: {
+        textAlign: 'center',
+        width: 260,
+        padding: 5,
+        borderWidth: 0.3,
+        borderColor: 'grey',
+        borderRadius: 4,
+        marginBottom: 10,
     }
 });

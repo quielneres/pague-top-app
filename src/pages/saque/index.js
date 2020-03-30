@@ -10,7 +10,7 @@ export default class Perfil extends React.Component {
     render() {
         return (
             <View>
-                <Text>Perfil</Text>
+                <Text>Saque</Text>
             </View>
         );
     }

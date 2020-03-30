@@ -7,12 +7,19 @@ import {createDrawerNavigator} from 'react-navigation-drawer';
 import {createStackNavigator} from 'react-navigation-stack';
 
 import Example from './pages/Example';
-import Home from './pages/home';
 import Login from './pages/Welcome';
-import Sair from './pages/singUp/index';
+// import Sair from './pages/singUp/index';
+import Home from './pages/home';
+import CartDigital from './pages/carteiraDigital';
+import ExtratoHome from './pages/extrato';
 import Detalhes from './pages/home/detalhes';
+import Perfil from './pages/perfil';
+import SaqueHome from './pages/saque';
+import CartoesHome from './pages/cartoes';
+import TransferirHome from './pages/transferir';
 
 import AuthLoadingScreen from './pages/AuthLoadingScreen';
+import {deleteUser} from "./utils";
 
 const AuthStack = createStackNavigator({
     Landing: {
@@ -52,6 +59,10 @@ const AuthStack = createStackNavigator({
         },
     },
 });
+
+// const HomeScreen = createStackNavigator({
+// });
+
 
 const FeedStack = createStackNavigator({
     Home: {
@@ -99,6 +110,18 @@ const DiscoverStack = createStackNavigator({
 });
 
 const MainTabs = createBottomTabNavigator({
+    Home: {
+        screen: Home,
+        navigationOptions: {
+            headerTitle: 'Home',
+        },
+    },
+    // Details: {
+    //     screen: Detalhes,
+    //     navigationOptions: {
+    //         headerTitle: 'Detalhes',
+    //     },
+    // },
     Feed: {
         screen: FeedStack,
         navigationOptions: {
@@ -134,15 +157,89 @@ const SettingsStack = createStackNavigator({
     },
 });
 
-const MainDrawer = createDrawerNavigator({
-    MainTabs: MainTabs,
-    Settings: SettingsStack,
-    Teste: {
-        screen: Sair,
+const CarteiraDigital = createStackNavigator({
+    CarteiraDigital: {
+        screen: CartDigital,
         navigationOptions: {
-            headerTitle: 'Profile',
+            headerTitle: 'Carteira Digital',
         },
     },
+    Saque: {
+        screen: SaqueHome,
+        navigationOptions: {
+            headerTitle: 'Saque',
+        },
+    },
+    Transferir: {
+        screen: TransferirHome,
+        navigationOptions: {
+            headerTitle: 'Transferir',
+        },
+    },
+});
+const Extrato = createStackNavigator({
+    Extrato: {
+        screen: ExtratoHome,
+        navigationOptions: {
+            headerTitle: 'Extrato',
+        },
+    }
+});
+
+const Profile = createStackNavigator({
+    Perfil: {
+        screen: Perfil,
+        navigationOptions: {
+            headerTitle: 'Perfil',
+        },
+    },
+});
+
+
+const Cartoes = createStackNavigator({
+    Cartoes: {
+        screen: CartoesHome,
+        navigationOptions: {
+            headerTitle: 'Cartoes',
+        },
+    },
+});
+
+const HomeScreen = createStackNavigator({
+    Home: {
+        screen: Home,
+        navigationOptions: {
+            headerTitle: 'Home',
+        },
+    },
+    Details: {
+        screen: Detalhes,
+        navigationOptions: {
+            headerTitle: 'Detalhes',
+        },
+    },
+});
+
+const Sair = () => {
+    deleteUser().then(() => {
+        navigation.navigate('Loading');
+    })
+};
+
+const MainDrawer = createDrawerNavigator({
+    Home: HomeScreen,
+    MainTabs: MainTabs,
+    Carteira_Digital: CarteiraDigital,
+    Extrato: Extrato,
+    Cdigo_QRCode: Profile,
+    Cartoes: Cartoes,
+    Pagar: Profile,
+    Descontos: Profile,
+    Cobrar: Profile,
+    Seu_negocia: Profile,
+    Perfil: Profile,
+    Ajuda: SettingsStack,
+    Sair : Sair,
 
 });
 

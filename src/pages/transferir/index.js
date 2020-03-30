@@ -1,17 +1,65 @@
 import React from 'react';
 
-import {StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform, View} from 'react-native';
-import { Block, Text, theme, Button as GaButton } from 'galio-framework';
+import {
+    StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform, View,
+    Picker
+} from 'react-native';
+import {Block, Text, theme, Button as GaButton} from 'galio-framework';
 
 
-export default class Perfil extends React.Component {
+import {
+    Content,
+    Saldo,
+    TextoSaldo,
+    ValorSaldo,
+    ContentUsuario,
+    Select,
+    Usuario,
+    ContentValorTransferir,
+    TextInput,
+    InputValor,
+    BtnTransferir,
+} from './styles';
 
+export default class Transferir extends React.Component {
+    state = {user: ''}
+    updateUser = (user) => {
+        this.setState({user: user})
+    }
 
     render() {
         return (
-            <View>
-                <Text>Perfil</Text>
-            </View>
+            <Content>
+                <Saldo>
+                    <TextoSaldo>Saldo:</TextoSaldo>
+                    <ValorSaldo>R$ 150,00</ValorSaldo>
+                </Saldo>
+                <ContentUsuario>
+                    <Select selectedValue={this.state.user} onValueChange={this.updateUser}>
+                        <Picker.Item label="Selecine um usuario" value=""/>
+                        <Picker.Item label="Steve" value="steve"/>
+                        <Picker.Item label="Ellen" value="ellen"/>
+                        <Picker.Item label="Maria" value="maria"/>
+                    </Select>
+                    <Usuario style={styles.text}>{this.state.user}</Usuario>
+                </ContentUsuario>
+                <ContentValorTransferir>
+                    <TextInput>
+                        Digite o valor:
+                    </TextInput>
+                    <InputValor
+                        style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
+                        onChangeText=""
+                        value="0,00"
+                    />
+                    <BtnTransferir
+                        style={{ marginTop: 20}}
+                        onPress=""
+                        title="Transferir"
+                        accessibilityLabel="Learn more about this purple button"
+                    />
+                </ContentValorTransferir>
+            </Content>
         );
     }
 }
@@ -54,7 +102,6 @@ const styles = StyleSheet.create({
 
     },
     social: {
-
 
 
         justifyContent: 'center',

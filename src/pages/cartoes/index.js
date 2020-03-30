@@ -4,13 +4,13 @@ import {StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform, Vi
 import { Block, Text, theme, Button as GaButton } from 'galio-framework';
 
 
-export default class Perfil extends React.Component {
+export default class Cartoes extends React.Component {
 
 
     render() {
         return (
             <View>
-                <Text>Perfil</Text>
+                <Text>Cartoes</Text>
             </View>
         );
     }
