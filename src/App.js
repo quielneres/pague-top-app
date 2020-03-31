@@ -17,6 +17,8 @@ import Perfil from './pages/perfil';
 import SaqueHome from './pages/saque';
 import CartoesHome from './pages/cartoes';
 import TransferirHome from './pages/transferir';
+import DescontosHome from './pages/descontos';
+import PagarHome from './pages/pagar';
 
 import AuthLoadingScreen from './pages/AuthLoadingScreen';
 import {deleteUser} from "./utils";
@@ -205,6 +207,23 @@ const Cartoes = createStackNavigator({
     },
 });
 
+const Descontos = createStackNavigator({
+    Descontos: {
+        screen: DescontosHome,
+        navigationOptions: {
+            headerTitle: 'Descontos',
+        },
+    },
+});
+const Pagar = createStackNavigator({
+    Pagar: {
+        screen: PagarHome,
+        navigationOptions: {
+            headerTitle: 'Pagamentos',
+        },
+    },
+});
+
 const HomeScreen = createStackNavigator({
     Home: {
         screen: Home,
@@ -233,8 +252,8 @@ const MainDrawer = createDrawerNavigator({
     Extrato: Extrato,
     Cdigo_QRCode: Profile,
     Cartoes: Cartoes,
-    Pagar: Profile,
-    Descontos: Profile,
+    Pagar: Pagar,
+    Descontos: Descontos,
     Cobrar: Profile,
     Seu_negocia: Profile,
     Perfil: Profile,
