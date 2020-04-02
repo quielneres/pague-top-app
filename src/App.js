@@ -19,6 +19,10 @@ import CartoesHome from './pages/cartoes';
 import TransferirHome from './pages/transferir';
 import DescontosHome from './pages/descontos';
 import PagarHome from './pages/pagar';
+import CobrarHome from './pages/cobrar';
+import ProductHome from './pages/cobrar/produtos/ProductList';
+import GerarBoletoHome from './pages/cobrar/gerarBoleto/gerarLinkBoleto';
+
 
 import AuthLoadingScreen from './pages/AuthLoadingScreen';
 import {deleteUser} from "./utils";
@@ -215,11 +219,33 @@ const Descontos = createStackNavigator({
         },
     },
 });
+
 const Pagar = createStackNavigator({
     Pagar: {
         screen: PagarHome,
         navigationOptions: {
             headerTitle: 'Pagamentos',
+        },
+    },
+});
+
+const Cobrar = createStackNavigator({
+    Cobrar: {
+        screen: CobrarHome,
+        navigationOptions: {
+            headerTitle: 'Cobrar',
+        },
+    },
+    ProductList: {
+        screen: ProductHome,
+        navigationOptions: {
+            headerTitle: 'Lista de produtos',
+        },
+    },
+    GerarBoleto: {
+        screen: GerarBoletoHome,
+        navigationOptions: {
+            headerTitle: 'Gerar Link',
         },
     },
 });
@@ -254,7 +280,7 @@ const MainDrawer = createDrawerNavigator({
     Cartoes: Cartoes,
     Pagar: Pagar,
     Descontos: Descontos,
-    Cobrar: Profile,
+    Cobrar: Cobrar,
     Seu_negocia: Profile,
     Perfil: Profile,
     Ajuda: SettingsStack,
