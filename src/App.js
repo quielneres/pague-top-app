@@ -245,7 +245,7 @@ const Cobrar = createStackNavigator({
     GerarBoleto: {
         screen: GerarBoletoHome,
         navigationOptions: {
-            headerTitle: 'Gerar Link',
+            headerShown: false
         },
     },
 });
