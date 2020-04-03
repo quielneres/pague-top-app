@@ -12,6 +12,7 @@
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.7",
     "axios": "^0.19.2",
+    "expo": "^37.0.3",
     "galio-framework": "^0.6.3",
     "native-base": "^2.13.12",
     "react": "16.9.0",
@@ -39,5 +40,9 @@
   },
   "jest": {
     "preset": "react-native"
+  },
+  "android": {
+    "package": "com.quielnerestecnology.pagtop",
+    "versionCode": 1
   }
 }
