@@ -10,31 +10,53 @@ import {
     Link
 } from './styles';
 import {grey} from "color-name";
+import {Button, Container, Footer, FooterTab, Icon} from "native-base";
 
 
 export default class Perfil extends React.Component {
     render() {
         return (
-            <Content>
-                <ContantSaldo style={styles.saldo}>
-                    <TextSaldo>R$ 150,00</TextSaldo>
-                    <Text>Saldo</Text>
-                    <View style={{flexDirection: 'row', marginTop: 20}}>
-                        <Link onPress={() => this.props.navigation.navigate('Saque')}>
-                            <Text style={styles.links}>Saque</Text>
-                        </Link>
-                        <Link onPress={() => this.props.navigation.navigate('Transferir')}>
-                            <Text style={styles.links}>Transferir</Text>
-                        </Link>
-                    </View>
-                    <View>
-                        <Link onPress={() => this.props.navigation.navigate('Saque')}>
-                            <Text style={styles.links2}>Adicionar Dinheiro</Text>
-                        </Link>
-                    </View>
-                </ContantSaldo>
-
-            </Content>
+            <Container>
+                <Content>
+                    <ContantSaldo style={styles.saldo}>
+                        <TextSaldo>R$ 150,00</TextSaldo>
+                        <Text>Saldo</Text>
+                        <View style={{flexDirection: 'row', marginTop: 20}}>
+                            <Link onPress={() => this.props.navigation.navigate('Saque')}>
+                                <Text style={styles.links}>Saque</Text>
+                            </Link>
+                            <Link onPress={() => this.props.navigation.navigate('Transferir')}>
+                                <Text style={styles.links}>Transferir</Text>
+                            </Link>
+                        </View>
+                        <View>
+                            <Link onPress={() => this.props.navigation.navigate('Saque')}>
+                                <Text style={styles.links2}>Adicionar Dinheiro</Text>
+                            </Link>
+                        </View>
+                    </ContantSaldo>
+                </Content>
+                <Footer>
+                    <FooterTab style={{backgroundColor: '#F2F2F2'}}>
+                        <Button vertical onPress={() => this.props.navigation.navigate('Home')}>
+                            <Icon name="home"/>
+                            <Text>Home</Text>
+                        </Button>
+                        <Button vertical>
+                            <Icon name="camera"/>
+                            <Text>Pagar</Text>
+                        </Button>
+                        <Button vertical>
+                            <Icon active name="navigate"/>
+                            <Text>Cobrar</Text>
+                        </Button>
+                        <Button vertical onPress={() => this.props.navigation.navigate('Perfil')}>
+                            <Icon name="settings"/>
+                            <Text>Confg</Text>
+                        </Button>
+                    </FooterTab>
+                </Footer>
+            </Container>
         );
     }
 }

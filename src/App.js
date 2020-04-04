@@ -254,7 +254,7 @@ const HomeScreen = createStackNavigator({
     Home: {
         screen: Home,
         navigationOptions: {
-            headerTitle: 'Home',
+            headerShown: false
         },
     },
     Details: {
