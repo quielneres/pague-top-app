@@ -1,64 +1,38 @@
 import React from 'react';
 
-import {StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform, View} from 'react-native';
-import { Block, Text, theme, Button as GaButton } from 'galio-framework';
-
+import {Container, Header, Content, Tab, Tabs, Footer, FooterTab, Button, Icon, Text} from 'native-base';
 
 export default class Perfil extends React.Component {
 
 
     render() {
         return (
-            <View>
-                <Text>Perfil</Text>
-            </View>
+            <Container>
+                <Content>
+                    <Text>Perfil</Text>
+                </Content>
+                <Footer>
+                    <FooterTab style={{backgroundColor: '#F2F2F2'}}>
+                        <Button vertical onPress={() => this.props.navigation.navigate('Home')}>
+                            <Icon name="home"/>
+                            <Text>Home</Text>
+                        </Button>
+                        <Button vertical>
+                            <Icon name="camera"/>
+                            <Text>Pagar</Text>
+                        </Button>
+                        <Button vertical>
+                            <Icon active name="navigate"/>
+                            <Text>Cobrar</Text>
+                        </Button>
+                        <Button vertical onPress={() => this.props.navigation.navigate('Perfil')}>
+                            <Icon name="settings"/>
+                            <Text>Confg</Text>
+                        </Button>
+                    </FooterTab>
+                </Footer>
+            </Container>
         );
     }
 }
 
-const styles = StyleSheet.create({
-
-    profileContainer: {
-
-        padding: 0,
-        zIndex: 1
-    },
-    profileBackground: {
-
-        height: 0.6
-    },
-
-    info: {
-        marginTop: 30,
-        paddingHorizontal: 10,
-        height: 0.8
-    },
-    avatarContainer: {
-        position: 'relative',
-        marginTop: -80
-    },
-    avatar: {
-
-
-        borderRadius: 50,
-        borderWidth: 0
-    },
-    nameInfo: {
-        marginTop: 35
-    },
-    thumb: {
-        borderRadius: 4,
-        marginVertical: 4,
-        alignSelf: 'center',
-
-
-    },
-    social: {
-
-
-
-        justifyContent: 'center',
-        zIndex: 99,
-        marginHorizontal: 5
-    }
-});

@@ -4,13 +4,12 @@ import {StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform, Vi
 import {Block, Text, theme, Button as GaButton} from 'galio-framework';
 
 import {
-    Content,
     ContantSaldo,
     TextSaldo,
     Link
 } from './styles';
 import {grey} from "color-name";
-import {Button, Container, Footer, FooterTab, Icon} from "native-base";
+import {Container, Header, Content, Tab, Tabs, Footer, FooterTab, Button, Icon} from 'native-base';
 
 
 export default class Perfil extends React.Component {
