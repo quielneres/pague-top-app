@@ -1,113 +1,56 @@
 import React, {useState} from 'react';
-import {StackActions, NavigationActions} from 'react-navigation';
-import {StatusBar, ActivityIndicator, AsyncStorage, Image} from 'react-native';
-import PropTypes from 'prop-types';
 
-import api from '../../services/api';
+import {StatusBar, ActivityIndicator, AsyncStorage, Image, View, Text, TouchableOpacity} from 'react-native';
 
-import {
-  Container,
-  Title,
-  TextInformation,
-  Error,
-  Form,
-  Input,
-  Button,
-  ButtonText,
-} from './styles';
+import {Container, Header, Content, Card, CardItem, Button, Icon} from 'native-base';
 
-export default function Welcome(props) {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
-  const [errorMessage, setErrorMessage] = useState(null);
-
-  async function saveUser(user) {
-    await AsyncStorage.setItem('@ListApp:userToken', JSON.stringify(user));
-  }
-
-  async function signIn() {
-    if (username.length === 0) {
-      return;
-    }
-
-    setLoading(true);
-
-    try {
-      const credentials = {
-        email: username,
-        password: password,
-      };
-
-      const response = await api.post('/auth/login', credentials);
-
-      const user = response.data;
-
-      await saveUser(user);
-
-      const resetAction = StackActions.reset({
-        index: 0,
-        actions: [NavigationActions.navigate({routeName: 'App'})],
-      });
-
-      setLoading(false);
-
-      props.navigation.dispatch(resetAction);
-    } catch (err) {
-      console.log(err);
-
-      setLoading(false);
-      setErrorMessage('Usuário não existe');
-    }
-  }
-
-  return (
-    <Container>
-      <StatusBar barStyle="light-content" />
-      <Image style={{width:280, height: 150}} source={require('../../assets/logo.jpg')} />
-
-      {!!errorMessage && <Error>{errorMessage}</Error>}
-
-      <Form>
-        <Input
-          autoCapitalize="none"
-          autoCorrect={false}
-          placeholder="Digite seu usuário"
-          underlineColorAndroid="rgba(0, 0, 0, 0)"
-          value={username}
-          onChangeText={username => setUsername(username)}
-        />
-
-        <Input
-          autoCapitalize="none"
-          autoCorrect={false}
-          placeholder="Digite sua senha"
-          underlineColorAndroid="rgba(0, 0, 0, 0)"
-          secureTextEntry={true}
-          value={password}
-          onChangeText={password => setPassword(password)}
-        />
-
-        <Button onPress={signIn}>
-          {loading ? (
-            <ActivityIndicator size="small" color="#FFF" />
-          ) : (
-            <ButtonText>Prosseguir</ButtonText>
-          )}
-        </Button>
-      </Form>
-    </Container>
-  );
+const Welcome = ({navigation}) => {
+    return (
+        <Container>
+            <Content style={{backgroundColor: '#4CB1F7'}}>
+                <Card transparent style={{height: 500, justifyContent: 'flex-end'}}>
+                    <CardItem style={{margin: 15, backgroundColor: '#4CB1F7'}}>
+                        <Text style={{fontSize: 40, fontWeight: 'bold', color: 'white'}}>
+                            Bem-vindo!
+                        </Text>
+                    </CardItem>
+                    <CardItem style={{margin: 15, flexDirection: 'column', backgroundColor: '#4CB1F7'}}>
+                        <Button full light style={{
+                            justifyContent: 'flex-start',
+                            width: '100%',
+                            borderRadius: 7,
+                            backgroundColor: 'white',
+                        }}>
+                            <Icon name={'logo-google'}/>
+                            <View style={{ marginLeft: 60}}>
+                                <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Login com o google</Text>
+                            </View>
+                        </Button>
+                        <Button full light style={{
+                            width: '100%',
+                            borderRadius: 7,
+                            marginTop: 10,
+                            backgroundColor: 'white',
+                        }}
+                                    onPress={() => navigation.navigate('CreateAccount')}
+                        >
+                            <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Criar uma conta</Text>
+                        </Button>
+                    </CardItem>
+                    <CardItem style={{ backgroundColor: '#4CB1F7', justifyContent: 'center'}}>
+                        <Text style={{fontSize: 15, fontWeight: 'bold', color: 'white'}}>
+                            Ja tem uma conta?
+                        </Text>
+                        <TouchableOpacity style={{ marginLeft: 10}}
+                            onPress={() => navigation.navigate('Login')}
+                        >
+                            <Text style={{color: 'white', fontWeight: 'bold'}}>Entrar</Text>
+                        </TouchableOpacity>
+                    </CardItem>
+                </Card>
+            </Content>
+        </Container>
+    )
 }
 
-Welcome.navigationOptions = () => {
-  return {
-    headerShown: false,
-  };
-};
-
-Welcome.propTypes = {
-  navigation: PropTypes.shape({
-    dispatch: PropTypes.func,
-  }).isRequired,
-};
+export default Welcome;

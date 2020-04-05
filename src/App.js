@@ -7,7 +7,9 @@ import {createDrawerNavigator} from 'react-navigation-drawer';
 import {createStackNavigator} from 'react-navigation-stack';
 
 import Example from './pages/Example';
-import Login from './pages/Welcome';
+import Welcome from './pages/Welcome';
+import Login from './pages/singIn';
+import SingUp from './pages/singUp';
 // import Sair from './pages/singUp/index';
 import Home from './pages/home';
 import CartDigital from './pages/carteiraDigital';
@@ -29,9 +31,15 @@ import {deleteUser} from "./utils";
 
 const AuthStack = createStackNavigator({
     Landing: {
+        screen: Welcome,
+        navigationOptions: {
+            headerShown: false
+        },
+    },
+    Login: {
         screen: Login,
         navigationOptions: {
-            headerTitle: 'Landing',
+            headerShown: false
         },
     },
     SignIn: {
@@ -41,7 +49,7 @@ const AuthStack = createStackNavigator({
         },
     },
     CreateAccount: {
-        screen: Example,
+        screen: SingUp,
         navigationOptions: {
             headerTitle: 'Create Account',
         },
@@ -196,7 +204,7 @@ const Profile = createStackNavigator({
     Perfil: {
         screen: Perfil,
         navigationOptions: {
-            headerTitle: 'Perfil',
+            headerShown: false,
         },
     },
 });
@@ -304,6 +312,9 @@ const AppModalStack = createStackNavigator(
 const App = createSwitchNavigator({
     Loading: {
         screen: AuthLoadingScreen,
+        navigationOptions: {
+            headerShown: false
+        },
     },
     Auth: {
         screen: AuthStack,

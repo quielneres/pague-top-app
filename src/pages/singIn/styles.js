@@ -1,71 +1,75 @@
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 
-const Container = styled.View`
+export const Container = styled.View`
+  display: flex;
   flex: 1;
-  alignitems: center;
-  justifycontent: center;
-  backgroundcolor: #f5f5f5;
+  background-color: #ffff;
+  padding: 40px;
+  justify-content: center;
+  align-items: stretch;
 `;
 
-const Logo = styled.Image`
-  height: 30%;
-  marginbottom: 40px;
+export const Title = styled.Text`
+  text-align: center;
+  color: #ffffff;
+  font-size: 24px;
+  font-weight: bold;
 `;
 
-const Input = styled.TextInput`
-  paddinghorizontal: 20px;
-  paddingvertical: 15px;
-  borderradius: 5px;
-  backgroundcolor: #fff;
-  alignself: stretch;
-  marginbottom: 15px;
-  marginhorizontal: 20px;
-  fontsize: 16px;
+export const TextInformation = styled.Text`
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+  color: #dddddd;
+  line-height: 21px;
 `;
 
-const ErrorMessage = styled.Text`
-  textalign: center;
-  color: #ce2029;
-  fontsize: 16px;
-  marginbottom: 15px;
-  marginhorizontal: 20px;
+export const Error = styled.Text`
+  color: #e37a7a;
+  text-align: center;
+  margin-top: 10px;
 `;
 
-const Button = styled.TouchableHighlight`
-  padding: 20px;
-  borderradius: 5px;
-  backgroundcolor: #fc6663;
-  alignself: stretch;
-  margin: 15px;
-  marginhorizontal: 20px;
+export const Form = styled.View`
+  margin-top: 20px;
 `;
 
-const ButtonText = styled.Text`
-  color: #fff;
-  fontweight: bold;
-  fontsize: 16px;
-  textalign: center;
+export const Input = styled.TextInput`
+  background-color: #fff;
+  border-radius: 3px;
+  height: 44px;
+  padding: 0px 20px;
+  margin-bottom: 10px;
+  border: 0.5px solid #4CB1F7;
 `;
 
-const SignUpLink = styled.TouchableHighlight`
-  padding: 10px;
-  margintop: 20px;
+export const Button = styled.TouchableOpacity`
+  background-color: #4CB1F7;
+  border-radius: 3px;
+  height: 44px;
+  padding: 0px 20px;
+  margin-top: 10px;
+  justify-content: center;
+  align-items: center;
 `;
 
-const SignUpLinkText = styled.Text`
-  color: #999;
-  fontweight: bold;
-  fontsize: 16px;
-  textalign: center;
+export const ButtonText = styled.Text`
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 14px;
 `;
 
-export {
-  Container,
-  Logo,
-  Input,
-  ErrorMessage,
-  Button,
-  ButtonText,
-  SignUpLink,
-  SignUpLinkText,
-};
+export const TextSingUp = styled.Text`  
+  font-weight: bold;
+  font-size: 14px;
+`;
+
+export const ContentSingUp = styled.View`  
+    flex-direction: row
+    margin-top: 20px;
+    justify-content: center;
+    align-items: center;
+`;
+export const CreateCount = styled.TouchableOpacity`  
+   margin-left: 10px;
+`;
