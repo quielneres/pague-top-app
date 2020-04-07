@@ -76,7 +76,9 @@ export default class Perfil extends React.Component {
                                     </ListItem>
                                     <ListItem itemDivider style={{justifyContent: 'space-between'}}>
                                         <Text>Cartões</Text>
-                                        <Icon name={'md-add-circle'}/>
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('Cartoes')}>
+                                            <Icon name={'md-add-circle'}/>
+                                        </TouchableOpacity>
                                     </ListItem>
                                     <ListItem>
                                         <Icon name={'card'}/>
@@ -88,6 +90,12 @@ export default class Perfil extends React.Component {
                                             <Text style={{marginLeft: 10}}>**** **** **** 1234</Text>
                                             <Icon style={{marginRight: 20}} name={'trash'}/>
                                         </View>
+                                    </ListItem>
+                                    <ListItem itemDivider style={{justifyContent: 'space-between'}}>
+                                        <Text>Conta cliente</Text>
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('ClientCount')}>
+                                            <Icon name={'md-add-circle'}/>
+                                        </TouchableOpacity>
                                     </ListItem>
                                 </List>
                             </View>

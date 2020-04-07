@@ -1,64 +1,60 @@
 import React from 'react';
 
 import {StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform, View} from 'react-native';
-import { Block, Text, theme, Button as GaButton } from 'galio-framework';
+import {Container, Button, Content, Card, CardItem, Footer, Text} from 'native-base';
+
+const Cards = ({navigation}) => {
+    return (
+        <Container>
+            <Content>
+                <Card>
+                    <CardItem>
+                        <Button block style={{width: 70, height: 70, borderRadius: 7}}>
+                            <Text>Adicionar Cartao</Text>
+                        </Button>
+                    </CardItem>
+                </Card>
+                <Card>
+                    <CardItem style={{justifyContent: 'center', flexDirection: 'column'}}>
+                        <Card style={{
+                            backgroundColor: 'red',
+                            width: '90%',
+                            height: 180,
+                            margin: 40,
+                            borderRadius: 10,
+                            padding: 20
+                        }}>
+                            <Text>124-5678-9098-7654</Text>
+                            <Text>12/03</Text>
+                            <Text>CVC 123</Text>
+                        </Card>
+                        <Card style={{
+                            backgroundColor: 'red',
+                            width: '90%',
+                            height: 60,
+                            margin: 40,
+                            marginTop: 40,
+                            borderRadius: 10,
+                            padding: 20
+                        }}>
+                            <Text>124-5678-9098-7654</Text>
+
+                        </Card>
+                    </CardItem>
+                </Card>
+            </Content>
+            <Footer style={{height: 100}}>
+                <CardItem>
+                    <Button block style={{width: '100%', height: 60, borderRadius: 7}}
+                            onPress={() => navigation.navigate('AddCard')}>
+                        <Text>Adicionar Cartao</Text>
+                    </Button>
+                </CardItem>
+            </Footer>
+        </Container>
+    );
+};
+
+export default Cards;
 
 
-export default class Cartoes extends React.Component {
-
-
-    render() {
-        return (
-            <View>
-                <Text>Cartoes</Text>
-            </View>
-        );
-    }
-}
-
-const styles = StyleSheet.create({
-
-    profileContainer: {
-
-        padding: 0,
-        zIndex: 1
-    },
-    profileBackground: {
-
-        height: 0.6
-    },
-
-    info: {
-        marginTop: 30,
-        paddingHorizontal: 10,
-        height: 0.8
-    },
-    avatarContainer: {
-        position: 'relative',
-        marginTop: -80
-    },
-    avatar: {
-
-
-        borderRadius: 50,
-        borderWidth: 0
-    },
-    nameInfo: {
-        marginTop: 35
-    },
-    thumb: {
-        borderRadius: 4,
-        marginVertical: 4,
-        alignSelf: 'center',
-
-
-    },
-    social: {
-
-
-
-        justifyContent: 'center',
-        zIndex: 99,
-        marginHorizontal: 5
-    }
-});

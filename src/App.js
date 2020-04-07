@@ -24,6 +24,8 @@ import PagarHome from './pages/pagar';
 import CobrarHome from './pages/cobrar';
 import ProductHome from './pages/cobrar/produtos/ProductList';
 import GerarBoletoHome from './pages/cobrar/gerarBoleto/gerarLinkBoleto';
+import AddCardHome from './pages/cartoes/add/addCard';
+import ClientCountHome from './pages/contaCilente';
 
 
 import AuthLoadingScreen from './pages/AuthLoadingScreen';
@@ -207,6 +209,13 @@ const Profile = createStackNavigator({
             headerShown: false,
         },
     },
+    ClientCount: {
+        screen: ClientCountHome,
+        navigationOptions: {
+            headerTitleAlign: 'center',
+            headerTitle: 'Conta Cliente'
+        },
+    }
 });
 
 
@@ -215,6 +224,12 @@ const Cartoes = createStackNavigator({
         screen: CartoesHome,
         navigationOptions: {
             headerTitle: 'Cartoes',
+        },
+    },
+    AddCard: {
+        screen: AddCardHome,
+        navigationOptions: {
+            headerTitle: 'Adicionar cartoes',
         },
     },
 });
