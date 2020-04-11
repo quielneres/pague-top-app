@@ -1,76 +1,93 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform, View} from 'react-native';
 import {Container, Card, Button, Content, Form, CardItem, Footer, Text, Item, Input, Label} from 'native-base';
 import api from "../../../services/api";
+import {NavigationActions, StackActions} from "react-navigation";
 
 const Cards = ({navigation}) => {
 
-    const [form, setForm] = useState({
-        numberCard: null,
-        nameCard: null,
-        expiracao: null,
-        cvc: null,
-        name: null,
-        email: null,
-        nascimento: null,
-        cpf: null,
+    const [numberCard, setNumberCard] = useState(null);
+    const [nameTitular, setNameTitular] = useState(null);
+    const [expiracao, setExpiracao] = useState(null);
+    const [cvc, setCvc] = useState(null);
+    const [name, setName] = useState(null);
+    const [email, setEmail] = useState(null);
+    const [cpf, setCpf] = useState(null);
+    const [birth, setBirth] = useState(null);
+    const [ddd, setDdd] = useState(null);
+    const [phoneNumber, setPhoneNumber] = useState(null);
+    const [type, setType] = useState(null);
+    const [street, setStreet] = useState(null);
+    const [adressNumber, setAdressNumber] = useState(null);
+    const [district, setDistrict] = useState(null);
+    const [city, setCity] = useState(null);
+    const [stateAdress, setStateAdress] = useState(null);
+    const [cep, setCep] = useState(null);
+    const [complement, setComplement] = useState(null);
+
+    useEffect(() => {
+        const items = {
+            items: {
+                numberCard: numberCard,
+                nameTitular: nameTitular,
+                expiracao: expiracao,
+                cvc: cvc,
+                name: name,
+                email: email,
+                cpf: cpf,
+                birth: birth,
+                ddd: ddd,
+                phoneNumber: phoneNumber,
+                type: type,
+                street: street,
+                adressNumber: adressNumber,
+                district: district,
+                city: city,
+                stateAdress: stateAdress,
+                cep: cep,
+                complement: complement,
+            }
+        }
     });
 
-    const [formPhone, setformPhone] = useState({
-        ddd: null, number: null
-    });
-    const [formAdress, setFormAdress] = useState({
-        type: null,
-        street: null,
-        number: null,
-        district: null,
-        city: null,
-        cep: null,
-        complement: null,
-    });
+    async function submit() {
 
-    // const submit = () => {
-    //     const itens = {
-    //         numberCard: form.numberCard,
-    //         nameCard: form.nameCard,
-    //         expiracao: form.expiracao,
-    //         cvc: form.cvc,
-    //         name: form.name,
-    //         email: form.email,
-    //         nascimento: form.nascimento,
-    //         cpf: form.cpf,
-    //         phone: {
-    //             ddd: formPhone.ddd, number: formPhone.number
-    //         },
-    //         adress: {
-    //             type: formAdress.type,
-    //             street: formAdress.street,
-    //             number: formAdress.number,
-    //             district: formAdress.district,
-    //             city: formAdress.city,
-    //             cep: formAdress.cep,
-    //             complement: formAdress.complement,
-    //         }
-    //     }
-    //
-    //     console.log(itens)
-    //
-    //     // api.post('/ver-pedido-all')
-    //     //     .then(res => {
-    //     //         this.setState(
-    //     //             {
-    //     //                 isLoading: false,
-    //     //                 dataSource: res.data.pedido,
-    //     //             },
-    //     //             function () {
-    //     //             },
-    //     //         );
-    //     //     })
-    //     //     .catch(function (error) {
-    //     //         console.log(error);
-    //     //     });
-    // }
+        try {
+            const items = {
+                items: {
+                    numberCard: numberCard,
+                    nameTitular: nameTitular,
+                    expiracao: expiracao,
+                    cvc: cvc,
+                    name: name,
+                    email: email,
+                    cpf: cpf,
+                    birth: birth,
+                    ddd: ddd,
+                    phoneNumber: phoneNumber,
+                    type: type,
+                    street: street,
+                    adressNumber: adressNumber,
+                    district: district,
+                    city: city,
+                    stateAdress: stateAdress,
+                    cep: cep,
+                    complement: complement,
+                }
+            };
+
+            const response = await api.post('/add-credit-card', items);
+
+            const data = response.data;
+
+            props.navigation.dispatch(resetAction);
+
+        } catch (err) {
+            console.log(err);
+            setErrorMessage('Usuário não existe');
+        }
+    }
 
     return (
         <Container>
@@ -78,25 +95,25 @@ const Cards = ({navigation}) => {
                 <Card styles={{justifyContent: 'center'}}>
                     <Form style={{padding: 10}}>
                         <Item floatingLabel>
-                            <Label>Numero do cartoa</Label>
+                            <Label>Número do cartão</Label>
                             <Input
                                 autoCapitalize="none"
                                 autoCorrect={false}
                                 placeholder="Digite seu usuário"
                                 underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={form.numberCard}
-                                onChangeText={value => setForm({numberCard: value})}
+                                value={numberCard}
+                                onChangeText={value => setNumberCard(value)}
                             />
                         </Item>
                         <Item floatingLabel last>
-                            <Label>Nome cartao</Label>
+                            <Label>Nome do titular </Label>
                             <Input
                                 autoCapitalize="none"
                                 autoCorrect={false}
                                 placeholder="Digite seu usuário"
                                 underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={form.nameCard}
-                                onChangeText={value => setForm({nameCard: value})}
+                                value={nameTitular}
+                                onChangeText={value => setNameTitular(value)}
                             />
                         </Item>
                         <Item floatingLabel last>
@@ -106,8 +123,8 @@ const Cards = ({navigation}) => {
                                 autoCorrect={false}
                                 placeholder="Digite seu usuário"
                                 underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={form.expiracao}
-                                onChangeText={value => setForm({expiracao: value})}
+                                value={expiracao}
+                                onChangeText={value => setExpiracao(value)}
                             />
                         </Item>
                         <Item floatingLabel last>
@@ -117,8 +134,8 @@ const Cards = ({navigation}) => {
                                 autoCorrect={false}
                                 placeholder="Digite seu usuário"
                                 underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={form.cvc}
-                                onChangeText={value => setForm({cvc: value})}
+                                value={cvc}
+                                onChangeText={value => setCvc(value)}
                             />
                         </Item>
                         <Text>Dados Pessoais</Text>
@@ -129,8 +146,8 @@ const Cards = ({navigation}) => {
                                 autoCorrect={false}
                                 placeholder="Digite seu usuário"
                                 underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={form.name}
-                                onChangeText={value => setForm({name: value})}
+                                value={name}
+                                onChangeText={value => setName(value)}
                             />
                         </Item>
                         <Item floatingLabel last>
@@ -140,8 +157,8 @@ const Cards = ({navigation}) => {
                                 autoCorrect={false}
                                 placeholder="Digite seu usuário"
                                 underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={form.email}
-                                onChangeText={value => setForm({email: value})}/>
+                                value={email}
+                                onChangeText={value => setEmail(value)}/>
                         </Item>
                         <Item floatingLabel last>
                             <Label>Nascimento</Label>
@@ -150,8 +167,8 @@ const Cards = ({navigation}) => {
                                 autoCorrect={false}
                                 placeholder="Digite seu usuário"
                                 underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={form.nascimento}
-                                onChangeText={value => setForm({nascimento: value})}
+                                value={birth}
+                                onChangeText={value => setBirth(value)}
                             />
                         </Item>
                         <Item floatingLabel last>
@@ -161,8 +178,8 @@ const Cards = ({navigation}) => {
                                 autoCorrect={false}
                                 placeholder="Digite seu usuário"
                                 underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={form.cpf}
-                                onChangeText={value => setForm({cpf: value})}
+                                value={cpf}
+                                onChangeText={value => setCpf(value)}
                             />
                         </Item>
                         <Text>Telefone</Text>
@@ -173,8 +190,8 @@ const Cards = ({navigation}) => {
                                 autoCorrect={false}
                                 placeholder="Digite seu usuário"
                                 underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={formPhone.ddd}
-                                onChangeText={value => setformPhone({ddd: value})}
+                                value={ddd}
+                                onChangeText={value => setDdd(value)}
                             />
                         </Item>
                         <Item floatingLabel last>
@@ -184,8 +201,8 @@ const Cards = ({navigation}) => {
                                 autoCorrect={false}
                                 placeholder="Digite seu usuário"
                                 underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={formPhone.number}
-                                onChangeText={value => setformPhone({number: value})}
+                                value={phoneNumber}
+                                onChangeText={value => setPhoneNumber(value)}
                             />
                         </Item>
                         <Text>Endereço</Text>
@@ -196,8 +213,8 @@ const Cards = ({navigation}) => {
                                 autoCorrect={false}
                                 placeholder="Digite seu usuário"
                                 underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={formAdress.type}
-                                onChangeText={value => setFormAdress({type: value})}
+                                value={type}
+                                onChangeText={value => setType(value)}
                             />
                         </Item>
                         <Item floatingLabel last>
@@ -207,8 +224,8 @@ const Cards = ({navigation}) => {
                                 autoCorrect={false}
                                 placeholder="Digite seu usuário"
                                 underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={formAdress.street}
-                                onChangeText={value => setFormAdress({street: value})}
+                                value={street}
+                                onChangeText={value => setStreet(value)}
                             />
                         </Item>
                         <Item floatingLabel last>
@@ -218,8 +235,8 @@ const Cards = ({navigation}) => {
                                 autoCorrect={false}
                                 placeholder="Digite seu usuário"
                                 underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={formAdress.number}
-                                onChangeText={value => setFormAdress({number: value})}
+                                value={adressNumber}
+                                onChangeText={value => setAdressNumber(value)}
                             />
                         </Item>
                         <Item floatingLabel last>
@@ -229,8 +246,8 @@ const Cards = ({navigation}) => {
                                 autoCorrect={false}
                                 placeholder="Digite seu usuário"
                                 underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={formAdress.district}
-                                onChangeText={value => setFormAdress({district: value})}
+                                value={district}
+                                onChangeText={value => setDistrict(value)}
                             />
                         </Item>
                         <Item floatingLabel last>
@@ -240,8 +257,19 @@ const Cards = ({navigation}) => {
                                 autoCorrect={false}
                                 placeholder="Digite seu usuário"
                                 underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={formAdress.city}
-                                onChangeText={value => setFormAdress({city: value})}
+                                value={city}
+                                onChangeText={value => setCity(value)}
+                            />
+                        </Item>
+                        <Item floatingLabel last>
+                            <Label>UF</Label>
+                            <Input
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                placeholder="Digite seu usuário"
+                                underlineColorAndroid="rgba(0, 0, 0, 0)"
+                                value={stateAdress}
+                                onChangeText={value => setStateAdress(value)}
                             />
                         </Item>
                         <Item floatingLabel last>
@@ -251,8 +279,8 @@ const Cards = ({navigation}) => {
                                 autoCorrect={false}
                                 placeholder="Digite seu usuário"
                                 underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={formAdress.cep}
-                                onChangeText={value => setFormAdress({cep: value})}
+                                value={cep}
+                                onChangeText={value => setCep(value)}
                             />
                         </Item>
                         <Item floatingLabel last>
@@ -262,24 +290,16 @@ const Cards = ({navigation}) => {
                                 autoCorrect={false}
                                 placeholder="Digite seu usuário"
                                 underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={formAdress.complement}
-                                onChangeText={value => setFormAdress({complement: value})}
+                                value={complement}
+                                onChangeText={value => setComplement(value)}
                             />
                         </Item>
-                        <Button>
+                        <Button onPress={submit}>
                             <Text>Enviar</Text>
                         </Button>
                     </Form>
                 </Card>
             </Content>
-            <Footer style={{height: 100}}>
-                <CardItem>
-                    <Button block style={{width: '100%', height: 60, borderRadius: 7, backgroundColor: 'green'}}
-                            onPress={() => navigation.navigate('AddCard')}>
-                        <Text>Salvar</Text>
-                    </Button>
-                </CardItem>
-            </Footer>
         </Container>
     );
 };
