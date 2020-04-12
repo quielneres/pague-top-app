@@ -4,7 +4,7 @@ import {StatusBar, ActivityIndicator, AsyncStorage, Image, View, Text, Touchable
 
 import {Container, Header, Content, Card, CardItem, Button, Icon} from 'native-base';
 
-const Welcome = ({navigation}) => {
+const Welcome = ({navigation, message}) => {
     return (
         <Container>
             <Content style={{backgroundColor: '#4CB1F7'}}>

@@ -1,12 +1,40 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 
 import {StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform, View} from 'react-native';
 import {Container, Button, Content, Card, CardItem, Footer, Text} from 'native-base';
 
+
+import api from "../../services/api";
+
+// const ls = require('react-native-local-storage')
+
 const Cards = ({navigation}) => {
+
+    const [cards, setCards] = useState([]);
+    const [user, setUser] = useState(null);
+
+    // ls.clear()
+
+
+
+    useEffect(() => {
+        // ls.get('user').then(data => {
+        //     api.get('list-credit-card/1')
+        //         .then((res) => {
+        //             setCards(res.data)
+        //         })
+        //
+        // });
+    }, []);
+    const renderCard = card => (
+       <Text></Text>
+
+    );
+
     return (
         <Container>
             <Content>
+                {/*{cards.map((c) => renderCard(c))}*/}
                 <Card>
                     <CardItem>
                         <Button block style={{width: 70, height: 70, borderRadius: 7}}>

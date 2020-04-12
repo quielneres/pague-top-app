@@ -17,6 +17,7 @@ import {
 } from 'native-base';
 
 import {deleteUser} from '../../utils';
+// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default class Perfil extends React.Component {
 

@@ -1,300 +1,298 @@
 import React, {useState, useEffect} from 'react';
 
 import {StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform, View} from 'react-native';
-import {Container, Card, Button, Content, Form, CardItem, Footer, Text, Item, Input, Label} from 'native-base';
+import {
+    Container,
+    Card,
+    Button,
+    Content,
+    Form,
+    CardItem,
+    Footer,
+    Text,
+    Item,
+    Input,
+    Label,
+    ListItem, List
+} from 'native-base';
+import {validateAll} from 'indicative/validator';
 import api from "../../../services/api";
 import {NavigationActions, StackActions} from "react-navigation";
 
+import {Hoshi} from 'react-native-textinput-effects';
+
 const Cards = ({navigation}) => {
 
-    const [numberCard, setNumberCard] = useState(null);
-    const [nameTitular, setNameTitular] = useState(null);
-    const [expiracao, setExpiracao] = useState(null);
-    const [cvc, setCvc] = useState(null);
-    const [name, setName] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [cpf, setCpf] = useState(null);
-    const [birth, setBirth] = useState(null);
-    const [ddd, setDdd] = useState(null);
-    const [phoneNumber, setPhoneNumber] = useState(null);
-    const [type, setType] = useState(null);
-    const [street, setStreet] = useState(null);
-    const [adressNumber, setAdressNumber] = useState(null);
-    const [district, setDistrict] = useState(null);
-    const [city, setCity] = useState(null);
-    const [stateAdress, setStateAdress] = useState(null);
-    const [cep, setCep] = useState(null);
-    const [complement, setComplement] = useState(null);
-
-    useEffect(() => {
-        const items = {
-            items: {
-                numberCard: numberCard,
-                nameTitular: nameTitular,
-                expiracao: expiracao,
-                cvc: cvc,
-                name: name,
-                email: email,
-                cpf: cpf,
-                birth: birth,
-                ddd: ddd,
-                phoneNumber: phoneNumber,
-                type: type,
-                street: street,
-                adressNumber: adressNumber,
-                district: district,
-                city: city,
-                stateAdress: stateAdress,
-                cep: cep,
-                complement: complement,
-            }
-        }
+    const [form, setForm] = useState({
+        number_card: '',
+        name_holder: '',
+        expiration: '',
+        cvc: '',
+        name_client: '',
+        email_client: '',
+        cpf_client: '',
+        birth_client: '',
+        ddd: '',
+        phone_number: '',
+        type: '',
+        street: '',
+        adress_nuumber: '',
+        district: '',
+        city: '',
+        state_adress: '',
+        zip_code: '',
+        complement: '',
+        error: {},
+        error_server: '',
     });
 
-    async function submit() {
+    useEffect(() => {
+
+    });
+
+    const submit = async (data) => {
+
+        const rules = {
+            number_card: 'required',
+            name_holder: 'required|string',
+            expiration: 'required',
+            cvc: 'required',
+            name_client: 'required|string',
+            email_client: 'required|email',
+            cpf_client: 'required|string',
+            birth_client: 'required',
+            ddd: 'required|string',
+            phone_number: 'required|string',
+            type: 'required|string',
+            street: 'required|string',
+            adress_nuumber: 'required',
+            district: 'required|string',
+            city: 'required|string',
+            state_adress: 'required|string',
+            zip_code: 'required',
+            complement: 'required|string',
+
+        };
+
+        const messages = {
+            required: (field) => `${field} is required`,
+            'email.email': 'Please enter a valid email address',
+        };
 
         try {
-            const items = {
-                items: {
-                    numberCard: numberCard,
-                    nameTitular: nameTitular,
-                    expiracao: expiracao,
-                    cvc: cvc,
-                    name: name,
-                    email: email,
-                    cpf: cpf,
-                    birth: birth,
-                    ddd: ddd,
-                    phoneNumber: phoneNumber,
-                    type: type,
-                    street: street,
-                    adressNumber: adressNumber,
-                    district: district,
-                    city: city,
-                    stateAdress: stateAdress,
-                    cep: cep,
-                    complement: complement,
-                }
-            };
+            await validateAll(data, rules, messages);
 
-            const response = await api.post('/add-credit-card', items);
+            const response = await api.post('/add-credit-card', data);
+            const data_server = response.data;
 
-            const data = response.data;
-
-            props.navigation.dispatch(resetAction);
+            {data_server.status === false ? navigation.navigate('Cartoes') : setForm({...form, error_server: data_server.message})}
 
         } catch (err) {
-            console.log(err);
-            setErrorMessage('Usuário não existe');
+
+            const formattedErrors = {};
+            err.forEach(error => formattedErrors[error.field] = error.message);
+            setForm({...form, error: formattedErrors})
         }
-    }
+    };
 
     return (
         <Container>
             <Content>
                 <Card styles={{justifyContent: 'center'}}>
-                    <Form style={{padding: 10}}>
-                        <Item floatingLabel>
-                            <Label>Número do cartão</Label>
-                            <Input
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                placeholder="Digite seu usuário"
-                                underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={numberCard}
-                                onChangeText={value => setNumberCard(value)}
-                            />
+                    <Text>{form.error_server}</Text>
+                    <Form style={{padding: 20}}>
+                        <Hoshi
+                            style={{marginBottom: 20}}
+                            label={'Número do cartão'}
+                            backgroudColor={'#fff'}
+                            borderColor={'green'}
+                            borderHeight={3}
+                            inputPadding={16}
+                            keyboardType={'numeric'}
+                            onChangeText={value => setForm({...form, number_card: value})}
+                        />
+                        {form.error['number_card'] && <Text style={{fontSize: 12, color: 'red'}}>{form.error['number_card']}</Text>}
+                        <Hoshi
+                            style={{marginBottom: 20}}
+                            label={'Nome do titullar'}
+                            backgroudColor={'#fff'}
+                            borderColor={'green'}
+                            borderHeight={3}
+                            inputPadding={16}
+                            onChangeText={value => setForm({...form, name_holder: value})}
+                        />
+                        {form.error['name_holder'] && <Text style={{fontSize: 12, color: 'red'}}>{form.error['name_holder']}</Text>}
+                        <Hoshi
+                            style={{marginBottom: 20}}
+                            label={'Expiração'}
+                            backgroudColor={'#fff'}
+                            borderColor={'green'}
+                            borderHeight={3}
+                            inputPadding={16}
+                            keyboardType={'date'}
+                            onChangeText={value => setForm({...form, expiration: value})}
+                        />
+                        {form.error['expiration'] && <Text style={{fontSize: 12, color: 'red'}}>{form.error['expiration']}</Text>}
+                        <Hoshi
+                            style={{marginBottom: 20}}
+                            label={'CVC'}
+                            backgroudColor={'#fff'}
+                            borderColor={'green'}
+                            borderHeight={3}
+                            inputPadding={16}
+                            onChangeText={value => setForm({...form, cvc: value})}
+                        />
+                        {form.error['cvc'] && <Text style={{fontSize: 12, color: 'red'}}>{form.error['cvc']}</Text>}
+                        <Item itemDivider>
+                            <Text>Dados Pessoais</Text>
                         </Item>
-                        <Item floatingLabel last>
-                            <Label>Nome do titular </Label>
-                            <Input
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                placeholder="Digite seu usuário"
-                                underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={nameTitular}
-                                onChangeText={value => setNameTitular(value)}
-                            />
+                        <Hoshi
+                            style={{marginBottom: 20}}
+                            label={'Nome Cliente'}
+                            backgroudColor={'#fff'}
+                            borderColor={'green'}
+                            borderHeight={3}
+                            inputPadding={16}
+                            onChangeText={value => setForm({...form, name_client: value})}
+                        />
+                        {form.error['name_client'] && <Text style={{fontSize: 12, color: 'red'}}>{form.error['name_client']}</Text>}
+                        <Hoshi
+                            style={{marginBottom: 20}}
+                            label={'E-mail'}
+                            backgroudColor={'#fff'}
+                            borderColor={'green'}
+                            borderHeight={3}
+                            inputPadding={16}
+                            onChangeText={value => setForm({...form, email_client: value})}
+                        />
+                        {form.error['email_client'] && <Text style={{fontSize: 12, color: 'red'}}>{form.error['email_client']}</Text>}
+                        <Hoshi
+                            style={{marginBottom: 20}}
+                            label={'Nascimento'}
+                            backgroudColor={'#fff'}
+                            borderColor={'green'}
+                            borderHeight={3}
+                            inputPadding={16}
+                            onChangeText={value => setForm({...form, birth_client: value})}
+                        />
+                        {form.error['birth_client'] && <Text style={{fontSize: 12, color: 'red'}}>{form.error['birth_client']}</Text>}
+                        <Hoshi
+                            style={{marginBottom: 20}}
+                            label={'CPF'}
+                            backgroudColor={'#fff'}
+                            borderColor={'green'}
+                            borderHeight={3}
+                            inputPadding={16}
+                            onChangeText={value => setForm({...form, cpf_client: value})}
+                        />
+                        {form.error['cpf_client'] && <Text style={{fontSize: 12, color: 'red'}}>{form.error['cpf_client']}</Text>}
+                        <Item itemDivider>
+                            <Text>Telefone</Text>
                         </Item>
-                        <Item floatingLabel last>
-                            <Label>Expiraçao</Label>
-                            <Input
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                placeholder="Digite seu usuário"
-                                underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={expiracao}
-                                onChangeText={value => setExpiracao(value)}
-                            />
+                        <Hoshi
+                            style={{marginBottom: 20}}
+                            label={'DDD'}
+                            backgroudColor={'#fff'}
+                            borderColor={'green'}
+                            borderHeight={3}
+                            inputPadding={16}
+                            onChangeText={value => setForm({...form, ddd: value})}
+                        />
+                        {form.error['ddd'] && <Text style={{fontSize: 12, color: 'red'}}>{form.error['ddd']}</Text>}
+                        <Hoshi
+                            style={{marginBottom: 20}}
+                            label={'Numero'}
+                            backgroudColor={'#fff'}
+                            borderColor={'green'}
+                            borderHeight={3}
+                            inputPadding={16}
+                            onChangeText={value => setForm({...form, phone_number: value})}
+                        />
+                        {form.error['phone_number'] && <Text style={{fontSize: 12, color: 'red'}}>{form.error['phone_number']}</Text>}
+                        <Item itemDivider>
+                            <Text>Endereço</Text>
                         </Item>
-                        <Item floatingLabel last>
-                            <Label>CVC</Label>
-                            <Input
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                placeholder="Digite seu usuário"
-                                underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={cvc}
-                                onChangeText={value => setCvc(value)}
-                            />
-                        </Item>
-                        <Text>Dados Pessoais</Text>
-                        <Item floatingLabel>
-                            <Label>Nome</Label>
-                            <Input
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                placeholder="Digite seu usuário"
-                                underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={name}
-                                onChangeText={value => setName(value)}
-                            />
-                        </Item>
-                        <Item floatingLabel last>
-                            <Label>E-mail</Label>
-                            <Input
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                placeholder="Digite seu usuário"
-                                underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={email}
-                                onChangeText={value => setEmail(value)}/>
-                        </Item>
-                        <Item floatingLabel last>
-                            <Label>Nascimento</Label>
-                            <Input
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                placeholder="Digite seu usuário"
-                                underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={birth}
-                                onChangeText={value => setBirth(value)}
-                            />
-                        </Item>
-                        <Item floatingLabel last>
-                            <Label>CPF</Label>
-                            <Input
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                placeholder="Digite seu usuário"
-                                underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={cpf}
-                                onChangeText={value => setCpf(value)}
-                            />
-                        </Item>
-                        <Text>Telefone</Text>
-                        <Item floatingLabel last>
-                            <Label>DDD</Label>
-                            <Input
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                placeholder="Digite seu usuário"
-                                underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={ddd}
-                                onChangeText={value => setDdd(value)}
-                            />
-                        </Item>
-                        <Item floatingLabel last>
-                            <Label>Numerno</Label>
-                            <Input
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                placeholder="Digite seu usuário"
-                                underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={phoneNumber}
-                                onChangeText={value => setPhoneNumber(value)}
-                            />
-                        </Item>
-                        <Text>Endereço</Text>
-                        <Item floatingLabel last>
-                            <Label>Tipo</Label>
-                            <Input
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                placeholder="Digite seu usuário"
-                                underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={type}
-                                onChangeText={value => setType(value)}
-                            />
-                        </Item>
-                        <Item floatingLabel last>
-                            <Label>Rua</Label>
-                            <Input
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                placeholder="Digite seu usuário"
-                                underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={street}
-                                onChangeText={value => setStreet(value)}
-                            />
-                        </Item>
-                        <Item floatingLabel last>
-                            <Label>Numero</Label>
-                            <Input
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                placeholder="Digite seu usuário"
-                                underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={adressNumber}
-                                onChangeText={value => setAdressNumber(value)}
-                            />
-                        </Item>
-                        <Item floatingLabel last>
-                            <Label>Bairro</Label>
-                            <Input
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                placeholder="Digite seu usuário"
-                                underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={district}
-                                onChangeText={value => setDistrict(value)}
-                            />
-                        </Item>
-                        <Item floatingLabel last>
-                            <Label>Cidade</Label>
-                            <Input
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                placeholder="Digite seu usuário"
-                                underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={city}
-                                onChangeText={value => setCity(value)}
-                            />
-                        </Item>
-                        <Item floatingLabel last>
-                            <Label>UF</Label>
-                            <Input
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                placeholder="Digite seu usuário"
-                                underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={stateAdress}
-                                onChangeText={value => setStateAdress(value)}
-                            />
-                        </Item>
-                        <Item floatingLabel last>
-                            <Label>CEP</Label>
-                            <Input
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                placeholder="Digite seu usuário"
-                                underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={cep}
-                                onChangeText={value => setCep(value)}
-                            />
-                        </Item>
-                        <Item floatingLabel last>
-                            <Label>Complemento</Label>
-                            <Input
-                                autoCapitalize="none"
-                                autoCorrect={false}
-                                placeholder="Digite seu usuário"
-                                underlineColorAndroid="rgba(0, 0, 0, 0)"
-                                value={complement}
-                                onChangeText={value => setComplement(value)}
-                            />
-                        </Item>
-                        <Button onPress={submit}>
+                        <Hoshi
+                            style={{marginBottom: 20}}
+                            label={'Tipo'}
+                            backgroudColor={'#fff'}
+                            borderColor={'green'}
+                            borderHeight={3}
+                            inputPadding={16}
+                            onChangeText={value => setForm({...form, type: value})}
+                        />
+                        {form.error['type'] && <Text style={{fontSize: 12, color: 'red'}}>{form.error['type']}</Text>}
+                        <Hoshi
+                            style={{marginBottom: 20}}
+                            label={'Rua'}
+                            backgroudColor={'#fff'}
+                            borderColor={'green'}
+                            borderHeight={3}
+                            inputPadding={16}
+                            onChangeText={value => setForm({...form, street: value})}
+                        />
+                        {form.error['street'] && <Text style={{fontSize: 12, color: 'red'}}>{form.error['street']}</Text>}
+                        <Hoshi
+                            style={{marginBottom: 20}}
+                            label={'Numero'}
+                            backgroudColor={'#fff'}
+                            borderColor={'green'}
+                            borderHeight={3}
+                            inputPadding={16}
+                            onChangeText={value => setForm({...form, adress_nuumber: value})}
+                        />
+                        {form.error['adress_nuumber'] && <Text style={{fontSize: 12, color: 'red'}}>{form.error['adress_nuumber']}</Text>}
+                        <Hoshi
+                            style={{marginBottom: 20}}
+                            label={'Bairro'}
+                            backgroudColor={'#fff'}
+                            borderColor={'green'}
+                            borderHeight={3}
+                            inputPadding={16}
+                            onChangeText={value => setForm({...form, district: value})}
+                        />
+                        {form.error['district'] && <Text style={{fontSize: 12, color: 'red'}}>{form.error['district']}</Text>}
+                        <Hoshi
+                            style={{marginBottom: 20}}
+                            label={'Cidade'}
+                            backgroudColor={'#fff'}
+                            borderColor={'green'}
+                            borderHeight={3}
+                            inputPadding={16}
+                            onChangeText={value => setForm({...form, city: value})}
+                        />
+                        {form.error['city'] && <Text style={{fontSize: 12, color: 'red'}}>{form.error['city']}</Text>}
+                        <Hoshi
+                            style={{marginBottom: 20}}
+                            label={'UF'}
+                            backgroudColor={'#fff'}
+                            borderColor={'green'}
+                            borderHeight={3}
+                            inputPadding={16}
+                            onChangeText={value => setForm({...form, state_adress: value})}
+                        />
+                        {form.error['state_adress'] && <Text style={{fontSize: 12, color: 'red'}}>{form.error['state_adress']}</Text>}
+                        <Hoshi
+                            style={{marginBottom: 20}}
+                            label={'CEP'}
+                            backgroudColor={'#fff'}
+                            borderColor={'green'}
+                            borderHeight={3}
+                            inputPadding={16}
+                            onChangeText={value => setForm({...form, zip_code: value})}
+                        />
+                        {form.error['zip_code'] && <Text style={{fontSize: 12, color: 'red'}}>{form.error['zip_code']}</Text>}
+                        <Hoshi
+                            style={{marginBottom: 20}}
+                            label={'Complemento'}
+                            backgroudColor={'#fff'}
+                            borderColor={'green'}
+                            borderHeight={3}
+                            inputPadding={16}
+                            onChangeText={value => setForm({...form, complement: value})}
+                        />
+                        {form.error['complement'] && <Text style={{fontSize: 12, color: 'red'}}>{form.error['complement']}</Text>}
+                        <Button onPress={() => submit(form)}>
                             <Text>Enviar</Text>
                         </Button>
                     </Form>
