@@ -22,6 +22,8 @@ import TransferirHome from './pages/transferir';
 import DescontosHome from './pages/descontos';
 import PagarHome from './pages/pagar';
 import CobrarHome from './pages/cobrar';
+import CheckoutHome from './pages/cobrar/checkout';
+import CartScreen from './pages/cobrar/cart';
 import ProductHome from './pages/cobrar/produtos/ProductList';
 import GerarBoletoHome from './pages/cobrar/gerarBoleto/gerarLinkBoleto';
 import AddCardHome from './pages/cartoes/add/addCard';
@@ -269,6 +271,20 @@ const Cobrar = createStackNavigator({
         screen: GerarBoletoHome,
         navigationOptions: {
             headerShown: false
+        },
+    },
+    Checkout: {
+        screen: CheckoutHome,
+        navigationOptions: {
+            headerTitle: 'Checkout',
+            headerTitleAlign: 'center',
+        },
+    },
+    Cart: {
+        screen: CartScreen,
+        navigationOptions: {
+            headerTitle: 'Carrinho',
+            headerTitleAlign: 'center',
         },
     },
 });

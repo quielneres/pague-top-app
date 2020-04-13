@@ -83,6 +83,21 @@ class Home extends React.Component {
                                         style={{fontSize: 24, color: '#fff', fontWeight: 'bold'}}>Transferencias</Text>
                                 </CardItem>
                             </TouchableOpacity>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('Cobrar')}>
+                                <CardItem header
+                                          style={{
+                                              margin: 15,
+                                              width: 200,
+                                              height: 140,
+                                              borderRadius: 5,
+                                              flexDirection: 'column',
+                                              backgroundColor: '#2C3740',
+                                              justifyContent: 'center',
+                                          }}>
+                                    <Text
+                                        style={{fontSize: 24, color: '#fff', fontWeight: 'bold'}}>Cobrar</Text>
+                                </CardItem>
+                            </TouchableOpacity>
                         </ScrollView>
                     </Card>
                     <Card style={{
