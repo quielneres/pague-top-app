@@ -4,9 +4,9 @@
 
     <item android:drawable="@color/white"/>
     <item
-            android:width="200dp"
-            android:height="200dp"
-            android:drawable="@drawable/icon"
-            android:gravity="center"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:drawable="@drawable/splash"
+            android:orientation="vertical"
     />
 </layer-list>
