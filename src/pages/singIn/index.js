@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {StackActions, NavigationActions} from 'react-navigation';
-import {StatusBar, ActivityIndicator, AsyncStorage, Image, View} from 'react-native';
+import {StatusBar, ActivityIndicator, AsyncStorage, Image, View, Alert} from 'react-native';
 import PropTypes from 'prop-types';
 
 import api from '../../services/api';
@@ -24,6 +24,22 @@ export default function Welcome(props) {
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
+    const [new_count, setNewCount] = useState(props.navigation.getParam('new_count'));
+
+    {
+        new_count ?
+            Alert.alert(
+                //title
+                'Secesso ;)',
+                //body
+                'Cadastro realizado com secesso!',
+                [
+                    {text: 'Fazer login', onPress: () => setNewCount(false)},
+                ],
+                {cancelable: false}
+                //clicking out side of alert will not cancel
+            ) : null
+    }
 
     async function saveUser(user) {
         await AsyncStorage.setItem('@ListApp:userToken', JSON.stringify(user));
@@ -66,8 +82,10 @@ export default function Welcome(props) {
 
     return (
         <Container>
-            <StatusBar barStyle="light-content" />
-            <Image style={{marginLeft: 30, width:280, height: 150}} source={require('../../assets/logo.jpg')} />
+            <StatusBar barStyle="light-content"/>
+            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+                <Image style={{width: 200, height: 100}} source={require('../../assets/logo.jpg')}/>
+            </View>
 
             {!!errorMessage && <Error>{errorMessage}</Error>}
 
@@ -93,7 +111,7 @@ export default function Welcome(props) {
 
                 <Button onPress={signIn}>
                     {loading ? (
-                        <ActivityIndicator size="small" color="#FFF" />
+                        <ActivityIndicator size="small" color="#FFF"/>
                     ) : (
                         <ButtonText>Prosseguir</ButtonText>
                     )}

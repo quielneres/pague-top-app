@@ -65,7 +65,7 @@ export const TextSingUp = styled.Text`
 `;
 
 export const ContentSingUp = styled.View`  
-    flex-direction: row
+    flex-direction: row;
     margin-top: 20px;
     justify-content: center;
     align-items: center;

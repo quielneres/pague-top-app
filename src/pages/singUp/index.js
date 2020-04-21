@@ -1,11 +1,15 @@
 import React, {useState} from 'react';
 
 import {validateAll} from 'indicative/validator';
-import {Text, StyleSheet, View, TextInput, Button} from 'react-native';
+import {Text, StyleSheet, View, Alert, ActivityIndicator, TouchableOpacity} from 'react-native';
 import {Container, Card, Content, Form, CardItem, Item, Input, Label} from 'native-base';
 import {Hoshi} from 'react-native-textinput-effects';
 import api from '../../services/api';
 
+import {
+    Button,
+    ButtonText,
+} from './styles';
 
 const SingUp = ({navigation}) => {
 
@@ -17,6 +21,8 @@ const SingUp = ({navigation}) => {
     const [userData, setUserData] = useState('');
     const [error, setError] = useState({});
     const [error_server, setErrorServer] = useState([]);
+
+    const [loading, setLoading] = useState(false);
 
 
     const registerUser = async () => {
@@ -46,6 +52,8 @@ const SingUp = ({navigation}) => {
         }
 
         try {
+            setLoading(true);
+
             await validateAll(data, rules, messages)
 
             const response = await api.post('/register-user', data);
@@ -63,13 +71,17 @@ const SingUp = ({navigation}) => {
             }
 
             if (response.data.status === 'success') {
-                navigation.navigate('Landing')
+                navigation.navigate('Login', {new_count: true})
             }
+            setLoading(false);
 
         } catch (e) {
             const formattedErrors = {};
             e.forEach(error => formattedErrors[error.field] = error.message);
             setError(formattedErrors)
+            setLoading(false);
+
+
         }
     }
 
@@ -81,49 +93,47 @@ const SingUp = ({navigation}) => {
         <Container>
             <Content>
                 <View style={styles.content}>
-                    <Text>Register</Text>
-                    {/*{error_server.map((e) => renderErrorMsg(e))}*/}
                     <Hoshi
-                        style={{marginBottom: 20}}
                         label={'Nome'}
                         backgroudColor={'#fff'}
-                        borderColor={'green'}
-                        borderHeight={3}
-                        inputPadding={16}
+                        borderColor={'#4CB1F7'}
+                        borderHeight={1}
+                        inputPadding={5}
+                        style={{marginBottom: 20, borderBottomWidth: 0.5}}
                         value={name}
                         onChangeText={name => setName(name)}
                     />
                     {error['name'] && <Text style={{fontSize: 12, color: 'red'}}>{error['name']}</Text>}
                     <Hoshi
-                        style={{marginBottom: 20}}
                         label={'E-mail'}
                         backgroudColor={'#fff'}
-                        borderColor={'green'}
-                        borderHeight={3}
-                        inputPadding={16}
+                        borderColor={'#4CB1F7'}
+                        borderHeight={1}
+                        inputPadding={5}
+                        style={{marginBottom: 20, borderBottomWidth: 0.5}}
                         value={email}
                         onChangeText={email => setEmail(email)}
                     />
                     {error['email'] && <Text style={{fontSize: 12, color: 'red'}}>{error['email']}</Text>}
                     <Hoshi
-                        style={{marginBottom: 20}}
                         label={'CPF'}
                         backgroudColor={'#fff'}
-                        borderColor={'green'}
-                        borderHeight={3}
-                        inputPadding={16}
+                        borderColor={'#4CB1F7'}
+                        borderHeight={1}
+                        inputPadding={5}
+                        style={{marginBottom: 20, borderBottomWidth: 0.5}}
                         value={cpf}
                         onChangeText={cpf => setCpf(cpf)}
                     />
                     {error['cpf'] && <Text style={{fontSize: 12, color: 'red'}}>{error['cpf']}</Text>}
                     <Hoshi
-                        style={{marginBottom: 20}}
                         label={'Senha'}
                         secureTextEntry
                         backgroudColor={'#fff'}
-                        borderColor={'green'}
-                        borderHeight={3}
-                        inputPadding={16}
+                        borderColor={'#4CB1F7'}
+                        borderHeight={1}
+                        inputPadding={5}
+                        style={{marginBottom: 20, borderBottomWidth: 0.5}}
                         value={password}
                         onChangeText={password => setPassword(password)}
                     />
@@ -132,14 +142,21 @@ const SingUp = ({navigation}) => {
                         label={'Confirmar Senha'}
                         secureTextEntry
                         backgroudColor={'#fff'}
-                        borderColor={'green'}
-                        borderHeight={3}
-                        inputPadding={16}
-                        style={{marginBottom: 50}}
+                        borderColor={'#4CB1F7'}
+                        borderHeight={1}
+                        inputPadding={5}
+                        style={{marginBottom: 50, borderBottomWidth: 0.5}}
                         value={password_confirmation}
                         onChangeText={password_confirmation => setPasswordConfirm(password_confirmation)}
                     />
-                    <Button title={'Cadastrar'} onPress={() => registerUser()}/>
+
+                    <Button onPress={() => registerUser()}>
+                        {loading ? (
+                            <ActivityIndicator size="small" color="#FFF"/>
+                        ) : (
+                            <ButtonText>Salvar</ButtonText>
+                        )}
+                    </Button>
 
                 </View>
             </Content>
@@ -151,7 +168,7 @@ const styles = StyleSheet.create({
     content: {
         // backgroundColor: '#4CB1F7'
         flex: 1,
-        padding: 10
+        margin: 15
     },
     card: {
         padding: 15,

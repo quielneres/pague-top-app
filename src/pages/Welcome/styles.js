@@ -53,6 +53,8 @@ export const Button = styled.TouchableOpacity`
   align-items: center;
 `;
 
+
+
 export const ButtonText = styled.Text`
   color: #ffffff;
   font-weight: bold;
