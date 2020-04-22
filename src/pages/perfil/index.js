@@ -12,12 +12,11 @@ import {
     Footer,
     FooterTab,
     Button,
-    Icon,
     Text
 } from 'native-base';
 
 import {deleteUser} from '../../utils';
-// import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default class Perfil extends React.Component {
 
@@ -58,7 +57,7 @@ export default class Perfil extends React.Component {
                                         <Text style={{fontWeight: 'bold'}}>Dados Pessoais</Text>
                                     </ListItem>
                                     <ListItem>
-                                        <Icon name={'person'}/>
+                                        <Icon name={'user'}/>
                                         <Text style={{marginLeft: 10}}>
                                             Ezequiel Neres Nascimento
                                         </Text>

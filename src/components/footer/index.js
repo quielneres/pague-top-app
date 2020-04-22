@@ -3,7 +3,7 @@ import React from 'react';
 import Styles from './styles';
 
 import {Footer,Button,  FooterTab, Text} from "native-base";
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 
 const FooterContent = ({navigation}) => {
@@ -11,19 +11,19 @@ const FooterContent = ({navigation}) => {
         <Footer>
             <FooterTab style={Styles.footerBar}>
                 <Button vertical onPress={() => navigation.navigate('Home')}>
-                    <Icon name="home" size={25}/>
+                    <Icon active name="home" size={20}/>
                     <Text >Home</Text>
                 </Button>
                 <Button vertical>
-                    <Icon name="camera"  size={25}/>
+                    <Icon name="camera"  size={20}/>
                     <Text>Pagar</Text>
                 </Button>
                 <Button vertical>
-                    <Icon active name="navigate"  size={25}/>
+                    <Icon active name="money"  size={20}/>
                     <Text>Cobrar</Text>
                 </Button>
                 <Button vertical  onPress={() => navigation.navigate('Perfil')}>
-                    <Icon name="settings"  size={25}/>
+                    <Icon name="user"  size={20}/>
                     <Text>Confg</Text>
                 </Button>
             </FooterTab>
