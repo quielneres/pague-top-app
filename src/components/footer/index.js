@@ -15,11 +15,11 @@ const FooterContent = ({navigation}) => {
                     <Text >Home</Text>
                 </Button>
                 <Button vertical>
-                    <Icon name="camera"  size={20}/>
+                    <Icon name="money-bill-wave"  size={20}/>
                     <Text>Pagar</Text>
                 </Button>
                 <Button vertical>
-                    <Icon active name="money"  size={20}/>
+                    <Icon active name="hand-holding-usd"  size={20}/>
                     <Text>Cobrar</Text>
                 </Button>
                 <Button vertical  onPress={() => navigation.navigate('Perfil')}>
