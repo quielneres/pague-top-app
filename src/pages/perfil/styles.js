@@ -31,6 +31,8 @@ export const View = styled.View`
 `;
 
 export const TouchableOpacity = styled.TouchableOpacity`
+ width: 100%;
+ flex-direction: row;
  
 `;
 
