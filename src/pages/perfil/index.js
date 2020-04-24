@@ -66,6 +66,12 @@ const Profile = ({navigation}) => {
             icon: 'exchange-alt'
         },
         {
+            title: 'Trocar Senha',
+            subtitle: 'Veja seus extratos',
+            route: null,
+            icon: 'stream'
+        },
+        {
             title: 'Configurações',
             subtitle: 'Mais configuraçoes',
             route: null,
