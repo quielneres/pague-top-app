@@ -7,7 +7,7 @@ var Style = StyleSheet.create({
     footerBar: {
         // backgroundColor: '#C4E1F2',
         // backgroundColor: '#C4DDF2',
-        backgroundColor: '#F2F2F2',
+        backgroundColor: '#fff',
     },
     text: {
         color: '#000',

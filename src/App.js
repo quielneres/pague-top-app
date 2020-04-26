@@ -4,7 +4,7 @@ import React, {useEffect} from 'react';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createBottomTabNavigator} from 'react-navigation-tabs';
 import {createDrawerNavigator} from 'react-navigation-drawer';
-import {createStackNavigator} from 'react-navigation-stack';
+import {createStackNavigator, HeaderBackButton} from 'react-navigation-stack';
 
 import Example from './pages/Example';
 import Welcome from './pages/Welcome';
@@ -25,7 +25,7 @@ import CobrarHome from './pages/cobrar';
 import CheckoutHome from './pages/cobrar/checkout';
 import CartScreen from './pages/cobrar/cart';
 import ProductHome from './pages/cobrar/produtos/ProductList';
-import GerarBoletoHome from './pages/cobrar/gerarBoleto/gerarLinkBoleto';
+import GerarBoletoHome from './pages/gerarBoleto/Index';
 import AddCardHome from './pages/cartoes/add/addCard';
 import ClientCountHome from './pages/contaCilente';
 
@@ -257,9 +257,11 @@ const Pagar = createStackNavigator({
 const Cobrar = createStackNavigator({
     Cobrar: {
         screen: CobrarHome,
-        navigationOptions: {
-            headerTitle: 'Cobrar',
-        },
+        navigationOptions: ({navigation}) => ({
+            headerTitle: 'Opções para cobrar',
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+        }),
     },
     ProductList: {
         screen: ProductHome,
@@ -269,9 +271,11 @@ const Cobrar = createStackNavigator({
     },
     GerarBoleto: {
         screen: GerarBoletoHome,
-        navigationOptions: {
-            headerShown: false
-        },
+        navigationOptions: ({navigation}) => ({
+            headerShown: 'Boleto',
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+        }),
     },
     Checkout: {
         screen: CheckoutHome,
@@ -304,11 +308,6 @@ const HomeScreen = createStackNavigator({
     },
 });
 
-const Sair = () => {
-    deleteUser().then(() => {
-        navigation.navigate('Loading');
-    })
-};
 
 const MainDrawer = createDrawerNavigator({
     Home: HomeScreen,
@@ -323,8 +322,6 @@ const MainDrawer = createDrawerNavigator({
     Seu_negocia: Profile,
     Perfil: Profile,
     Ajuda: SettingsStack,
-    Sair : Sair,
-
 });
 
 const AppModalStack = createStackNavigator(
