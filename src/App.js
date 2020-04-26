@@ -34,6 +34,8 @@ import AuthLoadingScreen from './pages/AuthLoadingScreen';
 import RechargeCell from "./pages/pagar/rechargeCell";
 import Recharge from "./pages/pagar/rechargeCell/recharge";
 import RechargePay from "./pages/pagar/rechargeCell/rechargePay";
+import PayBill from "./pages/pagar/PayBill";
+import ReadCode from "./pages/pagar/PayBill/readCode";
 
 const AuthStack = createStackNavigator({
     Landing: {
@@ -260,7 +262,7 @@ const Pagar = createStackNavigator({
             headerShown: 'Recarregue seu celular',
             headerTitleAlign: 'center',
             headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
-        }),
+        }),PayBill
     },
     Recharge: {
         screen: Recharge,
@@ -274,6 +276,22 @@ const Pagar = createStackNavigator({
         screen: RechargePay,
         navigationOptions: ({navigation}) => ({
             headerShown: 'Recarga Pagar',
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+        }),
+    },
+    PayBill: {
+        screen: PayBill,
+        navigationOptions: ({navigation}) => ({
+            headerShown: 'Pagar Contas',
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+        }),
+    },
+    ReadCode: {
+        screen: ReadCode,
+        navigationOptions: ({navigation}) => ({
+            headerShown: 'Ler codigo',
             headerTitleAlign: 'center',
             headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
         }),

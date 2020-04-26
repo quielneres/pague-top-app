@@ -21,7 +21,7 @@ const Pagar = ({navigation}) => {
             <Content>
 
                 <List>
-                    <ListItem onPress={() => alert("This is Card Header")}>
+                    <ListItem onPress={() => navigation.navigate('PayBill')}>
                         <Left>
                             <CardItem header>
                                 <Text>Contas e boletos</Text>
