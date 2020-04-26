@@ -10,62 +10,71 @@ import {
     TextIcons,
 } from './styles';
 
-import {Container, Left, Thumbnail, Content, Card, CardItem, Body} from 'native-base';
+import {
+    Container, Left, Thumbnail, Content, Card, CardItem, Body,
+    List, ListItem, Right, Icon
+} from 'native-base';
 
+const Pagar = ({navigation}) => {
+    return (
+        <Container>
+            <Content>
 
-export default class Pagar extends React.Component {
-    render() {
-        return (
-            <Container>
-                <Content>
-                    <Card style={{height: '100%'}}>
-                        <CardItem>
-                            <Left>
-                                <Thumbnail style={{width: 40, height: 40}}
-                                           source={require('../../assets/icons-pagar/payment-icon.jpg')}/>
-                                <Body>
-                                <Text>Faça aqui seus pagamentos</Text>
-                                </Body>
-                            </Left>
-                        </CardItem>
-                        <Content padder style={{ marginTop: -20 }}>
-                            <Card>
-                                <CardItem header button onPress={() => alert("This is Card Header")}>
-                                    <Text>Contas e boletos</Text>
-                                </CardItem>
-                            </Card>
-                        </Content>
-                        <Content padder style={{ marginTop: -20 }}>
-                            <Card>
-                                <CardItem header button onPress={() => alert("This is Card Header")}>
-                                    <Text>Recarga Celular</Text>
-                                </CardItem>
-                            </Card>
-                        </Content>
-                        <Content padder style={{ marginTop: -20 }}>
-                            <Card>
-                                <CardItem header button onPress={() => alert("This is Card Header")}>
-                                    <Text>Boletos e Tributos</Text>
-                                </CardItem>
-                            </Card>
-                        </Content>
-                        <Content padder style={{ marginTop: -20 }}>
-                            <Card>
-                                <CardItem header button onPress={() => alert("This is Card Header")}>
-                                    <Text>Pagar com QR-Code</Text>
-                                </CardItem>
-                            </Card>
-                        </Content>
-                        <Content padder style={{ marginTop: -20 }}>
-                            <Card>
-                                <CardItem header button onPress={() => alert("This is Card Header")}>
-                                    <Text>Enviar Dinheiro</Text>
-                                </CardItem>
-                            </Card>
-                        </Content>
-                    </Card>
-                </Content>
-            </Container>
-        );
-    }
-}
+                <List>
+                    <ListItem onPress={() => alert("This is Card Header")}>
+                        <Left>
+                            <CardItem header>
+                                <Text>Contas e boletos</Text>
+                            </CardItem>
+                        </Left>
+                        <Right>
+                            <Icon name="arrow-forward"/>
+                        </Right>
+                    </ListItem>
+                    <ListItem onPress={() => navigation.navigate('RechargeCell')}>
+                        <Left>
+                            <CardItem header>
+                                <Text>Recarga Celular</Text>
+                            </CardItem>
+                        </Left>
+                        <Right>
+                            <Icon name="arrow-forward"/>
+                        </Right>
+                    </ListItem>
+                    <ListItem onPress={() => alert("This is Card Header")}>
+                        <Left>
+                            <CardItem header>
+                                <Text>Boletos e Tributos</Text>
+                            </CardItem>
+                        </Left>
+                        <Right>
+                            <Icon name="arrow-forward"/>
+                        </Right>
+                    </ListItem>
+                    <ListItem onPress={() => alert("This is Card Header")}>
+                        <Left>
+                            <CardItem header>
+                                <Text>Pagar com QR-Code</Text>
+                            </CardItem>
+                        </Left>
+                        <Right>
+                            <Icon name="arrow-forward"/>
+                        </Right>
+                    </ListItem>
+                    <ListItem onPress={() => alert("This is Card Header")}>
+                        <Left>
+                            <CardItem header>
+                                <Text>Enviar Dinheiro</Text>
+                            </CardItem>
+                        </Left>
+                        <Right>
+                            <Icon name="arrow-forward"/>
+                        </Right>
+                    </ListItem>
+                </List>
+            </Content>
+        </Container>
+    );
+};
+
+export default Pagar;

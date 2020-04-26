@@ -31,7 +31,9 @@ import ClientCountHome from './pages/contaCilente';
 
 
 import AuthLoadingScreen from './pages/AuthLoadingScreen';
-import {deleteUser} from "./utils";
+import RechargeCell from "./pages/pagar/rechargeCell";
+import Recharge from "./pages/pagar/rechargeCell/recharge";
+import RechargePay from "./pages/pagar/rechargeCell/rechargePay";
 
 const AuthStack = createStackNavigator({
     Landing: {
@@ -251,6 +253,30 @@ const Pagar = createStackNavigator({
         navigationOptions: {
             headerTitle: 'Pagamentos',
         },
+    },
+    RechargeCell: {
+        screen: RechargeCell,
+        navigationOptions: ({navigation}) => ({
+            headerShown: 'Recarregue seu celular',
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+        }),
+    },
+    Recharge: {
+        screen: Recharge,
+        navigationOptions: ({navigation}) => ({
+            headerShown: 'Recarga',
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+        }),
+    },
+    RechargePay: {
+        screen: RechargePay,
+        navigationOptions: ({navigation}) => ({
+            headerShown: 'Recarga Pagar',
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+        }),
     },
 });
 
