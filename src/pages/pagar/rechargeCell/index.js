@@ -18,9 +18,11 @@ const RechargeCell = ({navigation}) => {
     const [form, setForm] = useState(
         {
             number: '',
-            oparadora: 'key0',
+            operadora: 'key0',
         }
     );
+
+    console.log(form)
 
 
     return (
@@ -41,17 +43,17 @@ const RechargeCell = ({navigation}) => {
                         mode="dropdown"
                         iosIcon={<Icon name="arrow-down" />}
                         style={{ width: undefined }}
-                        placeholder="Select your SIM"
+                        placeholder="Selcione uma operadora"
                         placeholderStyle={{ color: "#bfc6ea" }}
                         placeholderIconColor="#007aff"
-                        selectedValue={form.oparadora}
-                        onValueChange={(value) => setForm({...form, oparadora: value})}
+                        selectedValue={form.operadora}
+                        onValueChange={(value) => setForm({...form, operadora: value})}
                     >
-                        <Picker.Item label="Selciona uma operadora" value="key0" />
-                        <Picker.Item label="Claro" value="key1" />
-                        <Picker.Item label="Vivo" value="key2" />
-                        <Picker.Item label="Tim" value="key3" />
-                        <Picker.Item label="Oi" value="key4" />
+                        <Picker.Item label="Selcione uma operadora" value="key0" />
+                        <Picker.Item label="Claro" value="Claro" />
+                        <Picker.Item label="Vivo" value="Vivo" />
+                        <Picker.Item label="Tim" value="Tim" />
+                        <Picker.Item label="Oi" value="Oi" />
                     </Picker>
                     <ContentButton>
                         <Button

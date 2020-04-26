@@ -18,7 +18,9 @@ import {View} from "react-native";
 
 
 const RechargeCell = ({navigation}) => {
-    const [data, setDate] =  useState(navigation.getParam('data'));
+    const [data_phone, setDate] =  useState(navigation.getParam('data'));
+
+    console.log(data_phone.operadora, data_phone.number)
 
 
 
@@ -53,15 +55,14 @@ const RechargeCell = ({navigation}) => {
 
     const renderNumber = data => (
 
-         console.log(data),
         <View>
             {data.group.map((g) => (
                 <BlockNumber>
                     {g.data.map((n) => (
                         <Number onPress={() => navigation.navigate('RechargePay', {
                             value: n.number,
-                            cellNumber: data.number,
-                            operadora: data.operadora
+                            cellNumber: data_phone.number,
+                            operadora: data_phone.operadora
                         })}>
                             <TextCifrao>R$</TextCifrao>
                             <TextNumber>{n.number}</TextNumber>

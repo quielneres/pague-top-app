@@ -77,7 +77,7 @@ export const ContentDetails = styled.View`
   flex-direction: column;
 `;
 export const ContentInfo = styled.View`
-  margin: 5px 15px 0 15px;
+  margin: 5px 20px 0 20px;
   flex-direction: row;
   justify-content: space-between;   
 `;

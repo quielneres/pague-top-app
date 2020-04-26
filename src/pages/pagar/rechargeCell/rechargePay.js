@@ -28,6 +28,8 @@ const RechargePay = ({navigation}) => {
     const [cellNumber, setCellNumber] =  useState(navigation.getParam('cellNumber'));
     const [operadora, setOperadora] =  useState(navigation.getParam('operadora'));
 
+    console.log(value, cellNumber, operadora)
+
     const payments = [
         {
             id: 1,
@@ -84,6 +86,14 @@ const RechargePay = ({navigation}) => {
                 <ContentPayment>
                     <List>
                         {payments.map((p) => rendPayments(p))}
+                        <ListItem>
+                            <Left>
+                                <Text style={{ marginLeft: 20 }}>Adicionar cartão</Text>
+                            </Left>
+                            <Right>
+                                <Icon name={'plus'} size={17}/>
+                            </Right>
+                        </ListItem>
                     </List>
                 </ContentPayment>
                 <ContentButton>
