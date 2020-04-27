@@ -11,6 +11,8 @@ import {
 
 import {Hoshi} from 'react-native-textinput-effects';
 import {View} from "react-native";
+import {MaskService} from "react-native-masked-text";
+import {Value} from "../../gerarBoleto/styles";
 
 const RechargeCell = ({navigation}) => {
 
@@ -30,13 +32,13 @@ const RechargeCell = ({navigation}) => {
             <Content>
                 <Form style={{padding: 15}}>
                     <Hoshi error
-                        label={'Nome'}
+                        label={'Número com DDD'}
                         backgroudColor={'#fff'}
                         borderColor={'#4CB1F7'}
                         borderHeight={1}
-                        inputPadding={5}
+                        inputPadding={18}
                         style={{marginBottom: 20, borderBottomWidth: 0.5}}
-                        value={form.number}
+                        value={MaskService.toMask('cel-phone', form.number)}
                         onChangeText={number => setForm({...form, number})}
                     />
                     <Picker

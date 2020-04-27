@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {ActivityIndicator, View} from "react-native";
 
@@ -30,7 +30,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import api from '../../services/api';
 import SwipeablePanel from 'rn-swipeable-panel';
-
+const ls = require('react-native-local-storage');
 import Load from '../../components/loader';
 import {ButtonText} from "../singUp/styles";
 
@@ -40,6 +40,16 @@ const Checkout = ({navigation}) => {
     const [swipeablePanelActive, setSwip] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    const [status_server, setStatusServer] = useState(false);
+    const [user, setUser] = useState([]);
+    const [link, setLink] = useState(null);
+
+    useEffect(() => {
+        ls.get('@ListApp:userToken').then(data => {
+            setUser(data.user ?? [])
+        })
+
+    }, []);
 
     const componentDidMount = () => {
         this.openPanel();
@@ -58,27 +68,34 @@ const Checkout = ({navigation}) => {
         setLoading(true);
 
         const itens = {
-            id_comprador: "CUS-FH8D1Q2VZ9JV",
-            // valor: data.price - data.descount,
-            // preco: data.price,
-            // quantidade: 1,
-            // descricao: data.title,
-            // detalhes: data.content
+            id_comprador: user.id_comprador,
+            valor: data.price,
+            preco: data.price,
+            quantidade: 1,
+            descricao: data.title,
+            detalhes: data.content,
+            payment_method: 1,
+            cell_number: '',
+            operadora_name: ''
+
         };
-
-        console.log(itens)
-
 
         try {
             const response = await api.post('/new-request', itens);
             const data_server = response.data;
+            console.log(data_server)
+            {
+                data_server.status === false ? setStatusServer(false) : setStatusServer(true)
+            }
 
-            // navigation.navigate('Cart', {id_pedido: data_server.id_pedido});
+            {
+                data_server.status === true ? setLink(data_server.link_boleto): null
+            }
 
-            // {data_server.status === false ? navigation.navigate('Cartoes') : setForm({...form, error_server: data_server.message})}
             setLoading(false);
             setSwip(true)
         } catch (err) {
+            console.log(err)
             setLoading(false);
         }
     };
@@ -93,19 +110,40 @@ const Checkout = ({navigation}) => {
         >
             <ContentResponse>
                 <HeaderResponse>
-                    <Icon name={'check'} color={'green'} size={30}/>
-                    <TitleResponse>Boleto gerado com secesso!</TitleResponse>
+                    {status_server
+                        ?
+                        <View style={{alignItems: 'center'}}>
+                            <Icon name={'grin'} color={'green'} size={30}/>
+                            <TitleResponse style={{color: 'green'}}> Boleto gerado com secesso!</TitleResponse>
+                        </View>
+                        :
+                        <View style={{alignItems: 'center'}}>
+                            <Icon name={'frown'} color={'red'} size={30}/>
+                            <TitleResponse style={{color: 'red'}}> Erro em sua solicitacao!</TitleResponse>
+                        </View>
+                    }
                 </HeaderResponse>
-                <ContenDatailsResponse>
-                    <TextDetail> Acesse o link para baixar o boleto:</TextDetail>
-                    <LinkBoleto>https://www.youtube.com/watch?v=9rQlL3DdoA4</LinkBoleto>
-                </ContenDatailsResponse>
-                <ContenResponseButton>
-                    <Button style={{width: '100%', justifyContent: 'center'}}
-                            onPress={() => boletoGeneration()}>
-                        <Text>Enviar link</Text>
-                    </Button>
-                </ContenResponseButton>
+                {status_server
+                    ?
+                    <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                        <ContenDatailsResponse>
+                            <TextDetail> Acesse o link para baixar o boleto:</TextDetail>
+                            <LinkBoleto style={{alignItems: 'center', justifyContent: 'center'}}>{link}</LinkBoleto>
+                        </ContenDatailsResponse>
+                        <ContenResponseButton>
+                            <Button style={{width: '100%', justifyContent: 'center', alignItems: 'center'}}
+                                    onPress={() => navigation.goBack(null)}>
+                                <Text  style={{alignItems: 'center', justifyContent: 'center'}}>Enviar link</Text>
+                            </Button>
+                        </ContenResponseButton>
+                    </View>
+                    : <ContenResponseButton>
+                        <Button style={{width: '100%', justifyContent: 'center', borderEndColor: 'red'}}
+                                onPress={() => navigation.goBack(null)}>
+                            <Text>Fechar</Text>
+                        </Button>
+                    </ContenResponseButton>
+                }
             </ContentResponse>
         </SwipeablePanel>
     );

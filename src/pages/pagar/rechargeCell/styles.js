@@ -46,8 +46,9 @@ export const TextCifrao = styled.Text`
   font-weight: bold;
 `;
 
-export const ContentNumbers = styled.View`
+export const ContentNumbers = styled.ScrollView`
    padding-top: 30px;
+   width: 100%;
   
 `;
 
@@ -93,4 +94,41 @@ export const ContentPayment = styled.View`
  border-top-width: 0.3px;
  margin-top: 30px;
    
+`;
+
+export const ContentResponse = styled.View`
+   flex: 1;
+`;
+
+export const ContenResponseButton = styled.View`
+   align-items: center;
+   justify-content: center;
+   padding: 50px;
+`;
+export const ContenDatailsResponse = styled.View`
+  margin: 15px;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+   
+`;
+
+export const HeaderResponse = styled.View`
+   width: 100%;
+   justify-content: center;
+   align-items: center;
+`;
+
+export const TitleResponse = styled.Text`
+  margin-top: 10px;
+  font-weight: bold; 
+`;
+
+
+export const TextDetail = styled.Text`
+ 
+`;
+export const LinkBoleto = styled.Text`
+   color: blue;
+   font-weight: bold;
 `;

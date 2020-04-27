@@ -31,9 +31,7 @@ const Cobrar = ({navigation}) => {
                     <ListItem button onPress={() =>
                         navigation.navigate('ProductList')}>
                         <Left>
-                            <CardItem>
-                                <Text>Catalogo de produtos</Text>
-                            </CardItem>
+                            <Text>Catalogo de produtos</Text>
                         </Left>
                         <Right>
                             <Icon name="arrow-forward"/>
@@ -42,9 +40,7 @@ const Cobrar = ({navigation}) => {
                     <ListItem button onPress={() =>
                         navigation.navigate('GerarBoleto')}>
                         <Left>
-                            <CardItem header>
-                                <Text>Gerar link de boleto</Text>
-                            </CardItem>
+                            <Text>Gerar link de boleto</Text>
                         </Left>
                         <Right>
                             <Icon name="arrow-forward"/>
@@ -52,9 +48,7 @@ const Cobrar = ({navigation}) => {
                     </ListItem>
                     <ListItem button onPress={() => alert("Nao implemetado")}>
                         <Left>
-                            <CardItem header>
-                                <Text>Cabarar com maquineta</Text>
-                            </CardItem>
+                            <Text>Cabarar com maquineta</Text>
                         </Left>
                         <Right>
                             <Icon name="arrow-forward"/>

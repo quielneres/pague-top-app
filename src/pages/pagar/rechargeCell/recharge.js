@@ -79,7 +79,9 @@ const RechargeCell = ({navigation}) => {
                 <RechargeHeader>
                     <RechargeTitle>Valor da recarga</RechargeTitle>
                 </RechargeHeader>
-                <ContentNumbers>
+                <ContentNumbers
+                    horizontal={true}
+                >
                     {RechargeValue.map((data) => renderNumber(data))}
                 </ContentNumbers>
             </Content>

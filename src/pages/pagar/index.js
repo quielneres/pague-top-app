@@ -12,8 +12,9 @@ import {
 
 import {
     Container, Left, Thumbnail, Content, Card, CardItem, Body,
-    List, ListItem, Right, Icon
+    List, ListItem, Right
 } from 'native-base';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const Pagar = ({navigation}) => {
     return (
@@ -23,52 +24,42 @@ const Pagar = ({navigation}) => {
                 <List>
                     <ListItem onPress={() => navigation.navigate('PayBill')}>
                         <Left>
-                            <CardItem header>
-                                <Text>Contas e boletos</Text>
-                            </CardItem>
+                            <Text>Contas e boletos</Text>
                         </Left>
                         <Right>
-                            <Icon name="arrow-forward"/>
+                            <Icon name="chevron-right"/>
                         </Right>
                     </ListItem>
                     <ListItem onPress={() => navigation.navigate('RechargeCell')}>
                         <Left>
-                            <CardItem header>
-                                <Text>Recarga Celular</Text>
-                            </CardItem>
+                            <Text>Recarga Celular</Text>
                         </Left>
                         <Right>
-                            <Icon name="arrow-forward"/>
+                            <Icon name="chevron-right"/>
                         </Right>
                     </ListItem>
                     <ListItem onPress={() => alert("This is Card Header")}>
                         <Left>
-                            <CardItem header>
-                                <Text>Boletos e Tributos</Text>
-                            </CardItem>
+                            <Text>Boletos e Tributos</Text>
                         </Left>
                         <Right>
-                            <Icon name="arrow-forward"/>
+                            <Icon name="chevron-right"/>
                         </Right>
                     </ListItem>
                     <ListItem onPress={() => alert("This is Card Header")}>
                         <Left>
-                            <CardItem header>
-                                <Text>Pagar com QR-Code</Text>
-                            </CardItem>
+                            <Text>Pagar com QR-Code</Text>
                         </Left>
                         <Right>
-                            <Icon name="arrow-forward"/>
+                            <Icon name="chevron-right"/>
                         </Right>
                     </ListItem>
                     <ListItem onPress={() => alert("This is Card Header")}>
                         <Left>
-                            <CardItem header>
-                                <Text>Enviar Dinheiro</Text>
-                            </CardItem>
+                            <Text>Enviar Dinheiro</Text>
                         </Left>
                         <Right>
-                            <Icon name="arrow-forward"/>
+                            <Icon name="chevron-right"/>
                         </Right>
                     </ListItem>
                 </List>

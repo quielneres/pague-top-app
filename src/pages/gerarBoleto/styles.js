@@ -9,9 +9,9 @@ export const ContentValor = styled.View`
 
    
 `;
-export const ContentNumbers = styled.View`
+export const ContentNumbers = styled.ScrollView`
    border-top-width: 0.3px;
-   padding-top: 30px;
+   padding-top: 10px;
   ;
    
 `;
