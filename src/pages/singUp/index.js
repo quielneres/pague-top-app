@@ -10,18 +10,19 @@ import {
     Button,
     ButtonText,
 } from './styles';
+import Load from '../../components/loader';
+import Modal from "../../components/modal";
 
 const SingUp = ({navigation}) => {
 
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
-    const [cpf, setCpf] = useState('');
     const [password, setPassword] = useState('');
     const [password_confirmation, setPasswordConfirm] = useState('');
     const [userData, setUserData] = useState('');
     const [error, setError] = useState({});
     const [error_server, setErrorServer] = useState([]);
-
+    const [modal, setModal] = useState(false);
     const [loading, setLoading] = useState(false);
 
 
@@ -30,14 +31,12 @@ const SingUp = ({navigation}) => {
         const data = {
             name: name,
             email: email,
-            cpf: cpf,
             password: password,
         };
 
         // console.log(data);
         const rules = {
             name: 'required|string',
-            cpf: 'required|string',
             email: 'required|email',
             password: 'required|string|min:4',
         };
@@ -45,7 +44,6 @@ const SingUp = ({navigation}) => {
         const messages = {
             required: (field) => `${field} is required`,
             'name': 'Nome contains unallowed characters',
-            'cpf': 'Cpf contains unallowed characters',
             'email.email': 'Please enter a valid email address',
             'password.confirmed': 'The password did not match',
             'password.min': 'Password is too short',
@@ -71,7 +69,8 @@ const SingUp = ({navigation}) => {
             }
 
             if (response.data.status === 'success') {
-                navigation.navigate('Login', {new_count: true})
+                // navigation.navigate('Login', {new_count: true, email: email})
+                setModal(true)
             }
             setLoading(false);
 
@@ -89,8 +88,19 @@ const SingUp = ({navigation}) => {
         <Text>{error}</Text>
     );
 
+    const submitMessage = () => {
+        setModal(false)
+        navigation.navigate('Login', {email: email})
+    }
+
     return (
         <Container>
+            <Modal
+                status={modal}
+                menssage={'Conta criada com sucesso!'}
+                action={() => submitMessage()}
+                menssageBtn={'FAZER LOGIN'}
+            />
             <Content>
                 <View style={styles.content}>
                     <Hoshi
@@ -116,17 +126,6 @@ const SingUp = ({navigation}) => {
                     />
                     {error['email'] && <Text style={{fontSize: 12, color: 'red'}}>{error['email']}</Text>}
                     <Hoshi
-                        label={'CPF'}
-                        backgroudColor={'#fff'}
-                        borderColor={'#4CB1F7'}
-                        borderHeight={1}
-                        inputPadding={5}
-                        style={{marginBottom: 20, borderBottomWidth: 0.5}}
-                        value={cpf}
-                        onChangeText={cpf => setCpf(cpf)}
-                    />
-                    {error['cpf'] && <Text style={{fontSize: 12, color: 'red'}}>{error['cpf']}</Text>}
-                    <Hoshi
                         label={'Senha'}
                         secureTextEntry
                         backgroudColor={'#fff'}
@@ -151,15 +150,12 @@ const SingUp = ({navigation}) => {
                     />
 
                     <Button onPress={() => registerUser()}>
-                        {loading ? (
-                            <ActivityIndicator size="small" color="#FFF"/>
-                        ) : (
-                            <ButtonText>Salvar</ButtonText>
-                        )}
+                        <ButtonText>Salvar</ButtonText>
                     </Button>
 
                 </View>
             </Content>
+            {loading ? <Load/> : null}
         </Container>
     )
 };
@@ -168,7 +164,7 @@ const styles = StyleSheet.create({
     content: {
         // backgroundColor: '#4CB1F7'
         flex: 1,
-        margin: 15
+        margin: 10
     },
     card: {
         padding: 15,

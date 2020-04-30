@@ -38,13 +38,13 @@ const Profile = ({navigation}) => {
         {
             title: 'Carteira',
             subtitle: 'Meu saldo QR code',
-            route: null,
+            route: 'CarteiraDigital',
             icon: 'wallet'
         },
         {
             title: 'Forma de pagamentos',
             subtitle: 'Minhas formas de pagamento',
-            route: null,
+            route: 'Cartoes',
             icon: 'credit-card'
         },
         {
@@ -56,13 +56,13 @@ const Profile = ({navigation}) => {
         {
             title: 'Extratos',
             subtitle: 'Veja seus extratos',
-            route: null,
+            route: 'Extrato',
             icon: 'stream'
         },
         {
             title: 'Transferências',
             subtitle: 'Veja suas transferências',
-            route: null,
+            route: 'Transferir',
             icon: 'exchange-alt'
         },
         {
@@ -131,7 +131,7 @@ const Profile = ({navigation}) => {
 
     const render = (menu) => (
         <ListItem>
-            <TouchableOpacity onPress={() => openForm(user.rules)}>
+            <TouchableOpacity onPress={() => navigation.navigate(menu.route)}>
                 <Left style={Style.left}>
                     <View style={Style.leftIcon}>
                         <Icon name={menu.icon} size={18}/>
@@ -178,7 +178,7 @@ const Profile = ({navigation}) => {
 
     const renderUser = (usr) => (
         <Header style={Style.header}>
-            <TouchableOpacity onPress={() => openForm(usr.rules)}>
+            <TouchableOpacity onPress={() => navigation.navigate('EditProfile', {data_user: user})}>
             <Left>
                 <Image source={{uri: url_img()}}/>
             </Left>

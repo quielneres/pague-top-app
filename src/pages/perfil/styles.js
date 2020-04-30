@@ -36,6 +36,22 @@ export const TouchableOpacity = styled.TouchableOpacity`
  
 `;
 
+export const Button = styled.TouchableOpacity`
+  background-color: #4CB1F7;
+  border-radius: 3px;
+  height: 44px;
+  padding: 0px 20px;
+  margin-top: 10px;
+  justify-content: center;
+  align-items: center;
+`;
+
+export const ButtonText = styled.Text`
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 14px;
+`;
+
 export const Style = StyleSheet.create({
     header: {
         backgroundColor: '#fff'

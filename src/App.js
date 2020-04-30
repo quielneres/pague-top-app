@@ -16,6 +16,7 @@ import CartDigital from './pages/carteiraDigital';
 import ExtratoHome from './pages/extrato';
 import Detalhes from './pages/home/detalhes';
 import Perfil from './pages/perfil';
+import EditProfile from './pages/perfil/edit';
 import SaqueHome from './pages/saque';
 import CartoesHome from './pages/cartoes';
 import TransferirHome from './pages/transferir';
@@ -215,6 +216,14 @@ const Profile = createStackNavigator({
             headerShown: false,
         },
     },
+    EditProfile: {
+        screen: EditProfile,
+        navigationOptions: ({navigation}) => ({
+            headerShown: 'Editar Perfil',
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+        }),
+    },
     ClientCount: {
         screen: ClientCountHome,
         navigationOptions: {
@@ -252,14 +261,17 @@ const Descontos = createStackNavigator({
 const Pagar = createStackNavigator({
     Pagar: {
         screen: PagarHome,
-        navigationOptions: {
+        navigationOptions: ({navigation}) => ({
             headerTitle: 'Pagamentos',
-        },
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+        }),
     },
+
     RechargeCell: {
         screen: RechargeCell,
         navigationOptions: ({navigation}) => ({
-            headerShown: 'Recarregue seu celular',
+            headerTitle: 'Recarregue seu celular',
             headerTitleAlign: 'center',
             headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
         }),PayBill
@@ -267,7 +279,7 @@ const Pagar = createStackNavigator({
     Recharge: {
         screen: Recharge,
         navigationOptions: ({navigation}) => ({
-            headerShown: 'Recarga',
+            headerTitle: 'Recarga',
             headerTitleAlign: 'center',
             headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
         }),
@@ -275,7 +287,7 @@ const Pagar = createStackNavigator({
     RechargePay: {
         screen: RechargePay,
         navigationOptions: ({navigation}) => ({
-            headerShown: 'Recarga Pagar',
+            headerTitle: 'Recarga Pagar',
             headerTitleAlign: 'center',
             headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
         }),
@@ -283,7 +295,7 @@ const Pagar = createStackNavigator({
     PayBill: {
         screen: PayBill,
         navigationOptions: ({navigation}) => ({
-            headerShown: 'Pagar Contas',
+            headerTitle: 'Pagar Contas',
             headerTitleAlign: 'center',
             headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
         }),
@@ -291,7 +303,7 @@ const Pagar = createStackNavigator({
     ReadCode: {
         screen: ReadCode,
         navigationOptions: ({navigation}) => ({
-            headerShown: 'Ler codigo',
+            headerTitle: 'Ler codigo',
             headerTitleAlign: 'center',
             headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
         }),
@@ -316,7 +328,7 @@ const Cobrar = createStackNavigator({
     GerarBoleto: {
         screen: GerarBoletoHome,
         navigationOptions: ({navigation}) => ({
-            headerShown: 'Boleto',
+            headerTitle: 'Boleto',
             headerTitleAlign: 'center',
             headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
         }),

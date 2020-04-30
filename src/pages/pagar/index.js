@@ -15,13 +15,14 @@ import {
     List, ListItem, Right
 } from 'native-base';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import FooterContent from "../../components/footer";
 
 const Pagar = ({navigation}) => {
     return (
         <Container>
             <Content>
 
-                <List>
+                <List style={{ marginTop: 15}}>
                     <ListItem onPress={() => navigation.navigate('PayBill')}>
                         <Left>
                             <Text>Contas e boletos</Text>
@@ -64,6 +65,7 @@ const Pagar = ({navigation}) => {
                     </ListItem>
                 </List>
             </Content>
+            <FooterContent navigation={navigation}/>
         </Container>
     );
 };

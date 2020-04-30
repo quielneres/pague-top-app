@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {StackActions, NavigationActions} from 'react-navigation';
 import {StatusBar, ActivityIndicator, AsyncStorage, Image, View, Alert} from 'react-native';
 import PropTypes from 'prop-types';
@@ -19,31 +19,23 @@ import {
     CreateCount,
 } from './styles';
 
+import Modal from '../../components/modal';
+
 export default function Welcome(props) {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false);
     const [errorMessage, setErrorMessage] = useState(null);
-    const [new_count, setNewCount] = useState(props.navigation.getParam('new_count'));
+    const [new_email, setNewEmail] = useState(props.navigation.getParam('email'));
 
-    {
-        new_count ?
-            Alert.alert(
-                //title
-                'Secesso ;)',
-                //body
-                'Cadastro realizado com secesso!',
-                [
-                    {text: 'Fazer login', onPress: () => setNewCount(false)},
-                ],
-                {cancelable: false}
-                //clicking out side of alert will not cancel
-            ) : null
-    }
+    useEffect(()=> {
+        {new_email? setUsername(new_email) : null}
+    });
 
     async function saveUser(user) {
+
         await AsyncStorage.setItem('@ListApp:userToken', JSON.stringify(user));
-    }
+    };
 
     async function signIn() {
         if (username.length === 0) {
