@@ -1,23 +1,15 @@
 import React, {useState, useEffect} from 'react';
 
-import {StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform, View} from 'react-native';
+import {View} from 'react-native';
 import {
     Container,
-    Card,
     Button,
     Content,
     Form,
-    CardItem,
-    Footer,
     Text,
-    Item,
-    Input,
-    Label,
-    ListItem, List
 } from 'native-base';
 import {validateAll} from 'indicative/validator';
 import api from "../../../services/api";
-import {NavigationActions, StackActions} from "react-navigation";
 
 import {Hoshi} from 'react-native-textinput-effects';
 import {MaskService} from "react-native-masked-text";
@@ -81,7 +73,7 @@ const Cards = ({navigation}) => {
     const submitMessage = () => {
         setModal(false)
         navigation.navigate('Cartoes')
-    }
+    };
 
     return (
         <Container>

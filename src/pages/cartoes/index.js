@@ -7,8 +7,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import api from "../../services/api";
 import Load from '../../components/loader';
 import SwipeablePanel from 'rn-swipeable-panel';
-import {UserName} from "../perfil/styles";
-import {validateAll} from "indicative/validator";
+import Modal from "../../components/modal";
 
 const ls = require('react-native-local-storage');
 
@@ -18,6 +17,7 @@ const Cards = ({navigation}) => {
     const [loading, setLoading] = useState(false);
     const [swipeablePanelActive, setSwip] = useState(false);
     const [detailCard, setDetailCard] = useState([]);
+    const [modal, setModal] = useState(false);
 
     useEffect(() => {
 
@@ -70,24 +70,25 @@ const Cards = ({navigation}) => {
     const cardDefalt = async (id_card, status) => {
 
         try {
+            setSwip(false)
             setLoading(true);
 
             const response = await api.post('/credit-card-default/' + user.id, {
                 id: id_card,
                 status: status
             });
-
             const data_server = response.data;
-            setModal(true)
 
             setLoading(false);
-
+            setModal(true);
         } catch (err) {
 
-            const formattedErrors = {};
-            err.forEach(error => formattedErrors[error.field] = error.message);
-            setForm({...form, error: formattedErrors})
-            setLoading(false);
+            console.log(err)
+
+            // const formattedErrors = {};
+            // err.forEach(error => formattedErrors[error.field] = error.message);
+            // setForm({...form, error: formattedErrors})
+            // setLoading(false);
         }
 
     };
@@ -126,33 +127,69 @@ const Cards = ({navigation}) => {
                     width: '100%',
                     justifyContent: 'space-between',
                     paddingLeft: '10%',
-                    paddingRight: '10%'
+                    paddingRight: '10%',
+                    marginTop: 40
                 }}>
                     <TouchableOpacity style={{
                         justifyContent: 'center',
                         alignItems: 'center',
                         width: 120,
                         height: 50,
-                        backgroundColor: '#03A696',
                     }} onPress={() => cardDefalt(detailCard.id, detailCard.status)}>
-                        <Text style={{color: '#fff'}}>Tornar padrao</Text>
+                        {detailCard.status === 1 ?
+                            <Icon name={'check'} size={30} color={'#03A696'}/> :
+                            <Icon name={'check'} size={30} color={'gray'}/>
+                        }
+                        <Text>Tornar padrao</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={{
                         justifyContent: 'center',
                         alignItems: 'center',
                         width: 120,
                         height: 50,
-                        backgroundColor: '#F20732',
-                    }}>
-                        <Text style={{color: '#fff'}}>Remover</Text>
+                    }}
+                                      onPress={() => deleteCard(detailCard.id)}>
+                        <Icon name={'trash'} size={30} color={'#F20732'}/>
+                        <Text>Delete</Text>
                     </TouchableOpacity>
                 </View>
             </View>
         </SwipeablePanel>
     );
+    const submitMessage = () => {
+        setModal(false)
+        navigation.navigate('Perfil')
+    };
+
+    const deleteCard = async (id_card) => {
+
+        try {
+            setSwip(false);
+            setLoading(true);
+
+            const response = await api.get('/credit-card-delete/' +id_card);
+
+            setLoading(false);
+            setModal(true);
+        } catch (err) {
+
+            console.log(err)
+
+            // const formattedErrors = {};
+            // err.forEach(error => formattedErrors[error.field] = error.message);
+            // setForm({...form, error: formattedErrors})
+            // setLoading(false);
+        }
+    }
 
     return (
         <Container>
+            <Modal
+                status={modal}
+                menssage={'Operaçao realizada com sucesso!'}
+                action={() => submitMessage()}
+                menssageBtn={'OK'}
+            />
             <Content>
                 <ScrollView>
                     <List>
@@ -162,9 +199,9 @@ const Cards = ({navigation}) => {
             </Content>
             <Footer style={{height: 100}}>
                 <CardItem>
-                    <Button block style={{width: '100%', height: 60, borderRadius: 7}}
+                    <Button block style={{width: '100%', height: 50, borderRadius: 7, backgroundColor: '#4CB1F7'}}
                             onPress={() => navigation.navigate('AddCard')}>
-                        <Text>Adicionar Cartao</Text>
+                        <Text style={{color: '#fff'}}>Adicionar Cartao</Text>
                     </Button>
                 </CardItem>
             </Footer>
