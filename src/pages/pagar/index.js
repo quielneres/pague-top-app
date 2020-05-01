@@ -24,7 +24,8 @@ const Pagar = ({navigation}) => {
 
                 <List style={{ marginTop: 15}}>
                     <ListItem onPress={() => navigation.navigate('PayBill')}>
-                        <Left>
+                        <Left style={{alignItems: 'center'}}>
+                            <Icon name="barcode" size={20} style={{marginRight: 10}}/>
                             <Text>Contas e boletos</Text>
                         </Left>
                         <Right>
@@ -32,7 +33,8 @@ const Pagar = ({navigation}) => {
                         </Right>
                     </ListItem>
                     <ListItem onPress={() => navigation.navigate('RechargeCell')}>
-                        <Left>
+                        <Left style={{alignItems: 'center'}}>
+                            <Icon name="mobile-alt" size={20} style={{marginRight: 10, marginLeft: 5}}/>
                             <Text>Recarga Celular</Text>
                         </Left>
                         <Right>
@@ -40,7 +42,8 @@ const Pagar = ({navigation}) => {
                         </Right>
                     </ListItem>
                     <ListItem onPress={() => alert("This is Card Header")}>
-                        <Left>
+                        <Left style={{alignItems: 'center'}}>
+                            <Icon name="barcode" size={20} style={{marginRight: 10}}/>
                             <Text>Boletos e Tributos</Text>
                         </Left>
                         <Right>
@@ -48,7 +51,8 @@ const Pagar = ({navigation}) => {
                         </Right>
                     </ListItem>
                     <ListItem onPress={() => alert("This is Card Header")}>
-                        <Left>
+                        <Left style={{alignItems: 'center'}}>
+                            <Icon name="qrcode" size={20} style={{marginRight: 10}}/>
                             <Text>Pagar com QR-Code</Text>
                         </Left>
                         <Right>
@@ -56,7 +60,8 @@ const Pagar = ({navigation}) => {
                         </Right>
                     </ListItem>
                     <ListItem onPress={() => alert("This is Card Header")}>
-                        <Left>
+                        <Left style={{alignItems: 'center'}}>
+                            <Icon name="money-bill-alt" size={20} style={{marginRight: 10}}/>
                             <Text>Enviar Dinheiro</Text>
                         </Left>
                         <Right>

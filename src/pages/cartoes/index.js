@@ -173,12 +173,7 @@ const Cards = ({navigation}) => {
             setModal(true);
         } catch (err) {
 
-            console.log(err)
-
-            // const formattedErrors = {};
-            // err.forEach(error => formattedErrors[error.field] = error.message);
-            // setForm({...form, error: formattedErrors})
-            // setLoading(false);
+            console.log(err);
         }
     }
 
@@ -191,11 +186,17 @@ const Cards = ({navigation}) => {
                 menssageBtn={'OK'}
             />
             <Content>
-                <ScrollView>
-                    <List>
-                        {cards.map((c) => renderCard(c))}
-                    </List>
-                </ScrollView>
+                {cards > 0 ?
+                    <ScrollView>
+                        <List>
+                            {cards.map((c) => renderCard(c))}
+                        </List>
+                    </ScrollView>
+                    :
+                    <View style={{margin: 15,borderRadius: 7, backgroundColor: '#D9D9D9', padding: 50, alignItems: 'center', height:'80%'}}>
+                        <Text style={{fontWeight: 'bold'}}>Você não possui cartões cadastrados</Text>
+                    </View>
+                }
             </Content>
             <Footer style={{height: 100}}>
                 <CardItem>

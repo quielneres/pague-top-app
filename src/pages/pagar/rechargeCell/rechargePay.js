@@ -11,30 +11,24 @@ import {
     TextValue,
     ContentButton,
     ContentPayment,
-    ContenDatailsResponse, ContenResponseButton,
-    ContentResponse,
-    HeaderResponse,
-    LinkBoleto,
-    TextDetail,
-    TitleResponse
 } from './styles';
 
 import {
-    Container, Left, Button, Content, CheckBox, CardItem, Body,
-    List, ListItem, Right, Form, Item, Picker, Text
+    Container, Left, Button, Content, CheckBox,
+    List, ListItem, Right
 } from 'native-base';
 
-import {View, TouchableOpacity} from "react-native";
+import {View, Text} from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Load from "../../../components/loader";
 import api from "../../../services/api";
-import SwipeablePanel from 'rn-swipeable-panel';
 
 const ls = require('react-native-local-storage');
+import Modal from "../../../components/modal";
+import WorningModal from "../../../components/modal/worning";
 
 const RechargePay = ({navigation}) => {
 
-    // const [data] =  navigation.state.params;
     const [value, setValue] = useState(navigation.getParam('value'))
     const [cellNumber, setCellNumber] = useState(navigation.getParam('cellNumber'));
     const [operadora, setOperadora] = useState(navigation.getParam('operadora'));
@@ -44,6 +38,8 @@ const RechargePay = ({navigation}) => {
     const [status_server, setStatusServer] = useState(false);
     const [user, setUser] = useState([]);
     const [link, setLink] = useState(null);
+    const [modal, setModal] = useState(false);
+    const [modal_worning, setModalWorning] = useState(false);
 
     useEffect(() => {
         ls.get('@ListApp:userToken').then(data => {
@@ -96,9 +92,9 @@ const RechargePay = ({navigation}) => {
         </View>
     );
 
-    const boletoGeneration = async () => {
-        setLoading(true);
+    const submit = async () => {
 
+        setLoading(true);
         const itens = {
             id_comprador: user.id_comprador,
             valor: value,
@@ -115,74 +111,59 @@ const RechargePay = ({navigation}) => {
         try {
             const response = await api.post('/new-request', itens);
             const data_server = response.data;
-            console.log(data_server)
-            {
-                data_server.status === false ? setStatusServer(false) : setStatusServer(true)
-            }
 
             {
-                data_server.status === true ? setLink(data_server.link_boleto): null
+                data_server.status === true ? setLink(data_server.link_boleto) : null
             }
 
             setLoading(false);
-            setSwip(true)
+            setModal(true);
         } catch (err) {
             console.log(err)
             setLoading(false);
         }
     };
 
-    const Swipeable = () => (
+    const boletoGeneration = () => {
+        {
+            user.id_comprador ? submit() : setModalWorning(true)
+        }
+    };
 
-        <SwipeablePanel
-            fullWidth
-            isActive={swipeablePanelActive}
-            onClose={closePanel}
-            onPressCloseButton={closePanel}
-        >
-            <ContentResponse>
-                <HeaderResponse>
-                    {status_server
-                        ?
-                        <View style={{alignItems: 'center'}}>
-                            <Icon name={'grin'} color={'green'} size={30}/>
-                            <TitleResponse style={{color: 'green'}}> Boleto gerado com secesso!</TitleResponse>
-                        </View>
-                        :
-                        <View style={{alignItems: 'center'}}>
-                            <Icon name={'frown'} color={'red'} size={30}/>
-                            <TitleResponse style={{color: 'red'}}> Erro em sua solicitacao!</TitleResponse>
-                        </View>
-                    }
-                </HeaderResponse>
-                {status_server
-                    ?
-                    <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                        <ContenDatailsResponse>
-                            <TextDetail> Acesse o link para baixar o boleto:</TextDetail>
-                            <LinkBoleto style={{alignItems: 'center', justifyContent: 'center'}}>{link}</LinkBoleto>
-                        </ContenDatailsResponse>
-                        <ContenResponseButton>
-                            <Button style={{width: '100%', justifyContent: 'center', alignItems: 'center'}}
-                                    onPress={() => navigation.goBack(null)}>
-                                <Text  style={{alignItems: 'center', justifyContent: 'center'}}>Enviar link</Text>
-                            </Button>
-                        </ContenResponseButton>
-                    </View>
-                    : <ContenResponseButton>
-                        <Button style={{width: '100%', justifyContent: 'center', borderEndColor: 'red'}}
-                                onPress={() => navigation.goBack(null)}>
-                            <Text>Fechar</Text>
-                        </Button>
-                    </ContenResponseButton>
-                }
-            </ContentResponse>
-        </SwipeablePanel>
-    );
+    const submitMessage = () => {
+        setModal(false);
+        navigation.navigate('OrderDetail', {
+            data: {
+                method: 1,
+                origin: 'recharge',
+                link: link,
+                title: 'Recaga celular',
+                number: cellNumber,
+                opera: operadora,
+                value: value
+            }
+        })
+    };
 
+    const submitWorning = () => {
+        setModalWorning(false);
+        navigation.navigate('EditProfile', {data_user: user})
+    };
 
     return (
         <Container>
+            <Modal
+                status={modal}
+                menssage={'Boleto gerado com sucesso!'}
+                action={() => submitMessage()}
+                menssageBtn={'OK'}
+            />
+            <WorningModal
+                status={modal_worning}
+                menssage={'Complete o cadastro para continuar!'}
+                action={() => submitWorning()}
+                menssageBtn={'OK'}
+            />
             <Content>
                 <RechargePayHeader>
                     <Icon name={'mobile-alt'} size={40} color={'#4CB1F7'}/>
@@ -226,7 +207,6 @@ const RechargePay = ({navigation}) => {
                     </Button>
                 </ContentButton>
             </Content>
-            <Swipeable/>
             {loading ? <Load/> : null}
         </Container>
     );

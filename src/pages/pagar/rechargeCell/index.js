@@ -13,6 +13,8 @@ import {Hoshi} from 'react-native-textinput-effects';
 import {View} from "react-native";
 import {MaskService} from "react-native-masked-text";
 import {Value} from "../../gerarBoleto/styles";
+import {validateAll} from "indicative/validator";
+import api from "../../../services/api";
 
 const RechargeCell = ({navigation}) => {
 
@@ -20,11 +22,36 @@ const RechargeCell = ({navigation}) => {
     const [form, setForm] = useState(
         {
             number: '',
-            operadora: 'key0',
+            operadora: '',
+            error: {},
         }
     );
 
-    console.log(form)
+    const submit = async () => {
+
+        const rules = {
+            number: 'required',
+            operadora: 'required|string'
+        };
+
+        const messages = {
+            required: (field) => `${field} is required`,
+        };
+
+        try {
+
+            await validateAll(form, rules, messages);
+
+            navigation.navigate('Recharge', {data: form})
+
+
+        } catch (err) {
+
+            const formattedErrors = {};
+            err.forEach(error => formattedErrors[error.field] = error.message);
+            setForm({...form, error: formattedErrors})
+        }
+    };
 
 
     return (
@@ -37,10 +64,12 @@ const RechargeCell = ({navigation}) => {
                         borderColor={'#4CB1F7'}
                         borderHeight={1}
                         inputPadding={18}
-                        style={{marginBottom: 20, borderBottomWidth: 0.5}}
+                        style={{marginBottom: 0, borderBottomWidth: 0.5}}
                         value={MaskService.toMask('cel-phone', form.number)}
                         onChangeText={number => setForm({...form, number})}
                     />
+                    {form.error['number'] &&
+                    <Text style={{fontSize: 12, color: 'red'}}>{form.error['number']}</Text>}
                     <Picker
                         mode="dropdown"
                         iosIcon={<Icon name="arrow-down" />}
@@ -51,16 +80,18 @@ const RechargeCell = ({navigation}) => {
                         selectedValue={form.operadora}
                         onValueChange={(value) => setForm({...form, operadora: value})}
                     >
-                        <Picker.Item label="Selcione uma operadora" value="key0" />
+                        <Picker.Item label="Selcione uma operadora" value="" />
                         <Picker.Item label="Claro" value="Claro" />
                         <Picker.Item label="Vivo" value="Vivo" />
                         <Picker.Item label="Tim" value="Tim" />
                         <Picker.Item label="Oi" value="Oi" />
                     </Picker>
+                    {form.error['operadora'] &&
+                    <Text style={{fontSize: 12, color: 'red'}}>{form.error['operadora']}</Text>}
                     <ContentButton>
                         <Button
                             style={{width: '100%', justifyContent: 'center', backgroundColor: '#4CB1F7', marginTop: 20}}
-                            onPress={() => navigation.navigate('Recharge', {data: form})}>
+                            onPress={() => submit()}>
                             <Text>Avançar</Text>
                         </Button>
                     </ContentButton>

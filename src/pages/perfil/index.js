@@ -29,6 +29,7 @@ import Icon from 'react-native-vector-icons/FontAwesome5';
 import FooterContent from '../../components/footer';
 import SwipeablePanel from 'rn-swipeable-panel';
 import {Hoshi} from "react-native-textinput-effects";
+import {Alert} from "react-native";
 
 const ls = require('react-native-local-storage');
 
@@ -131,7 +132,7 @@ const Profile = ({navigation}) => {
 
     const render = (menu) => (
         <ListItem>
-            <TouchableOpacity onPress={() => navigation.navigate(menu.route)}>
+            <TouchableOpacity onPress={() =>   {menu.route ? navigation.navigate(menu.route) : Alert.alert('Nao implementado')}}>
                 <Left style={Style.left}>
                     <View style={Style.leftIcon}>
                         <Icon name={menu.icon} size={18}/>

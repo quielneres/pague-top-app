@@ -1,10 +1,8 @@
 import React from 'react';
 
 import {
-    StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform, View,
-    Picker
+    StyleSheet,   Picker
 } from 'react-native';
-import {Block, Text, theme, Button as GaButton} from 'galio-framework';
 
 
 import {

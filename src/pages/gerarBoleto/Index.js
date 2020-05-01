@@ -33,6 +33,9 @@ import {
 
 import Load from '../../components/loader';
 import {MaskService} from 'react-native-masked-text';
+import Modal from "../../components/modal";
+import WorningModal from "../../components/modal/worning";
+
 const ls = require('react-native-local-storage');
 
 const GerarBoleto = ({navigation}) => {
@@ -80,6 +83,8 @@ const GerarBoleto = ({navigation}) => {
     const [status_server, setStatusServer] = useState(false);
     const [user, setUser] = useState([]);
     const [link, setLink] = useState(null);
+    const [modal, setModal] = useState(false);
+    const [modal_worning, setModalWorning] = useState(false);
 
     useEffect(() => {
         ls.get('@ListApp:userToken').then(data => {
@@ -144,8 +149,7 @@ const GerarBoleto = ({navigation}) => {
         </View>
     );
 
-
-    const boletoGeneration = async () => {
+    const submit = async () => {
         setLoading(true);
 
         const itens = {
@@ -165,73 +169,58 @@ const GerarBoleto = ({navigation}) => {
             const response = await api.post('/new-request', itens);
             const data_server = response.data;
 
-            {
-                data_server.status === false ? setStatusServer(false) : setStatusServer(true)
-            }
 
             {
                 data_server.status === true ? setLink(data_server.link_boleto) : null
             }
 
             setLoading(false);
-            setSwip(true)
+            setModal(true)
         } catch (err) {
             console.log(err)
             setLoading(false);
         }
     };
 
-    const Swipeable = () => (
 
-        <SwipeablePanel
-            fullWidth
-            isActive={swipeablePanelActive}
-            onClose={closePanel}
-            onPressCloseButton={closePanel}
-        >
-            <ContentResponse>
-                <HeaderResponse>
-                    {status_server
-                        ?
-                        <View style={{alignItems: 'center'}}>
-                            <Icon name={'grin'} color={'green'} size={30}/>
-                            <TitleResponse style={{color: 'green'}}> Boleto gerado com secesso!</TitleResponse>
-                        </View>
-                        :
-                        <View style={{alignItems: 'center'}}>
-                            <Icon name={'frown'} color={'red'} size={30}/>
-                            <TitleResponse style={{color: 'red'}}> Erro em sua solicitacao!</TitleResponse>
-                        </View>
-                    }
-                </HeaderResponse>
-                {status_server
-                    ?
-                    <View style={{alignItems: 'center', justifyContent: 'center'}}>
-                        <ContenDatailsResponse>
-                            <TextDetail> Acesse o link para baixar o boleto:</TextDetail>
-                            <LinkBoleto style={{alignItems: 'center', justifyContent: 'center'}}>{link}</LinkBoleto>
-                        </ContenDatailsResponse>
-                        <ContenResponseButton>
-                            <Button style={{width: '100%', justifyContent: 'center', alignItems: 'center'}}
-                                    onPress={() => navigation.goBack(null)}>
-                                <Text  style={{alignItems: 'center', justifyContent: 'center'}}>Enviar link</Text>
-                            </Button>
-                        </ContenResponseButton>
-                    </View>
-                    : <ContenResponseButton>
-                        <Button style={{width: '100%', justifyContent: 'center', borderEndColor: 'red'}}
-                                onPress={() => navigation.goBack(null)}>
-                            <Text>Fechar</Text>
-                        </Button>
-                    </ContenResponseButton>
-                }
-            </ContentResponse>
-        </SwipeablePanel>
-    );
+    const boletoGeneration = () => {
+        {user.id_comprador ? submit() :  setModalWorning(true)}
+    };
 
+
+    const submitMessage = () => {
+        setModal(false);
+        navigation.navigate('OrderDetail', {
+            data: {
+                method: 1,
+                origin: 'barcode',
+                link: link,
+                title: 'Cobrança',
+                description: 'Cobraça por boleto',
+                value: value
+            }
+        })
+    };
+
+    const submitWorning = () => {
+        setModalWorning(false);
+        navigation.navigate('EditProfile', {data_user: user})
+    };
 
     return (
         <Container>
+            <Modal
+                status={modal}
+                menssage={'Boleto gerado com sucesso!'}
+                action={() => submitMessage()}
+                menssageBtn={'OK'}
+            />
+            <WorningModal
+                status={modal_worning}
+                menssage={'Complete o cadastro para continuar!'}
+                action={() => submitWorning()}
+                menssageBtn={'OK'}
+            />
             <ContentHeader>
                 <LabelHeader>Digite um valor:</LabelHeader>
             </ContentHeader>
@@ -254,7 +243,6 @@ const GerarBoleto = ({navigation}) => {
                     </Button>
                 </ContentButton>
             </ContentNumbers>
-            <Swipeable/>
             {loading ? <Load/> : null}
         </Container>
     );

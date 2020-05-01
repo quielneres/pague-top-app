@@ -14,6 +14,7 @@ import SingUp from './pages/singUp';
 import Home from './pages/home';
 import CartDigital from './pages/carteiraDigital';
 import ExtratoHome from './pages/extrato';
+import OrderDetail from './pages/extrato/detail';
 import Detalhes from './pages/home/detalhes';
 import Perfil from './pages/perfil';
 import EditProfile from './pages/perfil/edit';
@@ -183,9 +184,11 @@ const SettingsStack = createStackNavigator({
 const CarteiraDigital = createStackNavigator({
     CarteiraDigital: {
         screen: CartDigital,
-        navigationOptions: {
+        navigationOptions: ({navigation}) => ({
             headerTitle: 'Carteira Digital',
-        },
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
+        }),
     },
     Saque: {
         screen: SaqueHome,
@@ -206,6 +209,14 @@ const Extrato = createStackNavigator({
         navigationOptions: {
             headerTitle: 'Extrato',
         },
+    },
+    OrderDetail: {
+        screen: OrderDetail,
+        navigationOptions: ({navigation}) => ({
+            headerTitle: 'Detalhe pedido',
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
+        }),
     }
 });
 
@@ -219,9 +230,9 @@ const Profile = createStackNavigator({
     EditProfile: {
         screen: EditProfile,
         navigationOptions: ({navigation}) => ({
-            headerShown: 'Editar Perfil',
+            headerTitle: 'Editar Perfil',
             headerTitleAlign: 'center',
-            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
         }),
     },
     ClientCount: {
@@ -237,15 +248,19 @@ const Profile = createStackNavigator({
 const Cartoes = createStackNavigator({
     Cartoes: {
         screen: CartoesHome,
-        navigationOptions: {
-            headerTitle: 'Cartoes',
-        },
+        navigationOptions: ({navigation}) => ({
+            headerTitle: 'Cartões',
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
+        }),
     },
     AddCard: {
         screen: AddCardHome,
-        navigationOptions: {
-            headerTitle: 'Adicionar cartoes',
-        },
+        navigationOptions: ({navigation}) => ({
+            headerTitle: 'Novo cartão',
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
+        }),
     },
 });
 
@@ -264,7 +279,7 @@ const Pagar = createStackNavigator({
         navigationOptions: ({navigation}) => ({
             headerTitle: 'Pagamentos',
             headerTitleAlign: 'center',
-            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
         }),
     },
 
@@ -273,15 +288,15 @@ const Pagar = createStackNavigator({
         navigationOptions: ({navigation}) => ({
             headerTitle: 'Recarregue seu celular',
             headerTitleAlign: 'center',
-            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
-        }),PayBill
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
+        }), PayBill
     },
     Recharge: {
         screen: Recharge,
         navigationOptions: ({navigation}) => ({
             headerTitle: 'Recarga',
             headerTitleAlign: 'center',
-            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
         }),
     },
     RechargePay: {
@@ -289,7 +304,7 @@ const Pagar = createStackNavigator({
         navigationOptions: ({navigation}) => ({
             headerTitle: 'Recarga Pagar',
             headerTitleAlign: 'center',
-            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
         }),
     },
     PayBill: {
@@ -297,7 +312,7 @@ const Pagar = createStackNavigator({
         navigationOptions: ({navigation}) => ({
             headerTitle: 'Pagar Contas',
             headerTitleAlign: 'center',
-            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
         }),
     },
     ReadCode: {
@@ -305,7 +320,7 @@ const Pagar = createStackNavigator({
         navigationOptions: ({navigation}) => ({
             headerTitle: 'Ler codigo',
             headerTitleAlign: 'center',
-            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
         }),
     },
 });
@@ -316,7 +331,7 @@ const Cobrar = createStackNavigator({
         navigationOptions: ({navigation}) => ({
             headerTitle: 'Opções para cobrar',
             headerTitleAlign: 'center',
-            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
         }),
     },
     ProductList: {
@@ -330,7 +345,7 @@ const Cobrar = createStackNavigator({
         navigationOptions: ({navigation}) => ({
             headerTitle: 'Boleto',
             headerTitleAlign: 'center',
-            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)} />
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
         }),
     },
     Checkout: {

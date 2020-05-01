@@ -1,7 +1,6 @@
 import React from 'react';
 
-import {StyleSheet, Dimensions, ScrollView, Image, ImageBackground, Platform, View} from 'react-native';
-import {Block, Text, theme, Button as GaButton} from 'galio-framework';
+import {StyleSheet, Text, View} from 'react-native';
 
 import {
     ContantSaldo,
@@ -9,11 +8,12 @@ import {
     Link
 } from './styles';
 import {grey} from "color-name";
-import {Container, Header, Content, Tab, Tabs, Footer, FooterTab, Button, Icon} from 'native-base';
+import {Container,Content} from 'native-base';
+import FooterContent from "../../components/footer";
 
 
-export default class Perfil extends React.Component {
-    render() {
+const Wallet = ({navigation}) => {
+
         return (
             <Container>
                 <Content>
@@ -21,44 +21,24 @@ export default class Perfil extends React.Component {
                         <TextSaldo>R$ 150,00</TextSaldo>
                         <Text>Saldo</Text>
                         <View style={{flexDirection: 'row', marginTop: 20}}>
-                            <Link onPress={() => this.props.navigation.navigate('Saque')}>
+                            <Link onPress={() => navigation.navigate('Saque')}>
                                 <Text style={styles.links}>Saque</Text>
                             </Link>
-                            <Link onPress={() => this.props.navigation.navigate('Transferir')}>
+                            <Link onPress={() => navigation.navigate('Transferir')}>
                                 <Text style={styles.links}>Transferir</Text>
                             </Link>
                         </View>
                         <View>
-                            <Link onPress={() => this.props.navigation.navigate('Saque')}>
+                            <Link onPress={() => navigation.navigate('Saque')}>
                                 <Text style={styles.links2}>Adicionar Dinheiro</Text>
                             </Link>
                         </View>
                     </ContantSaldo>
                 </Content>
-                <Footer>
-                    <FooterTab style={{backgroundColor: '#F2F2F2'}}>
-                        <Button vertical onPress={() => this.props.navigation.navigate('Home')}>
-                            <Icon name="home"/>
-                            <Text>Home</Text>
-                        </Button>
-                        <Button vertical>
-                            <Icon name="camera"/>
-                            <Text>Pagar</Text>
-                        </Button>
-                        <Button vertical>
-                            <Icon active name="navigate"/>
-                            <Text>Cobrar</Text>
-                        </Button>
-                        <Button vertical onPress={() => this.props.navigation.navigate('Perfil')}>
-                            <Icon name="settings"/>
-                            <Text>Confg</Text>
-                        </Button>
-                    </FooterTab>
-                </Footer>
+                <FooterContent navigation={navigation}/>
             </Container>
         );
-    }
-}
+};
 
 const styles = StyleSheet.create({
     saldo: {
@@ -93,3 +73,5 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     }
 });
+
+export default Wallet;
