@@ -207,7 +207,7 @@ const Extrato = createStackNavigator({
     Extrato: {
         screen: ExtratoHome,
         navigationOptions: {
-            headerTitle: 'Extrato',
+            headerShown: false,
         },
     },
     OrderDetail: {
