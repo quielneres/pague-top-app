@@ -14,7 +14,6 @@ import api from "../../services/api";
 import Load from '../../components/loader';
 const ls = require('react-native-local-storage');
 
-
 const Home = ({navigation}) => {
 
     const [user, setUser] = useState([]);
