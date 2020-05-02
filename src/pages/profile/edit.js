@@ -177,7 +177,7 @@ const EditProfile = ({navigation}) => {
 
             setModal(true);
 
-            props.navigation.dispatch(resetAction);
+            navigation.dispatch(resetAction);
 
 
             if (response.data.status === 'error') {

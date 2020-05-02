@@ -14,14 +14,14 @@ import {
 } from './styles';
 
 import {
-    Container, Left,Content,
-    List, ListItem, Right
+    Container, Left, Content,
+    Right
 } from 'native-base';
 
 
 import {CheckBox} from 'react-native-elements'
 
-import {View, Text} from "react-native";
+import {View, Text, TouchableOpacity} from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import Load from "../../../components/loader";
 import api from "../../../services/api";
@@ -30,8 +30,7 @@ const ls = require('react-native-local-storage');
 import Modal from "../../../components/modal";
 import WorningModal from "../../../components/modal/worning";
 
-import { Button } from 'react-native-elements';
-
+import {Button, ListItem} from 'react-native-elements';
 
 
 const RechargePay = ({navigation}) => {
@@ -43,7 +42,15 @@ const RechargePay = ({navigation}) => {
     const [user, setUser] = useState([]);
     const [link, setLink] = useState(null);
     const [modal, setModal] = useState(false);
-    const [modal_worning, setModalWorning] = useState(false);
+    const [payment_method, setPayment] = useState(1);
+    const [myBalance, setBalance] = useState(5);
+    const [modal_worning, setModalWorning] = useState(
+        {
+            message: '',
+            route: '',
+            status: false
+        }
+    );
 
     useEffect(() => {
         ls.get('@ListApp:userToken').then(data => {
@@ -55,43 +62,36 @@ const RechargePay = ({navigation}) => {
     const payments = [
         {
             id: 1,
-            method: 'Usar saldo',
-            select: true,
-            icon: 'money-bill'
-        },
-        {
-            id: 1,
             method: 'Boleto',
             select: false,
             icon: 'barcode'
         },
         {
             id: 2,
+            method: 'Usar saldo (Meu saldo: 0,00)',
+            select: true,
+            icon: 'money-bill'
+        },
+        {
+            id: 3,
             method: 'Cartao de creditos',
             select: false,
             icon: 'credit-card'
         },
     ];
 
-    // const contentCheckBox = payment => (
-    //     <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '90%'}}>
-    //         <Text>{payment.method}</Text>
-    //         <Icon name={payment.icon} size={17}/>
-    //     </View>
-    //
-    // );
-
     const rendPayments = payment => (
         <View>
             <CheckBox
                 textStyle={{width: '100%'}}
                 title={payment.method}
-                checked={payment.select}
+                checked={payment_method === payment.id ? true : false}
+                onPress={() => setPayment(payment.id)}
             />
         </View>
     );
 
-    const submit = async () => {
+    const submit = async (pay_method) => {
 
         setLoading(true);
         const itens = {
@@ -101,10 +101,9 @@ const RechargePay = ({navigation}) => {
             quantidade: 1,
             descricao: 'Recarga',
             detalhes: 'Recarga Celular',
-            payment_method: 1,
+            payment_method: pay_method,
             cell_number: cellNumber,
             operadora_name: operadora
-
         };
 
         try {
@@ -114,7 +113,6 @@ const RechargePay = ({navigation}) => {
             {
                 data_server.status === true ? setLink(data_server.link_boleto) : null
             }
-
             setLoading(false);
             setModal(true);
         } catch (err) {
@@ -123,9 +121,39 @@ const RechargePay = ({navigation}) => {
         }
     };
 
+    const condition = () => {
+        {
+            payment_method === 2 ?
+                myBalance >= value ? submit(2) : setModalWorning({
+                    message: 'Seu saldo e inferior ao necessario!',
+                    route: 'Profile',
+                    status: true
+                })
+                : null
+        }
+
+        {
+            payment_method === 3 ?
+                user.card ? submit(3) : setModalWorning({
+                    message: 'Voce nao tem um cartao selecionado!',
+                    route: 'CreditCard',
+                    status: true
+                })
+                : null
+        }
+
+    };
+
     const boletoGeneration = () => {
         {
-            user.id_comprador ? submit() : setModalWorning(true)
+            user.id_comprador ?
+                payment_method === 1 ? submit(1) : condition()
+                :
+                setModalWorning({
+                    message: 'Complete o cadastro para continuar!',
+                    route: 'EditProfile',
+                    status: true
+                })
         }
     };
 
@@ -146,20 +174,20 @@ const RechargePay = ({navigation}) => {
 
     const submitWorning = () => {
         setModalWorning(false);
-        navigation.navigate('EditProfile', {data_user: user})
+        navigation.navigate(modal_worning.route, {data_user: user})
     };
 
     return (
         <Container>
             <Modal
                 status={modal}
-                menssage={'Boleto gerado com sucesso!'}
+                menssage={'Operaçao realizada com sucesso!'}
                 action={() => submitMessage()}
                 menssageBtn={'OK'}
             />
             <WorningModal
-                status={modal_worning}
-                menssage={'Complete o cadastro para continuar!'}
+                status={modal_worning.status}
+                menssage={modal_worning.message}
                 action={() => submitWorning()}
                 menssageBtn={'OK'}
             />
@@ -187,16 +215,12 @@ const RechargePay = ({navigation}) => {
                 </ContentDetails>
                 <ContentPayment>
                     {payments.map((p) => rendPayments(p))}
-                    <List>
-                        <ListItem>
-                            <Left>
-                                <Text style={{marginLeft: 20}}>Adicionar cartão</Text>
-                            </Left>
-                            <Right>
-                                <Icon name={'plus'} size={17}/>
-                            </Right>
-                        </ListItem>
-                    </List>
+                    <ListItem
+                        onPress={() => navigation.navigate('CreditCard')}
+                        title={'Adicionar cartão'}
+                        bottomDivider
+                        chevron
+                    />
                 </ContentPayment>
                 <ContentButton>
 

@@ -21,9 +21,10 @@ import RechargePay from './pages/toPay/rechargeCell/rechargePay';
 import PayBill from './pages/toPay/PayBill';
 import ToDemand from './pages/toDemand';
 import DigitalWallet from './pages/digitalWallet';
+import CreditCard from './pages/creditCard';
 
 
-//
+//DigitalWallet
 // import CartDigital from './pages/carteiraDigital';
 // import ExtratoHome from './pages/extrato';
 // import OrderDetail from './pages/extrato/detail';
@@ -479,6 +480,14 @@ const App = createStackNavigator({
         screen: DigitalWallet,
         navigationOptions: ({navigation}) => ({
             headerTitle: 'Carteira Digital',
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
+        }),
+    },
+    CreditCard: {
+        screen: CreditCard,
+        navigationOptions: ({navigation}) => ({
+            headerTitle: 'Meus Cartoes',
             headerTitleAlign: 'center',
             headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
         }),
