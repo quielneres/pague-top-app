@@ -14,7 +14,7 @@ import {
 } from './styles';
 
 import {
-    Container, Left, Button, Content,
+    Container, Left,Content,
     List, ListItem, Right
 } from 'native-base';
 
@@ -29,6 +29,10 @@ import api from "../../../services/api";
 const ls = require('react-native-local-storage');
 import Modal from "../../../components/modal";
 import WorningModal from "../../../components/modal/worning";
+
+import { Button } from 'react-native-elements';
+
+
 
 const RechargePay = ({navigation}) => {
 
@@ -195,11 +199,12 @@ const RechargePay = ({navigation}) => {
                     </List>
                 </ContentPayment>
                 <ContentButton>
+
                     <Button
-                        style={{width: '100%', justifyContent: 'center', backgroundColor: '#4CB1F7', marginTop: 20}}
-                        onPress={() => boletoGeneration()}>
-                        <Text>Finalizar</Text>
-                    </Button>
+                        buttonStyle={{width: 200, justifyContent: 'center', backgroundColor: '#4CB1F7', marginTop: 20}}
+                        onPress={() => boletoGeneration()}
+                        title="Finalizar"
+                    />
                 </ContentButton>
             </Content>
             {loading ? <Load/> : null}

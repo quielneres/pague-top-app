@@ -6,15 +6,18 @@ import {
 
 import {
     Container, Left, Button, Content, Card, CardItem, Body,
-    List, ListItem, Right, Icon, Form, Item, Picker, Text
+    List, ListItem, Right, Form, Item, Picker, Text
 } from 'native-base';
 
 import {Hoshi} from 'react-native-textinput-effects';
 import {View} from "react-native";
 import {MaskService} from "react-native-masked-text";
-// import {Value} from "../../gerarBoleto/styles";
 import {validateAll} from "indicative/validator";
 import api from "../../../services/api";
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+
+import { Input } from 'react-native-elements';
 
 const RechargeCell = ({navigation}) => {
 
@@ -58,15 +61,14 @@ const RechargeCell = ({navigation}) => {
         <Container>
             <Content>
                 <Form style={{padding: 15}}>
-                    <Hoshi error
-                        label={'Número com DDD'}
-                        backgroudColor={'#fff'}
-                        borderColor={'#4CB1F7'}
-                        borderHeight={1}
-                        inputPadding={18}
-                        style={{marginBottom: 0, borderBottomWidth: 0.5}}
+                    <Input
+                        placeholder="Número com DDD"
+                        leftIcon={{type: 'font-awesome5', name: 'phone'}}
                         value={MaskService.toMask('cel-phone', form.number)}
                         onChangeText={number => setForm({...form, number})}
+                        style={{marginBottom: 0, borderBottomWidth: 0.3, color: 'green'}}
+                        // errorStyle={{ color: 'red' }}
+                        // errorMessage={form.error['number']}
                     />
                     {form.error['number'] &&
                     <Text style={{fontSize: 12, color: 'red'}}>{form.error['number']}</Text>}

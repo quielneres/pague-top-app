@@ -1,78 +1,65 @@
 import React from 'react';
 
-import {Block, Text, theme, Button as GaButton} from 'galio-framework';
 
-import {
-    BlocoGeral,
-    Coluna1,
-    Coluna2,
-    ImagenIcon,
-    TextIcons,
-} from './styles';
-
-import {
-    Container, Left, Thumbnail, Content, Card, CardItem, Body,
-    List, ListItem, Right
-} from 'native-base';
-import Icon from 'react-native-vector-icons/FontAwesome5';
+import {Container, Content} from 'native-base';
 import FooterContent from "../../components/footer";
+import {ListItem} from 'react-native-elements';
 
-const Pagar = ({navigation}) => {
+const ToPay = ({navigation}) => {
+
+    const options = [
+        {
+            title: 'Contas e boletos',
+            icon: 'barcode',
+            route: 'PayBill',
+            size: 16
+        },
+        {
+            title: 'Recaga Celular',
+            icon: 'mobile-alt',
+            route: 'RechargeCell',
+            size: 21
+        },
+        {
+            title: 'Boletos e Tributos',
+            icon: 'barcode',
+            route: 'PayBill',
+            size: 16
+        },
+        {
+            title: 'Pagar com QR code',
+            icon: 'qrcode',
+            route: 'PayBill',
+            size: 18
+        },
+        {
+            title: 'Enviar dinheiro',
+            icon: 'money-bill-alt',
+            rout: null,
+            size: 16
+        },
+
+    ];
+
     return (
         <Container>
-            <Content>
-
-                <List style={{ marginTop: 15}}>
-                    <ListItem onPress={() => navigation.navigate('PayBill')}>
-                        <Left style={{alignItems: 'center'}}>
-                            <Icon name="barcode" size={20} style={{marginRight: 10}}/>
-                            <Text>Contas e boletos</Text>
-                        </Left>
-                        <Right>
-                            <Icon name="chevron-right"/>
-                        </Right>
-                    </ListItem>
-                    <ListItem onPress={() => navigation.navigate('RechargeCell')}>
-                        <Left style={{alignItems: 'center'}}>
-                            <Icon name="mobile-alt" size={20} style={{marginRight: 10, marginLeft: 5}}/>
-                            <Text>Recarga Celular</Text>
-                        </Left>
-                        <Right>
-                            <Icon name="chevron-right"/>
-                        </Right>
-                    </ListItem>
-                    <ListItem onPress={() => alert("This is Card Header")}>
-                        <Left style={{alignItems: 'center'}}>
-                            <Icon name="barcode" size={20} style={{marginRight: 10}}/>
-                            <Text>Boletos e Tributos</Text>
-                        </Left>
-                        <Right>
-                            <Icon name="chevron-right"/>
-                        </Right>
-                    </ListItem>
-                    <ListItem onPress={() => alert("This is Card Header")}>
-                        <Left style={{alignItems: 'center'}}>
-                            <Icon name="qrcode" size={20} style={{marginRight: 10}}/>
-                            <Text>Pagar com QR-Code</Text>
-                        </Left>
-                        <Right>
-                            <Icon name="chevron-right"/>
-                        </Right>
-                    </ListItem>
-                    <ListItem onPress={() => alert("This is Card Header")}>
-                        <Left style={{alignItems: 'center'}}>
-                            <Icon name="money-bill-alt" size={20} style={{marginRight: 10}}/>
-                            <Text>Enviar Dinheiro</Text>
-                        </Left>
-                        <Right>
-                            <Icon name="chevron-right"/>
-                        </Right>
-                    </ListItem>
-                </List>
+            <Content style={{margin: 10}}>
+                {
+                    options.map((item, i) => (
+                        <ListItem
+                            onPress={() => navigation.navigate(item.route)}
+                            key={i}
+                            title={item.title}
+                            leftIcon={{type: 'font-awesome-5', name: item.icon, size: item.size}}
+                            bottomDivider
+                            chevron
+                        />
+                    ))
+                }
             </Content>
             <FooterContent navigation={navigation}/>
         </Container>
     );
 };
 
-export default Pagar;
+export default ToPay;
