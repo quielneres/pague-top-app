@@ -12,7 +12,7 @@ import {
 import {Hoshi} from 'react-native-textinput-effects';
 import {View} from "react-native";
 import {MaskService} from "react-native-masked-text";
-import {Value} from "../../gerarBoleto/styles";
+// import {Value} from "../../gerarBoleto/styles";
 import {validateAll} from "indicative/validator";
 import api from "../../../services/api";
 

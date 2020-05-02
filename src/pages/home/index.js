@@ -9,7 +9,7 @@ import UltimasVendas from './UltimasVendas';
 
 import {Container, FooterTab, Button, Content, Card, CardItem, Body, Text} from 'native-base';
 import FooterContent from '../../components/footer';
-import {ImagenIcon} from "../descontos/styles";
+import {ImagenIcon} from "../discount/styles";
 import api from "../../services/api";
 import Load from '../../components/loader';
 const ls = require('react-native-local-storage');

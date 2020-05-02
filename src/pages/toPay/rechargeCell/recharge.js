@@ -17,12 +17,8 @@ import {
 import {View} from "react-native";
 
 
-const RechargeCell = ({navigation}) => {
+const RechargeCells = ({navigation}) => {
     const [data_phone, setDate] =  useState(navigation.getParam('data'));
-
-    console.log(data_phone.operadora, data_phone.number)
-
-
 
     const RechargeValue = [
         {
@@ -89,4 +85,4 @@ const RechargeCell = ({navigation}) => {
     );
 };
 
-export default RechargeCell;
+export default RechargeCells;

@@ -1,7 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {StackActions, NavigationActions} from 'react-navigation';
-import {StatusBar, ActivityIndicator, AsyncStorage, Image, View, Alert} from 'react-native';
+import {StatusBar, ActivityIndicator, Image, View, Alert} from 'react-native';
 import PropTypes from 'prop-types';
+
+import AsyncStorage from '@react-native-community/async-storage';
 
 import api from '../../services/api';
 
@@ -58,7 +60,7 @@ export default function Welcome(props) {
 
             const resetAction = StackActions.reset({
                 index: 0,
-                actions: [NavigationActions.navigate({routeName: 'App'})],
+                actions: [NavigationActions.navigate({routeName: 'HomeScreen'})],
             });
 
             setLoading(false);

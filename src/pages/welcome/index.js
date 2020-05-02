@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 
-import {StatusBar, ActivityIndicator, AsyncStorage, Image, View, Text, TouchableOpacity} from 'react-native';
+import {StatusBar, ActivityIndicator, Image, View, Text, TouchableOpacity} from 'react-native';
 
 import {
     Button,

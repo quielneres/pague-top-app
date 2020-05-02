@@ -14,9 +14,12 @@ import {
 } from './styles';
 
 import {
-    Container, Left, Button, Content, CheckBox,
+    Container, Left, Button, Content,
     List, ListItem, Right
 } from 'native-base';
+
+
+import {CheckBox} from 'react-native-elements'
 
 import {View, Text} from "react-native";
 import Icon from 'react-native-vector-icons/FontAwesome5';
@@ -32,10 +35,7 @@ const RechargePay = ({navigation}) => {
     const [value, setValue] = useState(navigation.getParam('value'))
     const [cellNumber, setCellNumber] = useState(navigation.getParam('cellNumber'));
     const [operadora, setOperadora] = useState(navigation.getParam('operadora'));
-    const [modalVisible, setModalVisible] = useState(true);
-    const [swipeablePanelActive, setSwip] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [status_server, setStatusServer] = useState(false);
     const [user, setUser] = useState([]);
     const [link, setLink] = useState(null);
     const [modal, setModal] = useState(false);
@@ -48,26 +48,17 @@ const RechargePay = ({navigation}) => {
 
     }, []);
 
-    const componentDidMount = () => {
-        this.openPanel();
-    };
-
-    const openPanel = () => {
-        setSwip(true);
-    };
-
-    const closePanel = () => {
-        navigation.goBack(null)
-        setSwip(false);
-    };
-
-    // console.log(user)
-
     const payments = [
         {
             id: 1,
-            method: 'Boleto',
+            method: 'Usar saldo',
             select: true,
+            icon: 'money-bill'
+        },
+        {
+            id: 1,
+            method: 'Boleto',
+            select: false,
             icon: 'barcode'
         },
         {
@@ -78,17 +69,21 @@ const RechargePay = ({navigation}) => {
         },
     ];
 
+    // const contentCheckBox = payment => (
+    //     <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '90%'}}>
+    //         <Text>{payment.method}</Text>
+    //         <Icon name={payment.icon} size={17}/>
+    //     </View>
+    //
+    // );
+
     const rendPayments = payment => (
         <View>
-            <ListItem>
-                <Left>
-                    <CheckBox checked={payment.select}/>
-                    <Text style={{marginLeft: 20}}>{payment.method}</Text>
-                </Left>
-                <Right>
-                    <Icon name={payment.icon} size={17}/>
-                </Right>
-            </ListItem>
+            <CheckBox
+                textStyle={{width: '100%'}}
+                title={payment.method}
+                checked={payment.select}
+            />
         </View>
     );
 
@@ -187,8 +182,8 @@ const RechargePay = ({navigation}) => {
                     </ContentInfo>
                 </ContentDetails>
                 <ContentPayment>
+                    {payments.map((p) => rendPayments(p))}
                     <List>
-                        {payments.map((p) => rendPayments(p))}
                         <ListItem>
                             <Left>
                                 <Text style={{marginLeft: 20}}>Adicionar cartão</Text>

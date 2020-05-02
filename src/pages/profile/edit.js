@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
 
 import {validateAll} from 'indicative/validator';
-import {Text, StyleSheet, View, Alert, ActivityIndicator, TouchableOpacity, AsyncStorage} from 'react-native';
-import {Container, Card, Content, Form, CardItem, Item, Input, Label} from 'native-base';
+import {Text, StyleSheet, View} from 'react-native';
+import {Container, Content} from 'native-base';
 import {Hoshi} from 'react-native-textinput-effects';
 import api from '../../services/api';
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 import {
     Button,
@@ -14,6 +16,9 @@ import Load from '../../components/loader';
 import Modal from "../../components/modal";
 import {MaskService} from "react-native-masked-text";
 import moment from 'moment';
+import {NavigationActions, StackActions} from "react-navigation";
+const ls = require('react-native-local-storage');
+
 
 const EditProfile = ({navigation}) => {
 
@@ -136,11 +141,6 @@ const EditProfile = ({navigation}) => {
 
     ];
 
-    async function saveUser(user) {
-
-        await AsyncStorage.setItem('@ListApp:userToken', JSON.stringify(user));
-    };
-
 
 
     const registerUser = async () => {
@@ -157,7 +157,7 @@ const EditProfile = ({navigation}) => {
             'email.email': 'Please enter a valid email address',
             'password.confirmed': 'The password did not match',
             'password.min': 'Password is too short',
-        }
+        };
 
         try {
             setLoading(true);
@@ -166,13 +166,19 @@ const EditProfile = ({navigation}) => {
 
             const response = await api.post('/update-user/' + data_user.id, form);
 
-            console.log(response.data)
-
             const user = response.data;
-            await saveUser(user);
-            setModal(true)
 
-            // setUserData(response);
+            await AsyncStorage.setItem('@ListApp:userToken', JSON.stringify(user));
+
+            const resetAction = StackActions.reset({
+                index: 0,
+                actions: [NavigationActions.navigate({routeName: 'App'})],
+            });
+
+            setModal(true);
+
+            props.navigation.dispatch(resetAction);
+
 
             if (response.data.status === 'error') {
 
@@ -207,8 +213,8 @@ const EditProfile = ({navigation}) => {
 
     const submitMessage = () => {
         setModal(false)
-        navigation.navigate('Perfil')
-    }
+        navigation.goBack(null);
+    };
 
     const renderForm = f => (
         <Hoshi

@@ -1,5 +1,6 @@
-import {AsyncStorage} from 'react-native';
 import {NavigationActions} from 'react-navigation';
+import AsyncStorage from '@react-native-community/async-storage';
+
 
 export async function getUser() {
   try {

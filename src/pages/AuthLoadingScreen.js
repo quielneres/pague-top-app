@@ -1,6 +1,8 @@
 import React, {useEffect} from 'react';
 
-import {View, AsyncStorage, ActivityIndicator} from 'react-native';
+import {View} from 'react-native';
+
+import AsyncStorage from '@react-native-community/async-storage';
 
 import Load from '../components/loader'
 
@@ -9,7 +11,7 @@ export default function AuthLoadingScreen(props) {
     async function handleUserNextScreen() {
       const userToken = await AsyncStorage.getItem('@ListApp:userToken');
 
-      props.navigation.navigate(userToken ? 'App' : 'Auth');
+      props.navigation.navigate(userToken ? 'Home' : 'Auth');
     }
 
     handleUserNextScreen();
@@ -17,7 +19,6 @@ export default function AuthLoadingScreen(props) {
 
   return (
     <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-      {/*<ActivityIndicator size="large" color="#00ff00" />*/}
       <Load/>
     </View>
   );
