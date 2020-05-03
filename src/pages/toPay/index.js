@@ -57,7 +57,7 @@ const ToPay = ({navigation}) => {
                     ))
                 }
             </Content>
-            <FooterContent navigation={navigation}/>
+            <FooterContent navigation={navigation} action={'toPay'}/>
         </Container>
     );
 };

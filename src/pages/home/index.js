@@ -1,25 +1,28 @@
 import React, {useEffect, useState} from 'react';
-import {ScrollView, TouchableOpacity} from 'react-native';
-import {Image} from "react-native";
+import {ScrollView, TouchableOpacity, View, Text} from 'react-native';
 
 import Styles from './Style';
 import Valores from './Valores';
 import ContaDigital from './ContaDigital';
 import UltimasVendas from './UltimasVendas';
 
-import {Container, FooterTab, Button, Content, Card, CardItem, Body, Text} from 'native-base';
+import {Container, FooterTab, Button, Content, Tab, Tabs, ScrollableTab} from 'native-base';
 import FooterContent from '../../components/footer';
-import {ImagenIcon} from "../discount/styles";
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import api from "../../services/api";
 import Load from '../../components/loader';
+import {Header, ButtonGroup, ListItem, Image} from 'react-native-elements';
+import colors from "../../components/styles/colors";
+
+
 const ls = require('react-native-local-storage');
 
 const Home = ({navigation}) => {
-
     const [user, setUser] = useState([]);
     const [loading, setLoading] = useState(false);
-
     const [transactions, setTransaction] = useState([]);
+    const [selected, setSelected] = useState(0);
+    const buttons = ['Sugestoes', 'Favoritos'];
 
     useEffect(() => {
         setLoading(true);
@@ -35,238 +38,216 @@ const Home = ({navigation}) => {
 
     }, []);
 
+    const suggestion = [
+        {
+            id: 1,
+            title: 'Pagar QR-code',
+            color: ''
+        },
+        {
+            id: 2,
+            title: 'Recarga de ' + "\n" + 'Celular',
+            color: ''
+        },
+        {
+            id: 3,
+            title: 'Cobrar',
+            color: ''
+        },
+        {
+            id: 4,
+            title: 'Gerar Link' + "\n" + 'de pagamento',
+            color: ''
+        },
+        {
+            id: 5,
+            title: 'Transferir',
+            color: ''
+        },
+        {
+            id: 6,
+            title: 'Pagar Boleto',
+            color: ''
+        },
 
-    const renderTransactions = trans => (
-        <Card>
-            <CardItem
-                style={{
-                    flexDirection: 'column',
-                    alignItems: 'flex-start',
-                }}
-                header button onPress={() => alert("nao implementado")}>
-                <Text>Data: {trans.cadastro}</Text>
-                <Text>Compardor: {trans.nome_comprador}</Text>
-                <Text>Valor: R$ {trans.total}</Text>
-            </CardItem>
-        </Card>
+    ];
+
+
+    const favirite = [
+        {
+            id: 1,
+            title: 'Adicione um' + "\n" + 'Favorito',
+            color: ''
+        }
+
+    ];
+
+    const partners = [
+        {
+            id: 1,
+            img_path: require('../../assets/icons-descontos/supermarket.png'),
+            title: 'Supermercados'
+        },
+        {
+            id: 2,
+            img_path: require('../../assets/icons-descontos/farmacia.png'),
+            title: 'Farmacias'
+        },
+        {
+            id: 3,
+            img_path: require('../../assets/icons-descontos/comercio.png'),
+            title: 'Comercio'
+        },
+        {
+            id: 4,
+            img_path: require('../../assets/icons-descontos/retsaurante.png'),
+            title: 'Restaurantes'
+        },
+    ];
+
+    const renderFastMenu = i => (
+        <View key={i.id}
+              style={{
+                  marginLeft: 15,
+                  marginTop: 15,
+                  width: 120,
+                  alignItems: 'center',
+
+              }}
+        >
+            <View style={{
+                width: 70,
+                height: 70,
+                borderRadius: 100,
+                backgroundColor: 'grey'
+            }}></View>
+            <Text style={{textAlign: 'center', marginTop: 5}}>{i.title}</Text>
+        </View>
+    );
+
+    const renderPartners = p => (
+
+        <View style={{
+            margin: 20,
+            width: 100,
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Image style={{width:70, height: 70, marginBottom: 10}} source={p.img_path}/>
+            <Text>{p.title}</Text>
+
+        </View>
     );
 
     return (
         <Container>
-            <Content>
-                <Card transparent style={{
-                    padding: 15,
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    alignItems: 'center',
-                    borderBottomWidth: 0.3
-                }}>
-                    <Text style={{fontSize: 18, fontWeight: 'bold'}}>Ola, {user.name}</Text>
-                    <Image
-                        style={{width: 30, height: 30, borderRadius: 50}}
-                        source={{uri: 'https://img2.gratispng.com/20180518/poz/kisspng-computer-icons-avatar-user-profile-photographer-5afeac6a8a4057.9798500715266397225663.jpg'}}
-                    />
-                </Card>
-
-                <Card transparent>
-                    <ScrollView
-                        horizontal={true}
-                        contentContainerStyle={{}}
-                        showsHorizontalScrollIndicator={false}
-                        scrollEventThrottle={200}
-                        decelerationRate="fast"
-                        pagingEnabled
-                    >
-                        <TouchableOpacity onPress={() => navigation.navigate('CarteiraDigital')}>
-                            <CardItem header
-                                      style={{
-                                          margin: 15,
-                                          width: 200,
-                                          height: 140,
-                                          borderRadius: 5,
-                                          flexDirection: 'column',
-                                          backgroundColor: '#0BBFAA',
-                                      }}>
-                                <Text>Saldo</Text>
-                                <Text style={{fontSize: 24, marginTop: 20, color: '#fff', fontWeight: 'bold'}}>R$
-                                    1.500,00</Text>
-                            </CardItem>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.navigate('Extrato')}>
-                            <CardItem header
-                                      style={{
-                                          margin: 15,
-                                          width: 200,
-                                          height: 140,
-                                          borderRadius: 5,
-                                          flexDirection: 'column',
-                                          backgroundColor: '#0850FF',
-                                          justifyContent: 'center',
-                                      }}>
-                                <Text style={{fontSize: 24, color: '#fff', fontWeight: 'bold'}}>Extratos</Text>
-                            </CardItem>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.navigate('CarteiraDigital')}>
-                            <CardItem header
-                                      style={{
-                                          margin: 15,
-                                          width: 200,
-                                          height: 140,
-                                          borderRadius: 5,
-                                          flexDirection: 'column',
-                                          backgroundColor: '#B82D0F',
-                                          justifyContent: 'center',
-                                      }}>
-                                <Text
-                                    style={{fontSize: 24, color: '#fff', fontWeight: 'bold'}}>Transferencias</Text>
-                            </CardItem>
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => navigation.navigate('Cobrar')}>
-                            <CardItem header
-                                      style={{
-                                          margin: 15,
-                                          width: 200,
-                                          height: 140,
-                                          borderRadius: 5,
-                                          flexDirection: 'column',
-                                          backgroundColor: '#2C3740',
-                                          justifyContent: 'center',
-                                      }}>
-                                <Text
-                                    style={{fontSize: 24, color: '#fff', fontWeight: 'bold'}}>Cobrar</Text>
-                            </CardItem>
-                        </TouchableOpacity>
-                    </ScrollView>
-                </Card>
-                <Card style={{
-                    backgroundColor: '#F2F2F2',
-                    flexDirection: 'row',
-                    justifyContent: 'space-between',
-                    paddingLeft: 15,
-                    paddingRight: 15,
-                    marginTop: 10
+            <Header
+                statusBarProps={{barStyle: 'light-content'}}
+                containerStyle={{
+                    backgroundColor: colors.primary,
                 }}
-                      transparent>
-                    <CardItem style={{flexDirection: 'column', backgroundColor: '#F2F2F2',}}>
-                        <Text style={{fontSize: 12, color: '#707070'}}>Disponivel</Text>
-                        <Text style={{fontWeight: 'bold'}}>R$ 25,00</Text>
-                    </CardItem>
-                    <CardItem style={{flexDirection: 'column', backgroundColor: '#F2F2F2',}}>
-                        <Text style={{fontSize: 12, color: '#707070'}}>A liberar</Text>
-                        <Text style={{fontWeight: 'bold'}}>R$ 15,00</Text>
-                    </CardItem>
-                    <CardItem style={{flexDirection: 'column', backgroundColor: '#F2F2F2',}}>
-                        <Text style={{fontSize: 12, color: '#707070',}}>Saldo total</Text>
-                        <Text style={{fontWeight: 'bold'}}>R$ 40,00</Text>
-                    </CardItem>
-                </Card>
-                <Card transparent>
-                    <Content padder>
-                        <CardItem>
-                            <Text style={{fontSize: 18, fontWeight: 'bold'}}>Ultimas transacoes</Text>
-                        </CardItem>
-                        {transactions.map((t) => renderTransactions(t))}
-                    </Content>
-                </Card>
-                <Card>
-                    <Content padder>
-                        <CardItem>
-                            <Text style={{fontSize: 18, fontWeight: 'bold'}}>Descontos</Text>
-                        </CardItem>
-                        <ScrollView
-                            horizontal={true}
-                            contentContainerStyle={{}}
-                            showsHorizontalScrollIndicator={false}
-                            scrollEventThrottle={200}
-                            decelerationRate="fast"
-                            pagingEnabled
-                        >
+                barStyle="light-content"
+                placement="left"
+                centerComponent={{
+                    text: 'Olá, ' + user.name,
+                    style: {color: '#fff', marginBottom: 10, fontSize: 18, fontWeight: 'bold'}
+                }}
+                rightComponent={{icon: 'home', color: '#fff', marginBottom: 10,}}
+            />
+            <Content>
+                <ButtonGroup
+                    selectedIndex={selected}
+                    onPress={setSelected}
+                    buttons={buttons}
+                    containerStyle={{width: '50%', borderColor: '#fff'}}
+                    selectedButtonStyle={{backgroundColor: '#fff', borderBottomWidth: 1}}
+                    innerBorderStyle={{width: 0}}
+                    selectedTextStyle={{color: colors.regular}}
+                />
 
-                            <CardItem header
-                                      style={{
-                                          margin: 15,
-                                          borderWidth: 0.5,
-                                          width: 150,
-                                          height: 150,
-                                          borderRadius: 5,
-                                          flexDirection: 'column'
-                                      }}>
-                                <Image
-                                    style={{
-                                        width: 80,
-                                        height: 80,
-                                    }}
-                                    source={require('./../../assets/icons-descontos/comercio.png')}
-                                />
-                                <Text>Comercio</Text>
-                            </CardItem>
-
-                            <CardItem header
-                                      style={{
-                                          margin: 15,
-                                          borderWidth: 0.5,
-                                          width: 150,
-                                          height: 150,
-                                          borderRadius: 5,
-                                          flexDirection: 'column'
-                                      }}>
-                                <Image
-                                    style={{
-                                        width: 80,
-                                        height: 80,
-                                    }}
-                                    source={require('./../../assets/icons-descontos/farmacia.png')}
-                                />
-                                <Text>Famacias</Text>
-                            </CardItem>
-
-
-                            <CardItem header
-                                      style={{
-                                          margin: 15,
-                                          borderWidth: 0.5,
-                                          width: 150,
-                                          height: 150,
-                                          borderRadius: 5,
-                                          flexDirection: 'column'
-                                      }}>
-                                <Image
-                                    style={{
-                                        width: 80,
-                                        height: 80,
-                                    }}
-                                    source={require('./../../assets/icons-descontos/retsaurante.png')}
-                                />
-                                <Text>Restaurantes</Text>
-                            </CardItem>
-                            <CardItem header
-                                      style={{
-                                          margin: 15,
-                                          borderWidth: 0.5,
-                                          width: 150,
-                                          height: 150,
-                                          borderRadius: 5,
-                                          flexDirection: 'column'
-                                      }}>
-                                <Image
-                                    style={{
-                                        width: 80,
-                                        height: 80,
-                                    }}
-                                    source={require('./../../assets/icons-descontos/supermarket.png')}
-                                />
-                                <Text>Supermercados</Text>
-                            </CardItem>
-
-                        </ScrollView>
-                    </Content>
-                </Card>
+                <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                    {
+                        selected === 0 ? suggestion.map((i) => renderFastMenu(i)) :
+                            favirite.map((i) => renderFastMenu(i))
+                    }
+                </ScrollView>
+                <View style={{borderTopWidth: 0.2, marginTop: 15, flexDirection: 'row', justifyContent: 'center'}}>
+                    <View style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: '30%',
+                        margin: 5,
+                        borderRightWidth: 0.2,
+                        flexDirection: 'row'
+                    }}>
+                        <Icon name={'check'} size={18} style={{marginRight: 10}} color={'green'}/>
+                        <View>
+                            <Text style={{fontSize: 10}}>Disponível</Text>
+                            <Text style={{fontSize: 12, fontWeight: 'bold'}}>R$ 0,00</Text>
+                        </View>
+                    </View>
+                    <View style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: '30%',
+                        margin: 5,
+                        flexDirection: 'row'
+                    }}>
+                        <Icon name={'spinner'} size={18} style={{marginRight: 10}} color={'orange'}/>
+                        <View>
+                            <Text style={{fontSize: 10}}>A liberar</Text>
+                            <Text style={{fontSize: 12, fontWeight: 'bold'}}>R$ 0,00</Text>
+                        </View>
+                    </View>
+                    <View style={{
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        width: '30%',
+                        margin: 5,
+                        borderLeftWidth: 0.2,
+                        flexDirection: 'row'
+                    }}>
+                        <Icon name={'hand-holding-usd'} size={18} style={{marginRight: 10}} color={'blue'}/>
+                        <View>
+                            <Text style={{fontSize: 10}}>Total</Text>
+                            <Text style={{fontSize: 12, fontWeight: 'bold'}}>R$ 0,00</Text>
+                        </View>
+                    </View>
+                </View>
+                <View style={{marginTop: 15}}>
+                    <Text style={{backgroundColor: colors.lighter9, padding: 15, fontWeight: 'bold'}}>Ultimas
+                        trasacoes</Text>
+                    {
+                        transactions.map((item, i) => (
+                            <ListItem
+                                key={i}
+                                title={item.cadastro}
+                                subtitle={
+                                    <View>
+                                        <Text>{item.nome_comprador}</Text>
+                                        <Text>Valor: {item.total}</Text>
+                                    </View>
+                                }
+                                leftIcon={{name: item.icon}}
+                                bottomDivider
+                                chevron
+                            />
+                        ))
+                    }
+                </View>
+                <View style={{marginTop: 15}}>
+                    <Text style={{backgroundColor: colors.lighter9, padding: 15, fontWeight: 'bold'}}>Nossos
+                        parceiros</Text>
+                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                        {partners.map((p) => renderPartners(p))}
+                    </ScrollView>
+                </View>
             </Content>
-            <FooterContent navigation={navigation}/>
+            <FooterContent navigation={navigation} action={'home'}/>
             {loading ? <Load/> : null}
         </Container>
     );
-}
+};
 
 
 export default Home;

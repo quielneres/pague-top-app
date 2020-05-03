@@ -14,6 +14,7 @@ export const UserName = styled.Text`
    font-size: ${fonts.bigger};
    font-weight: bold;
    color: ${colors.regular};
+   
 `;
 
 export const TextItens = styled.Text`

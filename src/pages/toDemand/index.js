@@ -56,7 +56,7 @@ const Cobrar = ({navigation}) => {
                     </ListItem>
                 </List>
             </Content>
-            <FooterContent navigation={navigation}/>
+            <FooterContent navigation={navigation} action={'toDemand'}/>
         </Container>
     );
 };

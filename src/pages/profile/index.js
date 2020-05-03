@@ -6,11 +6,11 @@ import {
     Content,
     Body,
     List,
-    ListItem,
     Right,
     Left,
     Form,
-    Text
+    Text,
+    ListItem as ListBase
 } from 'native-base';
 
 import {
@@ -30,6 +30,7 @@ import FooterContent from '../../components/footer';
 import SwipeablePanel from 'rn-swipeable-panel';
 import {Hoshi} from "react-native-textinput-effects";
 import {Alert} from "react-native";
+import { ListItem} from 'react-native-elements';
 
 const ls = require('react-native-local-storage');
 
@@ -192,15 +193,29 @@ const Profile = ({navigation}) => {
                 </Right>
             </TouchableOpacity>
         </Header>
-    );
+    )
 
-    return (
+     return (
         <Container>
             {usuario.map((u) => renderUser(u))}
             <Content>
+                <View>
+                    {
+                        data.map((item, i) => (
+                            <ListItem
+                                onPress={() =>   {item.route ? navigation.navigate(item.route) : Alert.alert('Nao implementado')}}
+                                key={i}
+                                title={item.title}
+                                subtitle={item.subtitle}
+                                leftIcon={{type: 'font-awesome-5' , name: item.icon, size: 18 }}
+                                bottomDivider
+                                chevron
+                            />
+                        ))
+                    }
+                </View>
                 <List style={Style.general_list}>
-                    {data.map((m) => render(m))}
-                    <ListItem>
+                    <ListBase>
                         <TouchableOpacity
                             onPress={() =>
                                 deleteUser().then(() => {
@@ -213,15 +228,15 @@ const Profile = ({navigation}) => {
                                 flexDirection: 'row',
                                 padding: 10
                             }}>
-                            <UserName>Sair</UserName>
+                            <UserName style={{color: 'red'}}>Sair da conta</UserName>
                             <Right>
                                 <Icon name="window-close" size={18}/>
                             </Right>
                         </TouchableOpacity>
-                    </ListItem>
+                    </ListBase>
                 </List>
             </Content>
-            <FooterContent navigation={navigation}/>
+            <FooterContent navigation={navigation} action={'profile'}/>
             <Swipeable/>
         </Container>
     );
