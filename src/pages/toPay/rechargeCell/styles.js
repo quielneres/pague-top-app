@@ -10,13 +10,15 @@ export const ContentButton = styled.View`
 
 export const RechargeHeader = styled.View`
     justify-content: center;
-    align-items: center;
-    padding-top: 40px;
+    align-items: flex-start;
+    padding: 40px;
+     border-bottom-width: 0.5px;
 `;
 
 export const RechargeTitle = styled.Text`
     font-weight: bold;
     font-size: 20px;
+   
    
 `;
 
@@ -37,7 +39,6 @@ export const Number = styled.TouchableOpacity`
 `;
 
 export const TextNumber = styled.Text`
-  font-size: 20px;
   font-weight: bold;
 `;
 

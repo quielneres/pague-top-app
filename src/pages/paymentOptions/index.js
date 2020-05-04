@@ -65,7 +65,6 @@ const RechargePay = ({navigation}) => {
         }
     );
 
-
     useEffect(() => {
         ls.get('@ListApp:userToken').then(data => {
             setUser(data.user ?? [])
@@ -85,8 +84,22 @@ const RechargePay = ({navigation}) => {
             ]);
         }
 
-        if(action === 'payByBillet'){
+        if(action === 'cellular_recharge'){
+            setHeader({
+                title: 'Recarga de celular',
+                value: payment_data.amount ?? 0
+            });
 
+            setDetail([
+                {
+                    title: 'Número:',
+                    subtitle: payment_data.number
+                },
+                {
+                    title: 'Operadora:',
+                    subtitle: payment_data.operator
+                }
+            ]);
         }
 
     }, []);
@@ -198,6 +211,14 @@ const RechargePay = ({navigation}) => {
         />
     );
 
+    const renderCellularRecharge = d => (
+        <ListItem
+            roundAvatar
+            title={d.title}
+            rightSubtitle={d.subtitle}
+        />
+    );
+
     const submitMessage = () => {
         setModal(false);
         navigation.navigate('OrderDetail', {
@@ -243,6 +264,7 @@ const RechargePay = ({navigation}) => {
                         bottomDivider
                     />
                     {action === 'pay_the_bills' ? detail.map((d) => renderBarCode(d)) : null}
+                    {action === 'cellular_recharge' ? detail.map((d) => renderCellularRecharge(d)) : null}
                 </Card>
                 <ContentPayment>
                     {payments_methods.map((p) => rendPayments(p))}
