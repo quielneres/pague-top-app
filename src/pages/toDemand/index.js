@@ -38,7 +38,7 @@ const Cobrar = ({navigation}) => {
                         </Right>
                     </ListItem>
                     <ListItem button onPress={() =>
-                        navigation.navigate('GerarBoleto')}>
+                        navigation.navigate('Billet')}>
                         <Left>
                             <Text>Gerar link de boleto</Text>
                         </Left>

@@ -56,11 +56,12 @@ export default function Welcome(props) {
 
             const user = response.data;
 
+
             await saveUser(user);
 
             const resetAction = StackActions.reset({
                 index: 0,
-                actions: [NavigationActions.navigate({routeName: 'HomeScreen'})],
+                actions: [NavigationActions.navigate({routeName: 'Home'})],
             });
 
             setLoading(false);

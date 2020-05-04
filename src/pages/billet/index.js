@@ -21,15 +21,6 @@ import {
 } from "native-base";
 import Icon from 'react-native-vector-icons/FontAwesome5';
 import api from "../../services/api";
-import SwipeablePanel from 'rn-swipeable-panel';
-import {
-    ContenDatailsResponse, ContenResponseButton,
-    ContentResponse,
-    HeaderResponse,
-    LinkBoleto,
-    TextDetail,
-    TitleResponse
-} from "../cobrar/styles";
 
 import Load from '../../components/loader';
 import {MaskService} from 'react-native-masked-text';

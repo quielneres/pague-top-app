@@ -3,7 +3,6 @@ import React, {useState, useEffect} from 'react';
 import {View} from 'react-native';
 import {
     Container,
-    Button,
     Content,
     Form,
     Text,
@@ -16,6 +15,7 @@ import {MaskService} from "react-native-masked-text";
 import Load from '../../../components/loader';
 import Modal from "../../../components/modal";
 const ls = require('react-native-local-storage');
+import {Button} from 'react-native-elements'
 
 const Cards = ({navigation}) => {
     const [user, setUser] = useState([]);
@@ -141,9 +141,14 @@ const Cards = ({navigation}) => {
                             <Text style={{fontSize: 12, marginBottom: 50, color: 'red'}}>{form.error['cvc']}</Text>}
                         </View>
                     </View>
-                    <Button onPress={() => submit(form)} style={{marginTop: 40}}>
-                        <Text>Enviar</Text>
-                    </Button>
+
+                    <View style={{alignItems: 'center'}}>
+                        <Button
+                            buttonStyle={{width: 300, justifyContent: 'center', backgroundColor: '#4CB1F7', marginTop: 40}}
+                            onPress={() => submit(form)}
+                            title="Prosseguir"
+                        />
+                    </View>
                 </Form>
             </Content>
             {loading ? <Load/> : null}

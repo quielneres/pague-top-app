@@ -40,13 +40,13 @@ const Profile = ({navigation}) => {
         {
             title: 'Carteira',
             subtitle: 'Meu saldo QR code',
-            route: 'CarteiraDigital',
+            route: 'DigitalWallet',
             icon: 'wallet'
         },
         {
             title: 'Forma de pagamentos',
             subtitle: 'Minhas formas de pagamento',
-            route: 'Cartoes',
+            route: 'CreditCard',
             icon: 'credit-card'
         },
         {
@@ -64,7 +64,7 @@ const Profile = ({navigation}) => {
         {
             title: 'Transferências',
             subtitle: 'Veja suas transferências',
-            route: 'Transferir',
+            route: 'Transfer',
             icon: 'exchange-alt'
         },
         {

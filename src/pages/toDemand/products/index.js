@@ -15,7 +15,7 @@ import {
 import {Container, Left, Right, Thumbnail, Content, Header, ListItem, Body, List, CardItem, Card} from 'native-base';
 
 
-export default class ProductList extends React.Component {
+export default class Index extends React.Component {
     render() {
 
         const products = [
@@ -58,7 +58,7 @@ export default class ProductList extends React.Component {
                 {p.itens.map((i) => (
                     <List>
                         <ListItem avatar onPress={() =>
-                            this.props.navigation.navigate('Checkout', {data: i})}>
+                            this.props.navigation.navigate('CheckoutProduct', {data: i})}>
                             <Left>
                                 <Thumbnail
                                     source={{uri: i.image_url }}/>

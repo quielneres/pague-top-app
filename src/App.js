@@ -23,8 +23,14 @@ import ReadCode from './pages/toPay/PayBill/readCode';
 import WriteBarcode from './pages/toPay/PayBill/writeBarcode';
 import PaymentOptions from './pages/paymentOptions';
 import ToDemand from './pages/toDemand';
+import ProductList from './pages/toDemand/products';
+import CheckoutProduct from './pages/toDemand/checkout';
 import DigitalWallet from './pages/digitalWallet';
 import CreditCard from './pages/creditCard';
+import CreditCardAdd from './pages/creditCard/add';
+import OrderDetail from './pages/extract/detail';
+import Billet from './pages/billet';
+import Transfer from './pages/transfer';
 
 
 //DigitalWallet
@@ -403,9 +409,13 @@ const App = createStackNavigator({
         },
     },
     Auth: {
+        screen: Welcome,
+    }
+    ,
+    Login: {
         screen: Login,
     },
-    SingUp: {
+    CreateAccount: {
         screen: SingUp,
         navigationOptions: {
             headerShown: false
@@ -506,6 +516,22 @@ const App = createStackNavigator({
             headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
         }),
     },
+    ProductList: {
+        screen: ProductList,
+        navigationOptions: ({navigation}) => ({
+            headerTitle: 'Produtos',
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
+        }),
+    },
+    CheckoutProduct: {
+        screen: CheckoutProduct,
+        navigationOptions: ({navigation}) => ({
+            headerTitle: 'Produtos',
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
+        }),
+    },
     DigitalWallet: {
         screen: DigitalWallet,
         navigationOptions: ({navigation}) => ({
@@ -518,6 +544,38 @@ const App = createStackNavigator({
         screen: CreditCard,
         navigationOptions: ({navigation}) => ({
             headerTitle: 'Meus Cartoes',
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
+        }),
+    },
+    CreditCardAdd: {
+        screen: CreditCardAdd,
+        navigationOptions: ({navigation}) => ({
+            headerTitle: 'Adicionar Cartoes',
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
+        }),
+    },
+    OrderDetail: {
+        screen: OrderDetail,
+        navigationOptions: ({navigation}) => ({
+            headerTitle: 'Detalhe',
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
+        }),
+    },
+    Billet: {
+        screen: Billet,
+        navigationOptions: ({navigation}) => ({
+            headerTitle: 'Boleto',
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
+        }),
+    },
+    Transfer: {
+        screen: Transfer,
+        navigationOptions: ({navigation}) => ({
+            headerTitle: 'Transferir',
             headerTitleAlign: 'center',
             headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
         }),

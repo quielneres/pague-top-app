@@ -1,14 +1,7 @@
 import React, {useEffect, useState} from 'react';
 
 import {
-    RechargePayHeader,
-    RechargePayTitle,
-    PayTextValue,
-    RechargePayTitleInfo,
-    ContentDetails,
-    ContentInfo,
-    TextIndice,
-    TextValue,
+
     ContentButton,
     ContentPayment,
 } from './styles';
@@ -37,23 +30,31 @@ import {MaskService} from "react-native-masked-text";
 const RechargePay = ({navigation}) => {
 
     const [user, setUser] = useState([]);
+    const [card, setCard] = useState([]);
     const [payment_data] = useState(navigation.getParam('payment_data'));
     const [action] = useState(navigation.getParam('action'));
     const [modal, setModal] = useState(false);
     const [header, setHeader] = useState(
         {
             title: '',
-            value: 0
+            value: 0,
+            avatar: ''
         }
     );
     const [detail, setDetail] = useState([]);
+    const [payment_method, setPayment] = useState(1);
+    const [payment_status, setPaymentStatus] = useState(
+        {
+            billet: true,
+            card: false
+        }
+    );
 
 
     const [cellNumber, setCellNumber] = useState(navigation.getParam('cellNumber'));
     const [operadora, setOperadora] = useState(navigation.getParam('operadora'));
     const [loading, setLoading] = useState(false);
     const [link, setLink] = useState(null);
-    const [payment_method, setPayment] = useState(1);
     const [myBalance, setBalance] = useState(5);
 
 
@@ -68,12 +69,14 @@ const RechargePay = ({navigation}) => {
     useEffect(() => {
         ls.get('@ListApp:userToken').then(data => {
             setUser(data.user ?? [])
+            setCard(data.card ?? [])
         });
 
         if (action === 'pay_the_bills') {
             setHeader({
                 title: 'Contas Diversas',
-                value: new Boleto(payment_data.barCode).amount() ?? 0
+                value: new Boleto(payment_data.barCode).amount() ?? 0,
+                avatar: require('../../assets/icons-pagar/barcode-icon.png')
             });
 
             setDetail([
@@ -82,12 +85,16 @@ const RechargePay = ({navigation}) => {
                     subtitle: payment_data.description
                 }
             ]);
+
+            setPaymentStatus({...payment_status, billet: false});
+            setPayment(2)
         }
 
-        if(action === 'cellular_recharge'){
+        if (action === 'cellular_recharge') {
             setHeader({
                 title: 'Recarga de celular',
-                value: payment_data.amount ?? 0
+                value: payment_data.amount ?? 0,
+                avatar: require('../../assets/icons-pagar/mobile-icon-10.png')
             });
 
             setDetail([
@@ -102,25 +109,30 @@ const RechargePay = ({navigation}) => {
             ]);
         }
 
+        {card ? setPaymentStatus({...payment_status, card: true}) : null}
+
     }, []);
 
+    console.log(card)
+
     const payments_methods = [
+
         {
             id: 1,
             method: 'Boleto',
-            select: false,
+            status: payment_status.billet,
             icon: 'barcode'
         },
         {
             id: 2,
             method: 'Usar saldo (Meu saldo: 0,00)',
-            select: true,
+            status: true,
             icon: 'money-bill'
         },
         {
             id: 3,
-            method: 'Cartão de creditos',
-            select: false,
+            method: '',
+            status: payment_status.card,
             icon: 'credit-card'
         },
     ];
@@ -131,14 +143,14 @@ const RechargePay = ({navigation}) => {
         setLoading(true);
         const itens = {
             id_comprador: user.id_comprador,
-            valor: value,
-            preco: value,
+            valor: header.value,
+            preco: header.value,
             quantidade: 1,
             descricao: 'Recarga',
             detalhes: 'Recarga Celular',
             payment_method: pay_method,
-            cell_number: cellNumber,
-            operadora_name: operadora
+            cell_number: action === 'cellular_recharge' ? payment_data.number : null,
+            operadora_name: action === 'cellular_recharge'? payment_data.operator : null
         };
 
         try {
@@ -194,12 +206,24 @@ const RechargePay = ({navigation}) => {
 
     const rendPayments = payment => (
         <View>
-            <CheckBox
-                textStyle={{width: '100%'}}
-                title={payment.method}
-                checked={payment_method === payment.id ? true : false}
-                onPress={() => setPayment(payment.id)}
-            />
+            {
+                payment.status ?
+                    payment.id === 3 ?
+                        <CheckBox
+                            textStyle={{width: '100%'}}
+                            title={card.first6 + ' **** ' + card.last4}
+                            checked={payment_method === payment.id ? true : false}
+                            onPress={() => setPayment(payment.id)}
+                        />
+                        :
+                        <CheckBox
+                            textStyle={{width: '100%'}}
+                            title={payment.method}
+                            checked={payment_method === payment.id ? true : false}
+                            onPress={() => setPayment(payment.id)}
+                        />
+                    : null
+            }
         </View>
     );
 
@@ -215,7 +239,9 @@ const RechargePay = ({navigation}) => {
         <ListItem
             roundAvatar
             title={d.title}
+            titleStyle={{ width: '40%'}}
             rightSubtitle={d.subtitle}
+            rightSubtitleStyle={{ width: 200, textAlign: 'right'}}
         />
     );
 
@@ -227,9 +253,9 @@ const RechargePay = ({navigation}) => {
                 origin: 'recharge',
                 link: link,
                 title: 'Recaga celular',
-                number: cellNumber,
-                opera: operadora,
-                value: value
+                number: action === 'cellular_recharge' ? payment_data.number : null,
+                opera: action === 'cellular_recharge' ? payment_data.operator : null,
+                value: header.value
             }
         })
     };
@@ -260,7 +286,7 @@ const RechargePay = ({navigation}) => {
                         title={header.title}
                         subtitle={MaskService.toMask('money', header.value)}
                         subtitleStyle={{fontWeight: 'bold'}}
-                        leftAvatar={{source: require('../../assets/icons-pagar/barcode-icon.png')}}
+                        leftAvatar={{source: header.avatar}}
                         bottomDivider
                     />
                     {action === 'pay_the_bills' ? detail.map((d) => renderBarCode(d)) : null}

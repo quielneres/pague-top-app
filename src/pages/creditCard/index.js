@@ -20,7 +20,6 @@ const Cards = ({navigation}) => {
     const [modal, setModal] = useState(false);
 
     useEffect(() => {
-
         setLoading(true);
         ls.get('@ListApp:userToken').then(data => {
             setUser(data.user ?? []);
@@ -29,6 +28,10 @@ const Cards = ({navigation}) => {
                     setCards(res.data.data)
                 })
         });
+
+        {user.id_comprador === null ? navigation.navigate('EditProfile', {data_user: user}) : null }
+
+
         setLoading(false);
     }, []);
 
@@ -167,7 +170,7 @@ const Cards = ({navigation}) => {
             setSwip(false);
             setLoading(true);
 
-            const response = await api.get('/credit-card-delete/' +id_card);
+            const response = await api.get('/credit-card-delete/' + id_card);
 
             setLoading(false);
             setModal(true);
@@ -186,14 +189,21 @@ const Cards = ({navigation}) => {
                 menssageBtn={'OK'}
             />
             <Content>
-                {cards > 0 ?
+                {cards.length > 0 ?
                     <ScrollView>
                         <List>
                             {cards.map((c) => renderCard(c))}
                         </List>
                     </ScrollView>
                     :
-                    <View style={{margin: 15,borderRadius: 7, backgroundColor: '#D9D9D9', padding: 50, alignItems: 'center', height:'80%'}}>
+                    <View style={{
+                        margin: 15,
+                        borderRadius: 7,
+                        backgroundColor: '#D9D9D9',
+                        padding: 50,
+                        alignItems: 'center',
+                        height: '80%'
+                    }}>
                         <Text style={{fontWeight: 'bold'}}>Você não possui cartões cadastrados</Text>
                     </View>
                 }
@@ -201,7 +211,7 @@ const Cards = ({navigation}) => {
             <Footer style={{height: 100}}>
                 <CardItem>
                     <Button block style={{width: '100%', height: 50, borderRadius: 7, backgroundColor: '#4CB1F7'}}
-                            onPress={() => navigation.navigate('AddCard')}>
+                            onPress={() => navigation.navigate('CreditCardAdd')}>
                         <Text style={{color: '#fff'}}>Adicionar Cartao</Text>
                     </Button>
                 </CardItem>
