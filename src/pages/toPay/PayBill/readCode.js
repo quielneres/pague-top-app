@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { Button, Text, View } from 'react-native';
-import { RNCamera } from 'react-native-camera';
+import React, {Component} from 'react';
+import {Button, Text, View} from 'react-native';
+import {RNCamera} from 'react-native-camera';
 
 class ProductScanRNCamera extends Component {
 
@@ -17,9 +17,11 @@ class ProductScanRNCamera extends Component {
         };
     }
 
+
     onBarCodeRead(scanResult) {
-        console.warn(scanResult.type, 111111);
-        console.warn(scanResult.data, 22222);
+
+        this.props.navigation.navigate('WriteBarcode', { brCode: scanResult.data});
+
         if (scanResult.data != null) {
             if (!this.barcodeCodes.includes(scanResult.data)) {
                 this.barcodeCodes.push(scanResult.data);
@@ -31,9 +33,9 @@ class ProductScanRNCamera extends Component {
 
     async takePicture() {
         if (this.camera) {
-            const options = { quality: 0.5, base64: true };
+            const options = {quality: 0.5, base64: true};
             const data = await this.camera.takePictureAsync(options);
-            console.log(data.uri);
+            console.log(options);
         }
     }
 
@@ -53,6 +55,11 @@ class ProductScanRNCamera extends Component {
     }
 
     render() {
+
+        const submitBarCode = () => {
+            this.props.navigation.navigate('WriteBarcode');
+        };
+
         return (
             <View style={styles.container}>
                 <RNCamera
@@ -63,21 +70,23 @@ class ProductScanRNCamera extends Component {
                     flashMode={this.state.camera.flashMode}
                     mirrorImage={false}
                     onBarCodeRead={this.onBarCodeRead.bind(this)}
-                    onFocusChanged={() => {}}
-                    onZoomChanged={() => {}}
-                    androidCameraPermissionOptions={'Permission to use camera'}
+                    onFocusChanged={() => {
+                    }}
+                    onZoomChanged={() => {
+                    }}
+                    androidCameraPermissionOptions={'Permissão para usar a camera'}
                     androidRecordAudioPermissionOptions={'We need your permission to use your camera phone'}
                     style={styles.preview}
                     type={this.state.camera.type}
                 />
                 <View style={[styles.overlay, styles.topOverlay]}>
-                    <Text style={styles.scanScreenMessage}>Please scan the barcode.</Text>
+                    <Text style={styles.scanScreenMessage}>Escanear código.</Text>
                 </View>
                 <View style={[styles.overlay, styles.bottomOverlay]}>
                     <Button
-                        onPress={() => { console.log('scan clicked'); }}
+                        onPress={() => submitBarCode()}
                         style={styles.enterBarcodeManualButton}
-                        title="Enter Barcode"
+                        title="Digitar código"
                     />
                 </View>
             </View>

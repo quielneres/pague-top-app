@@ -21,12 +21,6 @@ const ToPay = ({navigation}) => {
             size: 21
         },
         {
-            title: 'Boletos e Tributos',
-            icon: 'barcode',
-            route: 'PayBill',
-            size: 16
-        },
-        {
             title: 'Pagar com QR code',
             icon: 'qrcode',
             route: 'PayBill',

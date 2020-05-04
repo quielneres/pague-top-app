@@ -19,6 +19,8 @@ import RechargeCell from './pages/toPay/rechargeCell';
 import Recharge from './pages/toPay/rechargeCell/recharge';
 import RechargePay from './pages/toPay/rechargeCell/rechargePay';
 import PayBill from './pages/toPay/PayBill';
+import ReadCode from './pages/toPay/PayBill/readCode';
+import WriteBarcode from './pages/toPay/PayBill/writeBarcode';
 import ToDemand from './pages/toDemand';
 import DigitalWallet from './pages/digitalWallet';
 import CreditCard from './pages/creditCard';
@@ -462,8 +464,27 @@ const App = createStackNavigator({
     },
     PayBill: {
         screen: PayBill,
+        navigationOptions: {
+            headerShown: false
+        },
+        // navigationOptions: ({navigation}) => ({
+        //     headerTitle: 'Pagar contas',
+        //     headerTitleAlign: 'center',
+        //     headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
+        // }),
+    },
+    ReadCode: {
+        screen: ReadCode,
         navigationOptions: ({navigation}) => ({
-            headerTitle: 'Pagar contas',
+            headerTitle: 'ReadCode',
+            headerTitleAlign: 'center',
+            headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
+        }),
+    },
+    WriteBarcode: {
+        screen: WriteBarcode,
+        navigationOptions: ({navigation}) => ({
+            headerTitle: 'Pagar conta',
             headerTitleAlign: 'center',
             headerLeft: <HeaderBackButton onPress={() => navigation.goBack(null)}/>
         }),
