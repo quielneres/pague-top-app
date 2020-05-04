@@ -43,12 +43,8 @@ const WriteBarcode = ({navigation}) => {
             await validateAll(barCodeData, rules, messages);
 
             const result = new Boleto(barCodeData.barCode);
-            if (!result.valid()) {
-
-                setBarCodeData({
-                    amount: result.amount()
-                });
-                navigation.navigate('PaymentOptions', {billetData: barCodeData});
+            if (result.valid()) {
+                navigation.navigate('PaymentOptions', {payment_data: barCodeData, action: 'pay_the_bills'});
                 return;
             }
 
