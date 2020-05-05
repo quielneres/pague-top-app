@@ -1,9 +1,6 @@
 import React from 'react';
 
-import {View, Image} from 'react-native';
-
-import {Block, Text, theme, Button as GaButton} from 'galio-framework';
-
+import {View, Image, Text} from 'react-native';
 import {
     BlocoGeral,
     Coluna1,

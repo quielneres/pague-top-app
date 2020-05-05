@@ -1,8 +1,6 @@
 import React from 'react';
 
-import {ScrollView, TouchableOpacity, View} from 'react-native';
-
-import {Block, Text, theme, Button as GaButton} from 'galio-framework';
+import {ScrollView, TouchableOpacity, View, Text} from 'react-native';
 
 import {
     BlocoGeral,
